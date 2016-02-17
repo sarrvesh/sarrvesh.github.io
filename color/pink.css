@@ -1,0 +1,60 @@
+
+
+a {
+	color: #F39;
+	}
+	
+#content h1, .featured h1 {
+	color: #F39;
+	}
+	
+th {
+	border-color: #DDD #DDD #F39 #DDD;
+	}
+	
+dt {
+	color: #F39;
+	}
+	
+blockquote .cite {
+	color: #F39;
+	}
+
+input.button { 
+		background:#F39;
+		}
+	
+#nav li a:hover {
+	background: #e28;
+	}
+	
+.featured a.readmore {
+	background: #F39;
+	}
+	
+#searchform {
+	background: #F39 url('../images/arrow_pink.jpg') no-repeat center right;
+	}
+#sidebar ul li a:hover {
+	background: #F39 url('../images/arrow_pink.jpg') no-repeat center right;
+	}
+#footer ul li a:hover {
+	background: url('../images/arrow_pink2.jpg') no-repeat center right;
+	}
+	
+h4 {
+	color: #CE6499;
+	}
+	
+#footer {
+	background: #A42163;
+	}
+	
+#footer ul li a {
+	border-bottom: 1px solid #931E59;
+	}
+	
+#footer img {
+	border: 4px solid #820D48;
+	}
+	

@@ -1,0 +1,60 @@
+
+
+a {
+	color: #900;
+	}
+	
+#content h1, .featured h1 {
+	color: #900;
+	}
+	
+th {
+	border-color: #DDD #DDD #900 #DDD;
+	}
+	
+dt {
+	color: #900;
+	}
+	
+blockquote .cite {
+	color: #900;
+	}
+
+input.button { 
+		background:#900;
+		}
+	
+#nav li a:hover {
+	background: #900;
+	}
+	
+.featured a.readmore {
+	background: #900;
+	}
+	
+#searchform {
+	background: #900 url('../images/arrow_red.jpg') no-repeat center right;
+	}
+#sidebar ul li a:hover {
+	background: #900 url('../images/arrow_red.jpg') no-repeat center right;
+	}
+#footer ul li a:hover {
+	background: url('../images/arrow_red.jpg') no-repeat center right;
+	}
+	
+h4 {
+	color: #993D3D;
+	}
+	
+#footer {
+	background: #900;
+	}
+	
+#footer ul li a {
+	border-bottom: 1px solid #8c0000;
+	}
+	
+#footer img {
+	border: 4px solid #700;
+	}
+	

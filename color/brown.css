@@ -1,0 +1,64 @@
+
+
+a {
+	color: #693F17;
+	}
+	
+p a, .meta a {
+	color: #693F17;
+	}
+	
+#content h1, .featured h1 {
+	color: #693F17;
+	}
+	
+th {
+	border-color: #DDD #DDD #693F17 #DDD;
+	}
+	
+dt {
+	color: #693F17;
+	}
+	
+blockquote .cite {
+	color: #693F17;
+	}
+
+input.button { 
+		background:#693F17;
+		}
+	
+#nav li a:hover {
+	background: #693F17;
+	}
+	
+.featured a.readmore {
+	background: #693F17;
+	}
+	
+#searchform {
+	background: #693F17 url('../images/arrow_brown.jpg') no-repeat center right;
+	}
+#sidebar ul li a:hover {
+	background: #693F17 url('../images/arrow_brown.jpg') no-repeat center right;
+	}
+#footer ul li a:hover {
+	background: url('../images/arrow_brown.jpg') no-repeat center right;
+	}
+	
+h4 {
+	color: #693F17;
+	}
+	
+#footer {
+	background: #693F17;
+	}
+	
+#footer ul li a {
+	border-bottom: 1px solid #633610;
+	}
+	
+#footer img {
+	border: 4px solid #491f05;
+	}
+	

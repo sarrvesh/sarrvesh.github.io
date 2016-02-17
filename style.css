@@ -1,0 +1,460 @@
+* {
+	padding: 0;
+	margin: 0;
+	}
+	
+body {
+	font-family: arial,sans-serif;
+	background: #E0E0E0 url('images/b2g.jpg') repeat top center fixed;
+	color: #333;
+	}
+
+span.tab{
+	padding: 0 20px;
+}
+	
+/****************************
+      UNIVERSAL STYLES
+****************************/
+	
+p {
+	line-height: 1.4em;
+	margin-bottom: 10px;
+	}
+	
+a {
+	text-decoration: none;
+	}
+	
+a:hover {
+	color: #000;
+	}
+	
+p a:hover {
+	text-decoration: underline;
+	}
+
+h1 {
+	color: #FFF;
+	font: 800 2.5em arial,sans-serif;
+	letter-spacing: -3px;
+	}
+h1 a {
+	color: #FFF;
+	}
+	
+h1 a:hover {
+	color: #FFF;
+	}
+	
+h2, h3, h4 {
+/*	margin: 10px 0;*/
+	margin: 0 0;
+/*	letter-spacing: -2px;*/
+	}
+
+h2 span {
+	margin-left: 20px;
+	font: 800 14px arial,sans-serif;
+	color: #999;
+	}
+	
+img.left {
+	float: left;
+	margin: 0 10px 5px 0;
+	}
+		
+img.right {
+	float: right;
+	margin: 0 0 5px 10px;
+	}
+	
+/****************************
+          STYLE TAGS
+****************************/
+	
+
+blockquote {
+	background: #F0F0F0;
+	border-top: 1px solid #DDD;
+	border-bottom: 1px solid #DDD;
+	padding: 10px;
+	margin: 0 0 20px 10px;
+	}
+	
+blockquote .cite {
+		text-align: right;
+		font-style: italic;
+		margin: 0px;
+		}
+	
+dt {
+	font-style: italic;
+	font-weight: 600;
+	}
+	
+dd {
+	padding-left: 10px;
+	margin-bottom: 10px;
+	}
+	
+/* ---- LISTS ---- */
+	
+.post ol {
+	margin: 0 0 10px 20px;
+	color: #4B8610;
+	font-style: italic;
+	font-weight: 600;
+	line-height: 1.5em;
+	}
+	.post ol li {
+		color: #5b5b5b;
+		font-style: normal;
+		font-weight: 400;
+		}
+	
+.post ul li {
+list-style-type: none;
+	padding-left: 15px;
+	background-image: url('images/box.gif');
+	background-repeat: no-repeat;
+	background-position: 0px 10px;
+	line-height: 1.5em;
+	}
+	
+.post ul {
+	margin-bottom: 10px;
+	}
+	
+.postfoot {
+	margin: 10px 0 20px 0;
+	}
+		
+/* ---- FORMS ---- */ 	
+	
+form {
+	width: 520px;
+	background: #e6e6e6;
+	padding: 20px;
+	margin: 0 0 30px 0;
+	}
+	
+input, select, textarea {
+	margin: 5px 0;
+	padding: 5px;
+	color: #333;
+	border-width: 1px;
+	border-style: solid;
+  	border-color: #DDD; 	
+	font: 11px 'Lucida Grande', Verdana, Helvetica, sans-serif;
+	background: #fff;
+}
+
+	input.button { 
+		font: bold 12px Arial, Sans-serif; 
+		height: 30px;
+		margin: 0;
+		padding: 2px 3px; 
+		color: #FFF;
+		background:#4B8610;
+	}
+	
+/* ---- TABLES ---- */
+	
+table {
+	border-collapse: collapse;
+	margin: 10px 20px;		
+}
+tr { 
+	background: #FFF; 
+}
+
+	tr.altrow { 
+		background: #F9F9F9;	
+	}
+	
+th, td {
+	text-align: left;			
+	border-width: 1px;
+  	border-style: solid;
+}
+
+	th {
+		color: #555;
+		background: #f0f0f0; 
+		padding: .8em 1em;		
+	}
+	td {
+		border-color: #EFEFEF;	
+		padding: .7em 1em;	
+	}
+
+/************************
+       PAGE LAYOUT
+************************/
+
+	
+
+.clear {
+	clear: both;
+	line-height: 0;
+	font-size: 0;
+	}
+#wrap {
+	width: 980px;
+	margin: 0 auto;
+	}
+#header {
+	padding: 40px 20px 40px 20px;
+	width: 940px;
+	background: #000;
+	}
+#sidebar {
+	float: right;
+	width: 307px;
+	margin: 0 0 0 20px;
+	}	 
+#content {
+	background: #FFF;
+	padding: 20px;
+	width: 940px;
+	margin-bottom: 20px;
+	}
+#main {
+	width: 593px;
+	}  
+	
+
+/************************
+       HEADER STYLES
+************************/
+	
+
+#searchform {
+	width: 200px;
+	border: none;
+	float: right;
+	padding: 0;
+	margin: 0;
+	}
+#searchform input {
+	outline: 0;
+	border: 0;
+	padding: 4px;
+	margin: 0;
+	}
+	
+#searchform #s {
+	width: 170px;
+	}
+	
+	
+#searchsubmit {
+	padding: 0;
+	background: none;
+	width: 15px;
+	}
+	
+#nav {
+	width: 980px;
+	background: #333;
+	padding: 0;
+	color: #999;
+	font-size: 11px;
+	margin-top: -1px;
+	}
+	
+
+	
+#nav li {
+	list-style-type: none;
+	float: left;
+	}
+	
+#nav li a {
+	display: block;
+	background: #333;
+	padding: 15px;
+	color: #999;
+	font-size: 11px;
+	font-weight: 400;
+	}
+	
+#nav li a:hover {
+	color: #FFF;
+	}
+	
+/**************************
+	   SIDEBAR STYLES
+**************************/
+
+#sidebar h3 {
+	font: 800 14px arial,sans-serif;
+	background: #888;
+	color: #FFF;
+	padding: 8px 5px;
+	margin-bottom: 0;
+	letter-spacing: -1px;
+	}
+	
+#sidebar ul, #sidebar p {
+	margin-bottom: 20px;
+	}
+	
+#sidebar ul {
+	list-style-type: none;
+	}
+	
+#sidebar ul li a{
+	display: block;
+	font: 400 12px arial,sans-serif;
+	color: #666;
+	padding: 8px 22px 8px 5px;
+	border-bottom: 1px solid #E6E6E6;
+	}
+	
+#sidebar ul li a:hover {
+	color: #FFF;
+	}
+	
+#sidebar p {
+	font-size: 0.9em;
+	padding: 10px 0;
+	}
+	
+/*****************************
+	   FEATURED ARTICLE
+*****************************/
+
+.featured {
+	width: 940px;
+	height: 353px;
+	padding: 20px;
+	background: #FFF;
+	overflow: hidden;
+	margin: 20px 0;
+	}
+	
+.featured img {
+	float: left;
+	margin-right: 20px;
+	border: 4px solid #ccc;
+	}
+	
+
+	
+.featured p {
+	line-height: 1.4em;
+	}
+	
+.featured a.readmore {
+	padding: 5px;
+	color: #FFF;
+	font-size: 12px;
+	margin: 5px 0;
+	}
+
+.featured a.readmore:hover {
+	color: #FFF;
+	background: #000;
+	text-decoration: none;
+	}
+	
+/*****************************
+	   BLOG POST STYLES
+*****************************/
+	
+.post {	
+	padding: 20px 0;
+	border-bottom: 1px solid #e6e6e6;
+	}
+	
+.post img.left, .post img.right, .comment img {
+	border: 4px solid #DDD;
+	}
+	
+.comment .comment {
+	margin-left: 20px;
+	border-left: 4px solid #E6E6E6;
+	padding-left: 10px;
+	}
+	
+.meta {
+	font-size: 10px;
+	background: #e6e6e6;
+	padding: 5px;
+	border: 1px solid #DDD;
+	}
+	
+.comment .meta {
+	background: #F0F0F0;
+	border: none;
+	}
+
+.meta a:hover {
+	text-decoration: underline;
+	}
+	
+/************************
+	  FOOTER STYLES
+************************/
+
+#footer {
+	width: 940px;
+	padding: 20px;
+	color: #BBB;
+	font-size: 13px;
+	margin-bottom: 40px;
+	}
+	
+#footer a {
+	color: #FFF;
+	}
+	
+#footer a:hover {
+	text-decoration: underline;
+	}
+	
+#footer .links {
+	float: left;
+	margin-right: 20px;
+	}
+
+	
+#footer ul {
+	list-style-type: none;
+	float: left;
+	margin-right: 20px;
+	width: 307px;
+	}
+	
+#footer ul li a {
+	display: block;
+	font: 400 12px arial,sans-serif;
+	color: #BBB;
+	padding: 8px 22px 8px 5px;
+	}
+	
+#footer ul li a:hover {
+	color: #FFF;
+	text-decoration: none;
+	}
+	
+#footer h3 {
+	font: 800 14px arial,sans-serif;
+	color: #FFF;
+	padding: 8px 0px;
+	margin-bottom: 0;
+	letter-spacing: -1px;
+	}
+	
+ .copy {
+	margin: -20px 20px 20px 20px;
+	font-size: 11px;
+	}
+	
+
+	
+	
+	
+	
