@@ -107,6 +107,40 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Calibration with BBS </a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#source-catalog">Source catalog</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gaussian-sources">Gaussian sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spectral-index">Spectral index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rotation-measure">Rotation measure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gsm">GSM </a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#special-cases">Special cases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#instrument-tables">Instrument tables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#model">Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#beam-model">Beam model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#solver">Solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-reductions">Example reductions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#simulation">Simulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gain-calibration-direction-independent">Gain calibration (direction-independent)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gain-calibration-direction-dependent-with-source-subtraction">Gain calibration (direction-dependent) with source subtraction</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#tweaking-bbs-to-run-faster">Tweaking BBS to run faster</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#multithreading">Multithreading</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#global-parameter-estimation">Global parameter estimation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-your-environment">Setting up your environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#defining-a-global-solve">Defining a global solve</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pre-computed-visibilities">Pre-computed visibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inspecting-the-solutions">Inspecting the solutions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="shapelets.html">Sky Model Construction Using Shapelets </a></li>
@@ -201,11 +235,467 @@
 <li>The <strong>-f</strong> option, which overwrites stale information (the instrument table and sky model) from previous runs.</li>
 </ul>
 <p>You can run the script without arguments for a description of all the options and the mandatory arguments, such as the <strong>-v</strong> option to get a more verbose output.</p>
+</div>
+<div class="section" id="source-catalog">
+<h2>Source catalog<a class="headerlink" href="#source-catalog" title="Permalink to this headline">¶</a></h2>
+<p>The source catalog / sky model defines the sources that can be used (referred to) in the reduction. It is a plain text file that is translated by the <strong>makesourcedb</strong> tool into a form that BBS can use. (Internally, the script converts the catalog file to a sourcedb by running <strong>makesourcedb</strong> on it, before starting BBS.)</p>
+<p>A sky model can be created by hand using a text editor. Using tools like <strong>awk</strong> and <strong>sed</strong>, it is relatively straight-forward to convert existing text based catalogs into <strong>makesourcedb</strong> format. Various catalog files created by commissioners have been collected at <a class="reference external" href="https://github.com/lofar-astron/LOFAR-Cookbook">https://github.com/lofar-astron/LOFAR-Cookbook</a>.</p>
+<p>Alternatively, a catalog file in <strong>makesourcedb</strong> format can be created using the <strong>gsm.py</strong> tool. This tool extracts sources in a cone of a given radius around a given position on the sky from the <em>Global Sky Model</em> or GSM. The GSM contains all the sources from the VLSS, NVSS, and WENSS survey catalogs. See Section~ref{bbs:gsm} for more information about the GSM and <strong>gsm.py</strong>.</p>
+<p>Below is an example catalog file for 3C196. In this example, 3C196 is modelled as a point source with a flux of 153 Jy and a spectral index of -0.56 with a curvature of -0.05212 at a reference frequency of 55.468 MHz.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># (Name,Type,Ra,Dec,I, ReferenceFrequency=&#39;55.468e6&#39;, SpectralIndex) = format</span>
+<span class="mi">3</span><span class="n">C196</span><span class="p">,</span> <span class="n">POINT</span><span class="p">,</span> <span class="mi">08</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mf">36.062300</span><span class="p">,</span> <span class="o">+</span><span class="mf">48.13</span><span class="o">.</span><span class="mf">02.24900</span><span class="p">,</span> <span class="mf">153.0</span><span class="p">,</span> <span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.56</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.05212</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Another example catalog file describes a model for Cygnus~A. It is modelled as two point sources that represent the Eastern and the Western lobe respectively, with a flux ratio of 1:1.25.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># (Name, Type, Ra, Dec, I) = format</span>
+<span class="n">CygA</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="n">POINT</span><span class="p">,</span> <span class="mi">19</span><span class="p">:</span><span class="mi">59</span><span class="p">:</span><span class="mf">31.60000</span><span class="p">,</span> <span class="o">+</span><span class="mf">40.43</span><span class="o">.</span><span class="mf">48.3000</span><span class="p">,</span> <span class="mf">1.25</span>
+<span class="n">CygA</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">POINT</span><span class="p">,</span> <span class="mi">19</span><span class="p">:</span><span class="mi">59</span><span class="p">:</span><span class="mf">25.00000</span><span class="p">,</span> <span class="o">+</span><span class="mf">40.44</span><span class="o">.</span><span class="mf">15.7000</span><span class="p">,</span> <span class="mf">1.0</span>
+</pre></div>
+</div>
+<p>For each source, values should be specified for the fields listed in the header line, in the same order. The only mandatory fields are: <strong>Name</strong>, <strong>Type</strong>, <strong>Ra</strong>, and <strong>Dec</strong>. The declination separators have to be dots, not colons, unless you want the declination to be interpreted as hours (i.e., multiplied by a factor 15).</p>
+<p>If a field is left blank (e.g. the <strong>ReferenceFrequency</strong> in the 3C196 example above), the default value specified in the header line is used. If this is not available, then the application defined default value is used instead.</p>
+<p>When a catalog contains sources defined by shapelets as well as point sources or Gaussian sources, it is easiest to create two catalog files (one containing the shapelet sources and one containing the rest). Using the <strong>append</strong> option of the <strong>makesourcedb</strong> tool, a single sourcedb containing all the sources can then be created and fed to the <strong>calibrate-stand-alone</strong> script using the <strong>sourcedb</strong> option.</p>
+<p>For more information about the recognized fields, default values, and units, please refer to the <strong>makesourcedb</strong> documentation on the <a class="reference external" href="http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:makesourcedb">LOFAR wiki</a>.</p>
+<div class="section" id="gaussian-sources">
+<h3>Gaussian sources<a class="headerlink" href="#gaussian-sources" title="Permalink to this headline">¶</a></h3>
+<p>A Gaussian source can be specified as follows.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># (Name, Type, Ra, Dec, I, Q, U, V, ReferenceFrequency=&#39;60e6&#39;, SpectralIndex=&#39;[0.0]&#39;, MajorAxis, MinorAxis, Orientation) = format</span>
+<span class="n">sim_gauss</span><span class="p">,</span> <span class="n">GAUSSIAN</span><span class="p">,</span> <span class="mi">14</span><span class="p">:</span><span class="mi">31</span><span class="p">:</span><span class="mf">49.62</span><span class="p">,</span><span class="o">+</span><span class="mf">13.31</span><span class="o">.</span><span class="mf">59.10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,,,,,[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">],</span> <span class="mf">96.3</span><span class="p">,</span> <span class="mf">58.3</span><span class="p">,</span> <span class="mf">62.6</span>
+</pre></div>
+</div>
+<p>Note that the header line beginning with “<strong># (Name, …</strong>” must be a single line, and has been spread over multiple lines here for clarity (indicated by a backslash). There is a known issue about the definition of the <strong>Orientation</strong>: it’s defined relative to the north of some image and not relative to ‘true’ north. This is only relevant if the Gaussian is not symmetric, i.e. the major axis and minor axis differ, and you are transferring a Gaussian model component to another pointing over a large angular distance.</p>
+</div>
+<div class="section" id="spectral-index">
+<h3>Spectral index<a class="headerlink" href="#spectral-index" title="Permalink to this headline">¶</a></h3>
+<p>The spectral index used in the source catalog file is defined as follows:</p>
+<div class="math">
+\[{\rm \log}_{10}(S) = {\rm \log}_{10}(S_{0}) + c_{0} {\rm \log}_{10}\left(\frac{\nu}{\nu_{0}}\right) + c_{1}\left[{\rm \log}_{10}\left(\frac{\nu}{\nu_{0}}\right)\right]^{2} + \ldots + c_{n}\left[{\rm \log}_{10}\left(\frac{\nu}{\nu_{0}}\right)\right]^{n+1}\]</div>
+<p>with <span class="math">\(\nu_{0}\)</span> being the reference frequency specified in the <strong>ReferenceFrequency</strong> field, <span class="math">\(c_{0}\)</span> the spectral index, <span class="math">\(c_{1}\)</span> the curvature, and <span class="math">\(c_{2}, \ldots, c_{n}\)</span> the higher order curvature terms. The <strong>SpectralIndex</strong> field should contain a list of coefficients <span class="math">\([c_{0}, \ldots, c_{n}]\)</span>.</p>
+</div>
+<div class="section" id="rotation-measure">
+<h3>Rotation measure<a class="headerlink" href="#rotation-measure" title="Permalink to this headline">¶</a></h3>
+<p>For polarized sources, Stokes <span class="math">\(Q\)</span> and <span class="math">\(U\)</span> fluxes can be specified explicitly, or implicitly by specifying the intrinsic rotation measure <span class="math">\(RM\)</span>, the polarization angle <span class="math">\(\chi_{0}\)</span> at <span class="math">\(\lambda = 0\)</span>, and the polarized fraction <span class="math">\(p\)</span>.</p>
+<p>In the latter case, Stokes <span class="math">\(Q\)</span> and <span class="math">\(U\)</span> fluxes at a wavelength <span class="math">\(\lambda\)</span> are computed as:</p>
+<div class="math">
+\begin{eqnarray}
+Q(\lambda) &amp;=&amp; p \; I(\lambda) \; \cos(2\chi(\lambda)) \\
+
+U(\lambda) &amp;=&amp; p \; I(\lambda) \; \sin(2\chi(\lambda)) \\
+
+\chi(\lambda) &amp;=&amp; \chi_{0} + RM \; \lambda^{2}
+\end{eqnarray}</div><p>Here, <span class="math">\(I(\lambda)\)</span> is the total intensity at wavelength <span class="math">\(\lambda\)</span>, which depends on the spectral index of the source.</p>
+<p>The intrinsic rotation measure of a source can be specified by means of the field <strong>RotationMeasure</strong>. The polarization angle <span class="math">\(\chi_{0}\)</span> at <span class="math">\(\lambda = 0\)</span> and the polarized fraction <span class="math">\(p\)</span> can be specified in two ways:</p>
+<ul class="simple">
+<li>Explicitly by means of the fields <strong>PolarizationAngle</strong> and <strong>PolarizedFraction</strong>.</li>
+<li>Implicitly, by means of the fields <strong>Q</strong>, <strong>U</strong>, and <strong>ReferenceWavelength</strong>.</li>
+</ul>
+<p>When specifying <span class="math">\(Q\)</span> and <span class="math">\(U\)</span> at a reference wavelength <span class="math">\(\lambda_{0}\)</span>, the polarization angle <span class="math">\(\chi_{0}\)</span> at <span class="math">\(\lambda = 0\)</span>, and the polarized fraction <span class="math">\(p\)</span> will be computed as:</p>
+<div class="math">
+\begin{eqnarray}
+\chi_{0} &amp;=&amp; \frac{1}{2}\tan^{-1}(\frac{U}{Q}) - \lambda_{0}^2 \; RM \\
+
+p &amp;=&amp; \frac{\sqrt{(Q^{2} + U^{2})}}{I(\lambda_{0})}
+\end{eqnarray}</div><p>Here, <span class="math">\(I(\lambda_{0})\)</span> is the total intensity at reference wavelength <span class="math">\(\lambda_{0}\)</span>, which depends on the spectral index of the source. Note that the reference wavelength <span class="math">\(\lambda_{0}\)</span> must be <span class="math">\(&gt;0\)</span> if the source has a spectral index.</p>
+</div>
+</div>
+<div class="section" id="gsm">
+<h2>GSM <a class="footnote-reference" href="#f2" id="id2">[2]</a><a class="headerlink" href="#gsm" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>Global Sky Model</strong> or GSM is a database that contains the reported source properties from the VLSS, WENSS and NVSS surveys. The <strong>gsm.py</strong> script can be used to create a catalog file in <strong>makesourcedb</strong> format (see Section~ref{bbs:source-catalog}) from the information available in the GSM. As such, the <strong>gsm.py</strong> script serves as the interface between the GSM and BBS.</p>
+<p>A catalog file created by <strong>gsm.py</strong> contains the VLSS sources that are in the field of view. For every VLSS source, counterparts in the other catalogs are searched and associated depending on criteria described below. Spectral index and higher-order terms are fitted according to equation~ref{eqSI} in Section~ref{bbs:spectral-index}.</p>
+<p>On CEP, there is a GSM database instance and is loaded with all the sources and their reported properties from the VLSS, WENSS and NVSS surveys. The WENSS survey is actually split up into two catalogs according to their frequencies: A main (<span class="math">\(\delta \leq 75.8\)</span>, <span class="math">\(\nu=325\)</span> MHz) and a polar (<span class="math">\(\delta \geq 74.5\)</span>, <span class="math">\(\nu=352\)</span> MHz) part. The VLSS and NVSS surveys are taken at 73.8 MHz and 1400 MHz, respectively.</p>
+<p>The python wrapper script <strong>gsm.py</strong> can be used to generate a catalog file in <strong>makesourcedb</strong> format and can be run as:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">gsm</span><span class="o">.</span><span class="n">py</span> <span class="n">outfile</span> <span class="n">RA</span> <span class="n">DEC</span> <span class="n">radius</span> <span class="p">[</span><span class="n">vlssFluxCutoff</span> <span class="p">[</span><span class="n">assocTheta</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>The input arguments are explained in Table~ref{tab:gsm_params}. The arguments RA and DEC can be copy-pasted from the output of ‘msoverview’ to select the pointing of your observation. A sensible value for <strong>radius</strong> is, 5 degrees.</p>
+<p>INSERT PARAMETERS TABLE HERE</p>
+<p>The <strong>gsm.py</strong> script calls the function <strong>expected_fluxes_in_fov()</strong> in <strong>gsmutils.py</strong> that does the actual work. It makes a connection to the GSM database and selects all the VLSS sources that fulfill the criteria. The area around every found VLSS source (out to radius <strong>assocTheta</strong>) is searched for candidate counterparts in the other surveys. The dimensionless distance association parameter, <span class="math">\(\rho_{i,\star}\)</span>, is used to quantify the association of VLSS source-candidate counterpart further. It weights the positional differences by the postion errors of the pair and follows a Rayleigh distribution (De Ruiter et al., 1977). A value of <span class="math">\(3.717\)</span> corresponds to an acceptance of missing 0.1% genuine source associations (Scheers, 2011). The dimensionless radius is not an input argument to <strong>gsm.py</strong>, but it is to the above mentioned function. For completeness, we give its definition below:</p>
+<div class="math">
+\[\rho_{i,\star} \equiv \sqrt{ \frac{(\alpha_i \cos \delta_i - \alpha^{\star} \cos \delta^{\star})^2}{\sigma^2_{\alpha_i} + \sigma^2_{\alpha^{\star}}} + \frac{(\delta_i -\delta^{\star})^2}{\sigma^2_{\delta_i} + \sigma^2_{\delta^{\star}}}}.\]</div>
+<p>Here the sub- and superscripts <span class="math">\(\star\)</span> refers to the VLSS source and <span class="math">\(i\)</span> to its <strong>candidate</strong> counterpart in one of the other surveys.</p>
+<p>After being associated (or not), the corresponding fluxes and frequencies are used to fit the spectral-index and higher-order terms according to equation~ref{eqSI} in Section~ref{bbs:source-catalog}. Therefore, we use the python <strong>numpy.poly1d()</strong> functions. If no counterparts were found a default spectral index of <span class="math">\(-0.7\)</span> is assumed.</p>
+<p>Another optional argument when calling the function <strong>expected_fluxes_in_fov()</strong> in <strong>gsmutils.py</strong> is the boolean <strong>storespectraplots</strong>. When true and not performance driven, this will plot all the spectra of the sources in the catalog file, named by their VLSS name.</p>
+<div class="section" id="special-cases">
+<h3>Special cases<a class="headerlink" href="#special-cases" title="Permalink to this headline">¶</a></h3>
+<p>There might be cases that a VLSS source has more than one WENSS counterpart. This might occur when the mutiple subcomponents of a multicomponent WENSS source are associated to the VLSS source. WENSS sources that are flagged as a subcomponent (<strong>‘C’</strong>) are omitted in the inclusion. Only single component WENSS sources (<strong>‘S’</strong>) and multicomponent WENSS sources (<strong>‘M’</strong>) are included in the counterpart search.</p>
+</div>
+<div class="section" id="instrument-tables">
+<h3>Instrument tables<a class="headerlink" href="#instrument-tables" title="Permalink to this headline">¶</a></h3>
+<p>When calibrating, we try to estimate parameters in the measurement equation. The values of these model parameters are stored in a so-called “parmdb” (table). Usually, this parmdb is stored inside a measurement set and is called <strong>instrument</strong>. To inspect or create a parmdb, use the command <a class="reference external" href="http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:parmdbm">**parmdb**</a>. To view the contents of a parmdb, use the tool <strong>parmdbplot.py</strong> (section ref{bbs:inspect-solutions}).</p>
+<p>A parmdb can contain two sorts of parameters: normal parameters that are both time and frequency dependent, and <strong>default parameters</strong> that are neither frequency nor time dependent. The default parameters can be used as fallback if a model parameter is not known, but they can also be used in some schemes for transferring solutions, see section ref{bbs:gain-transfer}.</p>
+<p>Before even starting the actual BBS, there need to be values in the parmdb, because they are used as starting values by BBS <a class="footnote-reference" href="#f3" id="id3">[3]</a>. For gains (<strong>Gain</strong> and <strong>DirectionalGain</strong>), the default starting value of <span class="math">\(0\)</span> is not adequate. For this reason, the <strong>calibrate-stand-alone</strong> script implicitly creates a default parmdb that contains initial values of <span class="math">\(1\)</span> for these parameters.</p>
+<p>Please note that if you create your own parmdb, you will almost always want to include the default <strong>adddef</strong> commands listed below to set the correct defaults for <strong>Gain</strong>, <strong>DirectionalGain</strong>. Otherwise, estimating these parameters will not work correctly. The default parameters are automatically created if you use <strong>calibrate-stand-alone</strong> with the option <strong>-f</strong> or <strong>–replace-parmdb</strong>. To set default values in a parmdb manually, use the following commands in <a class="reference external" href="http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:parmdbm">**parmdbm**</a>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">adddef</span> <span class="n">Gain</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="n">Ampl</span>  <span class="n">values</span><span class="o">=</span><span class="mf">1.0</span>
+<span class="n">adddef</span> <span class="n">Gain</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="n">Ampl</span>  <span class="n">values</span><span class="o">=</span><span class="mf">1.0</span>
+<span class="n">adddef</span> <span class="n">Gain</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="n">Real</span>  <span class="n">values</span><span class="o">=</span><span class="mf">1.0</span>
+<span class="n">adddef</span> <span class="n">Gain</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="n">Real</span>  <span class="n">values</span><span class="o">=</span><span class="mf">1.0</span>
+<span class="n">adddef</span> <span class="n">DirectionalGain</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="n">Ampl</span>  <span class="n">values</span><span class="o">=</span><span class="mf">1.0</span>
+<span class="n">adddef</span> <span class="n">DirectionalGain</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="n">Ampl</span>  <span class="n">values</span><span class="o">=</span><span class="mf">1.0</span>
+<span class="n">adddef</span> <span class="n">DirectionalGain</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="n">Real</span>  <span class="n">values</span><span class="o">=</span><span class="mf">1.0</span>
+<span class="n">adddef</span> <span class="n">DirectionalGain</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="n">Real</span>  <span class="n">values</span><span class="o">=</span><span class="mf">1.0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="model">
+<h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
+<p>As already mentioned, BBS consists of two parts: a part to solve equations and a part to simulation of visibilities given a sky model. This section is about the latter. BBS uses the measurement equation, which is an equation that describes all effects that happen to the signal that was sent by the sky, before they are captured in your data. All these effects are Jones matrices: <span class="math">\(2\times 2\)</span> matrices that work on the two components (the two polarizations) of your data. An important thing to note is that these Jones matrices do not commute: the order in which they are matters.</p>
+<p>The most commonly used effects that BBS can handle are given in Table~ref{bbs:effecttable}, in the order that they are applied (from sky to antenna). The direction dependent effects are different for each <strong>patch</strong> you specify in your source model.</p>
+<p>INSERT BBS TABLE HERE</p>
+<p>The two most commonly used effects, Gain and DirectionalGain, have only one option: <strong>Phasors</strong>. When set to <strong>True</strong> (or <strong>T</strong>), the gains are expressed like <span class="math">\(A\cdot e^{i\phi}\)</span>, otherwise they are specified in the form <span class="math">\(a + b\cdot i\)</span>. While mathematically equivalent, this does make a difference because the solver in BBS solves for real variables. When you are solving for phases or amplitudes only, it is necessary to specify <strong>Phasors = True</strong>. Specify this like</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Model</span><span class="o">.</span><span class="n">Gain</span><span class="o">.</span><span class="n">Phasors</span> <span class="o">=</span> <span class="n">T</span>
+</pre></div>
+</div>
+<p>For configuration of the beam model that is used, see Section~ref{bbs:beammodel}.</p>
+<div class="section" id="beam-model">
+<h3>Beam model<a class="headerlink" href="#beam-model" title="Permalink to this headline">¶</a></h3>
+<p>The beam model tries to emulate all kinds of distortions to the signal that are caused by the beam of the station. These effects are split into two parts: the <strong>element beam</strong>, which is the response of a single dipole, and the <strong>array factor</strong>, which emulates the effect of combining the signal of the many dipoles in a station. In HBA, the array factor model also models the effect of the analogue tile beam former.</p>
+<p>To have a look at different elements of the beam, you can specifically use only the element beam or only the array factor (if you don’t know the details, you need both the element beam and the array factor, which is the default). The options are</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Model</span><span class="o">.</span><span class="n">Beam</span><span class="o">.</span><span class="n">Mode</span> <span class="o">=</span> <span class="n">ELEMENT</span>       <span class="c1"># only element beam</span>
+<span class="n">Model</span><span class="o">.</span><span class="n">Beam</span><span class="o">.</span><span class="n">Mode</span> <span class="o">=</span> <span class="n">ARRAY_FACTOR</span>  <span class="c1"># only array factor</span>
+<span class="n">Model</span><span class="o">.</span><span class="n">Beam</span><span class="o">.</span><span class="n">Mode</span> <span class="o">=</span> <span class="n">DEFAULT</span>       <span class="c1"># both element beam and array factor (default)</span>
+</pre></div>
+</div>
+<p>The tile beam former in the HBA tiles forms a beam for a certain reference frequency. When modeling this beam, the beam model should of course do this for the same frequency. Usually, this works automatically: the reference frequency is stored in the measurement set. Things are different when you compress a number of subbands as channels into one measurement set (usually done with DPPP).  Then each ‘channel’ was beamformed at a different reference frequency. In this case, the reference frequency is only right for one of the ‘channels’. To handle this case well, there is an option that tells the beam model to use the channel frequency (which is usually the center frequency of the compressed subband). This option is</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Step</span><span class="o">.</span><span class="n">Solve</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">Beam</span><span class="o">.</span><span class="n">UseChannelFreq</span> <span class="o">=</span> <span class="n">T</span>
+</pre></div>
+</div>
+<p>Note that the beam model is a direction dependent effect like any other in BBS. That means that over a patch, the beam is assumed to be constant (it is evaluated at the centroid of the patch). This may change in the future.</p>
+</div>
+</div>
+<div class="section" id="solver">
+<h2>Solver<a class="headerlink" href="#solver" title="Permalink to this headline">¶</a></h2>
+<p>BBS performs parameter estimation on the measurement equation to find parameters that best match the observed visibilities. To improve signal to noise, one can assume that the parameters are constant for a number of time samples or a number of frequencies. In this way, there are more measurements available to estimate the same parameter. To specify these, use <strong>Step.&lt;name&gt;.Solve.CellSize.Time</strong> and <strong>Step.&lt;name&gt;.Solve.CellSize.Freq</strong>. The unit of <strong>CellSize.Time</strong> is number of time slots, so <strong>CellSize.Time=1</strong> corresponds to the correlator integration time. If <strong>CellSize.Time=0</strong>, one solution is calculated for the entire scan.</p>
+<p>The underlying solver is a Levenberg-Marquardt solver. Several parameters exist to this solver, however the defaults should be fine.</p>
+</div>
+<div class="section" id="example-reductions">
+<h2>Example reductions<a class="headerlink" href="#example-reductions" title="Permalink to this headline">¶</a></h2>
+<p>The sequence of operations that BBS will perform on the data are defined in a configuration or <strong>parset</strong> file <a class="footnote-reference" href="#f4" id="id4">[4]</a>. The BBS documentation on the LOFAR wiki documents all the options (see the <a class="reference external" href="http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:bbs">LOFAR wiki</a>), and it is highly recommended that you obtain a hard-copy of this for future reference.</p>
+<p>A BBS parset file consists of two sections: The <strong>Strategy</strong> section, which defines the operations (or <strong>steps</strong>) to be carried out, and the <strong>Step</strong> section, which defines the details of each step. The following sections describe a few typical reductions along with the corresponding parset.</p>
+<p>The parsets shown in the following sections are intentionally verbose. Often, default settings have been included for clarity. For example, the default input column is <strong>DATA</strong>. The line <strong>Strategy.InputColumn = DATA</strong> is therefore redundant and can be left out.</p>
+<div class="section" id="simulation">
+<h3>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h3>
+<p>Given a source catalog and (optionally) a table of model parameters, BBS can be used to compute simulated <em>uv</em>-data (without noise) <a class="footnote-reference" href="#f5" id="id6">[5]</a>. Simulated data can sometimes be useful as a debugging aid. Imaging simulated data can provide an impression of what you would expect to see with an ideal telescope under ideal conditions and without noise. Comparing observed data to simulated data can provide useful clues, although in practice this is limited to cases where the signal to noise ratio of the observed data is high.</p>
+<p>Simulated data produced by BBS (or any other software package) can also be used as model data during calibration using the same parset syntax as described in Section~ref{bbs:precomputed-visibilities}.</p>
+<p>An example parset file <a class="footnote-reference" href="#f6" id="id7">[6]</a> to simulate {it uv}-data for all the sources in the source catalog is shown below.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># simulation.parset</span>
+<span class="n">Strategy</span><span class="o">.</span><span class="n">InputColumn</span> <span class="o">=</span> <span class="n">DATA</span>
+<span class="n">Strategy</span><span class="o">.</span><span class="n">TimeRange</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">Strategy</span><span class="o">.</span><span class="n">Baselines</span> <span class="o">=</span> <span class="o">*&amp;</span>
+<span class="n">Strategy</span><span class="o">.</span><span class="n">ChunkSize</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">Strategy</span><span class="o">.</span><span class="n">Steps</span> <span class="o">=</span> <span class="p">[</span><span class="n">predict</span><span class="p">]</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">predict</span><span class="o">.</span><span class="n">Operation</span> <span class="o">=</span> <span class="n">PREDICT</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">predict</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">Sources</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">predict</span><span class="o">.</span><span class="n">Output</span><span class="o">.</span><span class="n">Column</span> <span class="o">=</span> <span class="n">MODEL_DATA</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="gain-calibration-direction-independent">
+<h3>Gain calibration (direction-independent)<a class="headerlink" href="#gain-calibration-direction-independent" title="Permalink to this headline">¶</a></h3>
+<p>The following parset <a class="footnote-reference" href="#f7" id="id8">[7]</a> describes a direction independent gain calibration. The meaning of each parameter is the same as in Section~ref{bbs:simulation} unless otherwise stated. Enabling / disabling of model components can be either done by a short-hand <strong>T</strong> and <strong>F</strong> which is equivalent to explicit <strong>True</strong> and <strong>False</strong>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># uv-plane-cal.parset</span>
+<span class="n">Strategy</span><span class="o">.</span><span class="n">InputColumn</span> <span class="o">=</span> <span class="n">DATA</span>
+<span class="n">Strategy</span><span class="o">.</span><span class="n">TimeRange</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">Strategy</span><span class="o">.</span><span class="n">Baselines</span> <span class="o">=</span> <span class="o">*&amp;</span>
+<span class="n">Strategy</span><span class="o">.</span><span class="n">ChunkSize</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">Strategy</span><span class="o">.</span><span class="n">Steps</span> <span class="o">=</span> <span class="p">[</span><span class="n">solve</span><span class="p">,</span> <span class="n">correct</span><span class="p">]</span>
+
+<span class="n">Step</span><span class="o">.</span><span class="n">solve</span><span class="o">.</span><span class="n">Operation</span> <span class="o">=</span> <span class="n">SOLVE</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">solve</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">Sources</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="n">C196</span><span class="p">]</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">solve</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">Gain</span><span class="o">.</span><span class="n">Enable</span> <span class="o">=</span> <span class="n">T</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">solve</span><span class="o">.</span><span class="n">Solve</span><span class="o">.</span><span class="n">Parms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Gain:0:0:*&quot;</span><span class="p">,</span> <span class="s2">&quot;Gain:1:1:*&quot;</span><span class="p">]</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">solve</span><span class="o">.</span><span class="n">Solve</span><span class="o">.</span><span class="n">CellSize</span><span class="o">.</span><span class="n">Freq</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">solve</span><span class="o">.</span><span class="n">Solve</span><span class="o">.</span><span class="n">CellSize</span><span class="o">.</span><span class="n">Time</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1">#Step.solve.Model.Beam.Enable = True  &lt;-uncomment if you want to apply the beam</span>
+
+<span class="n">Step</span><span class="o">.</span><span class="n">correct</span><span class="o">.</span><span class="n">Operation</span> <span class="o">=</span> <span class="n">CORRECT</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">correct</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">Gain</span><span class="o">.</span><span class="n">Enable</span> <span class="o">=</span> <span class="n">T</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">correct</span><span class="o">.</span><span class="n">Output</span><span class="o">.</span><span class="n">Column</span> <span class="o">=</span> <span class="n">CORRECTED_DATA</span>
+<span class="c1">#Step.correct.Model.Beam.Enable = True &lt;-uncomment if you want to apply the beam</span>
+</pre></div>
+</div>
+<p>The CORRECT step performs a correction of the <em>uv</em>-data for a particular direction. This can be done for exactly <strong>one</strong> source from the skymodel. If <strong>Model.Sources</strong> contains multiple sources, BBS will throw an exception, because it cannot correct for more than one direction at a time.</p>
+<p>BBS also accepts an empty source list in the CORRECT step. In that case it will correct for the phase center direction of the MS. This does then, of course, not include direction dependent effects such as <strong>DirectionalGain</strong>, <strong>DirectionalTEC</strong>, et cetera, which are inherently bound to a patch name and therefore can only be corrected for if a patch name is specified. This implicit behaviour must be kept in mind when correcting your data.</p>
+<p>Note that a CORRECT step cannot be “undone”. If a CORRECTED_DATA column is used for further calibration later on, one has to be aware of the consequences. For example, if in the first correct the beam was enabled, this prevents proper use of the beam in the following steps <a class="footnote-reference" href="#f8" id="id9">[8]</a>.</p>
+</div>
+<div class="section" id="gain-calibration-direction-dependent-with-source-subtraction">
+<h3>Gain calibration (direction-dependent) with source subtraction<a class="headerlink" href="#gain-calibration-direction-dependent-with-source-subtraction" title="Permalink to this headline">¶</a></h3>
+<p>This section has been adapted from a document written by <a class="reference external" href="mailto:annalisa&#46;bonafede&#37;&#52;&#48;hs&#46;uni-hamburg&#46;de">Annalisa Bonafede</a>. In the following, we report the parset <a class="footnote-reference" href="#f9" id="id10">[9]</a> file and skymodel used for the subtraction of Cas A and Cyg A from the observation of the radio source 3C380.</p>
+<p>The parset includes the following steps:</p>
+<ul>
+<li><p class="first">Solve for the gain in the direction of each source in the source catalog.</p>
+</li>
+<li><p class="first">Subtract the sources CygA.E, CygA.W, and CasA, each with their own individual gain.</p>
+</li>
+<li><p class="first">Correct the data for the gain in the direction of 3C380 (the target).</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># image-plane-cal.parset</span>
+<span class="c1">#</span>
+
+<span class="n">Strategy</span><span class="o">.</span><span class="n">ChunkSize</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">Strategy</span><span class="o">.</span><span class="n">Steps</span> <span class="o">=</span> <span class="p">[</span><span class="n">solve</span><span class="p">,</span> <span class="n">subtract</span><span class="p">,</span> <span class="n">correct</span><span class="p">]</span>
+
+<span class="n">Step</span><span class="o">.</span><span class="n">solve</span><span class="o">.</span><span class="n">Operation</span> <span class="o">=</span> <span class="n">SOLVE</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">solve</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">DirectionalGain</span><span class="o">.</span><span class="n">Enable</span> <span class="o">=</span> <span class="n">T</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">solve</span><span class="o">.</span><span class="n">Solve</span><span class="o">.</span><span class="n">Parms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;DirectionalGain:0:0:*&quot;</span><span class="p">,</span><span class="s2">&quot;DirectionalGain:1:1:*&quot;</span><span class="p">]</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">solve</span><span class="o">.</span><span class="n">Solve</span><span class="o">.</span><span class="n">CellSize</span><span class="o">.</span><span class="n">Freq</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">solve</span><span class="o">.</span><span class="n">Solve</span><span class="o">.</span><span class="n">CellSize</span><span class="o">.</span><span class="n">Time</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">Step</span><span class="o">.</span><span class="n">subtract</span><span class="o">.</span><span class="n">Operation</span> <span class="o">=</span> <span class="n">SUBTRACT</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">subtract</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">Sources</span> <span class="o">=</span> <span class="p">[</span><span class="n">CygA</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="n">CygA</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">CasA</span><span class="p">]</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">subtract</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">DirectionalGain</span><span class="o">.</span><span class="n">Enable</span> <span class="o">=</span> <span class="n">T</span>
+
+<span class="n">Step</span><span class="o">.</span><span class="n">correct</span><span class="o">.</span><span class="n">Operation</span> <span class="o">=</span> <span class="n">CORRECT</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">correct</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">Sources</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="n">C380</span><span class="p">]</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">correct</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">DirectionalGain</span><span class="o">.</span><span class="n">Enable</span> <span class="o">=</span> <span class="n">T</span>
+<span class="n">Step</span><span class="o">.</span><span class="n">correct</span><span class="o">.</span><span class="n">Output</span><span class="o">.</span><span class="n">Column</span> <span class="o">=</span> <span class="n">CORRECTED_DATA</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>The source catalog used for calibration is reported below <a class="footnote-reference" href="#f10" id="id11">[10]</a></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">############################################################</span>
+<span class="c1"># 3C380-bbs.skymodel</span>
+<span class="c1"># (Name, Type, Ra, Dec, I, ReferenceFrequency, SpectralIndex) = format</span>
+
+<span class="n">CygA</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="n">POINT</span><span class="p">,</span> <span class="mi">19</span><span class="p">:</span><span class="mi">59</span><span class="p">:</span><span class="mf">29.99</span><span class="p">,</span> <span class="o">+</span><span class="mf">40.43</span><span class="o">.</span><span class="mf">57.53</span><span class="p">,</span> <span class="mi">4421</span><span class="p">,</span> <span class="mf">73.8e6</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">]</span>
+<span class="n">CygA</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">POINT</span><span class="p">,</span> <span class="mi">19</span><span class="p">:</span><span class="mi">59</span><span class="p">:</span><span class="mf">23.23</span><span class="p">,</span> <span class="o">+</span><span class="mf">40.44</span><span class="o">.</span><span class="mf">23.03</span><span class="p">,</span> <span class="mi">2998</span><span class="p">,</span> <span class="mf">73.8e6</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">]</span>
+<span class="n">CasA</span><span class="p">,</span> <span class="n">POINT</span><span class="p">,</span> <span class="mi">23</span><span class="p">:</span><span class="mi">23</span><span class="p">:</span><span class="mf">24.0</span><span class="p">,</span> <span class="o">+</span><span class="mf">58.48</span><span class="o">.</span><span class="mf">54.0</span><span class="p">,</span> <span class="mi">20000</span>
+<span class="mi">3</span><span class="n">C380</span><span class="p">,</span> <span class="n">POINT</span><span class="p">,</span> <span class="mi">18</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="mf">31.8</span><span class="p">,</span> <span class="o">+</span><span class="mf">48.44</span><span class="o">.</span><span class="mf">46.0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">178.e6</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The flux of 3C380 has been set to the arbitrary value of 1 Jy. Its spectral index has been roughly estimated by comparing VLSS and 3C flux. The subtraction can also be performed without specifying the correct flux of the sources and determining the flux of the target source with self calibration.</p>
+<p>The resulting image in shown in Figure~ref{3C380_comparison}, compared to the map obtained without subtraction.</p>
+<p>INSERT FIGURE HERE</p>
+</div>
+</div>
+<div class="section" id="tweaking-bbs-to-run-faster">
+<h2>Tweaking BBS to run faster<a class="headerlink" href="#tweaking-bbs-to-run-faster" title="Permalink to this headline">¶</a></h2>
+<p>BBS can take a long time to calibrate your huge dataset. Luckily, there are some ways to tune it. You have to know a bit about how BBS works to do this.</p>
+<p>BBS views the data as a grid of time slots times vs channels (see Figure~ref{bbs:solve_domains}). A solution cell is defined as the number of timeslots times the number of channels on which a constant parameter solution is computed. For example, if you specify <strong>CellSize.Freq = 1</strong>, a different solution is computed for every channel independently. In Figure~ref{bbs:solve_domains}, the solution cells are outlined with blue lines.</p>
+<p>Because the evaluation of the model is computationally expensive, and a lot of intermediate results can be reused, the model is evaluated for a number of cells simultaneously. There is a trade-off here: if one cell would converge to a solution very slowly, the model is evaluated for all the cells in the cell chunk, even the ones that have converged. The number of cells in a cell chunk is specified by <strong>CellChunkSize</strong>, which specifies the number of solution cells in the time direction. Dependent on the amount of frequency cells, a value of <strong>CellChunkSize = 10 – 25</strong> could be good.</p>
+<p>First, BBS loads a lot of timeslots into memory. The amount of timeslots is specified by <strong>ChunkSize</strong>. If you specify <strong>ChunkSize = 0</strong> then the whole MS will be read into memory, which will obviously not work if your data is 80 Gb large. Depending on the number of baselines and channels, usually 100 is a good choice. Monitor the amount of memory that is used (for example by running <strong>top</strong>) to see if you’re good. The <strong>ChunkSize</strong> should be an integer multiple of <strong>CellSize.Time</strong> <span class="math">\(\times\)</span> <strong>CellChunkSize</strong>, so that in every chunk the same number of cell chunks are handled and all cell chunks have the same size.</p>
+<p>INSERT SOLVE FIGURE</p>
+<div class="section" id="multithreading">
+<h3>Multithreading<a class="headerlink" href="#multithreading" title="Permalink to this headline">¶</a></h3>
+<p>BBS can do a bit of multithreading. Be warned in advance that if you use <span class="math">\(N\)</span> threads, BBS will most likely not run <span class="math">\(N\)</span> times faster. Again, a bit of tweaking may be necessary.</p>
+<p>The multithreading is done on solve part, not on the model building part. So it works only on problems that are ‘solve-dominated’. The multithreading is performed over the solution cells. For this to give any speedup, there need to be at least as many solution cells as the number of threads. You usually get a decent speed-up if the number of solution cells is about 5–6 times the number of threads. So if you solve over all frequencies (the number of frequency cells is 1), <strong>CellChunkSize = 5 :math:`times` nThreads</strong> should give you some speedup.</p>
+<p>You can instruct <strong>calibrate-stand-alone</strong> <a class="footnote-reference" href="#f11" id="id12">[11]</a> to run with multithreading with the parameter <strong>-t</strong> or <strong>–numthreads</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">calibrate</span><span class="o">-</span><span class="n">stand</span><span class="o">-</span><span class="n">alone</span> <span class="o">--</span><span class="n">numthreads</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="n">MS</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">parset</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">source</span> <span class="n">catalog</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="global-parameter-estimation">
+<h2>Global parameter estimation<a class="headerlink" href="#global-parameter-estimation" title="Permalink to this headline">¶</a></h2>
+<p>BBS was designed to run on a compute cluster, calibrating across multiple subbands which reside on separate compute nodes. BBS consists of three separate executables: <strong>bbs-controller</strong>, <strong>bbs-reducer</strong>, and <strong>bbs-shared-estimator</strong>. The <strong>bbs-controller</strong> process monitors and controls a set of <strong>bbs-reducer</strong> processes, and possibly one or more <strong>bbs-shared-estimator</strong> processes. Each <em>subband</em> is processed by a separate <strong>bbs-reducer</strong> process. When working with <strong>calibrate-stand-alone</strong>, the script actually launches one <strong>bbs-reducer</strong> for you. To setup a calibration across subbands, the script <strong>calibrate</strong> can be used, which sets up the appropriate processes on different nodes.</p>
+<p>Each <strong>bbs-reducer</strong> process computes a set of equations and sends this to the <strong>bbs-shared-estimator</strong> process assigned to the group it is part of. The <strong>bbs-shared-estimator</strong> process merges the set of equations with the sets of equations it receives from the other <strong>bbs-reducer</strong> processes in the group. Once it has received a set of equations from all the <strong>bbs-reducer</strong> in its group, the <strong>bbs-shared-estimator</strong> process computes a new estimate of the model parameters. This is sent back to all <strong>bbs-reducer</strong> processes in the group and the whole process repeats itself until convergence is reached.</p>
+<div class="section" id="setting-up-your-environment">
+<h3>Setting up your environment<a class="headerlink" href="#setting-up-your-environment" title="Permalink to this headline">¶</a></h3>
+<p>Before using the distributed version of BBS, you will have to set up a personal database. In principle, this needs to be done only once. You only have to recreate your database when the BBS SQL code has changed, for example to support new functionality. Such changes are kept to a minimum.</p>
+<p>Also, on each <strong>lce</strong> or <strong>locus</strong> node that you are going to use you need to create a working directory. Make sure you use the same path name on all the nodes . This has to be done only once.</p>
+<p>The distributed version of BBS requires a file that describes the compute cluster (an example of such a file is <strong>cep1.clusterdesc</strong> <a class="footnote-reference" href="#f12" id="id13">[12]</a>) and a configuration or <em>parset</em> <a class="footnote-reference" href="#f13" id="id14">[13]</a> file that describes the reduction.</p>
+<p>For each MS that we want to calibrate it is necessary to create a <em>vds</em> file that describes its contents and location. This can be done by running the following command</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">makevds</span> <span class="n">cep1</span><span class="o">.</span><span class="n">clusterdesc</span> <span class="o">&lt;</span><span class="n">directory</span><span class="o">&gt;/&lt;</span><span class="n">MS</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>After this, all <em>vds</em> files need to be combined into a single <em>gds</em> file, ready for calibration and/or imaging. This is done by typing</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">combinevds</span> <span class="o">&lt;</span><span class="n">output</span> <span class="n">file</span><span class="o">&gt;.</span><span class="n">gds</span> <span class="o">&lt;</span><span class="n">vds</span> <span class="n">file</span> <span class="mi">1</span><span class="o">&gt;</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">vds</span> <span class="n">file</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Instead of specifying the list of input <em>vds</em> files, you could type <strong>*.vds</strong>. Note that the <strong>combine</strong> step is required even if we want to calibrate a single subband only, although normally you would calibrate a single subband using the stand-alone version of BBS (see Section~ref{bbs:stand-alone-version}).</p>
+</div>
+<div class="section" id="id15">
+<h3>Usage<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>To calibrate an observation with the distributed version of BBS <em>on the Groningen cluster</em>, execute the <strong>calibrate</strong> script on the command line</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">calibrate</span> <span class="o">-</span><span class="n">f</span> <span class="o">--</span><span class="n">key</span> <span class="o">&lt;</span><span class="n">key</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">cluster</span><span class="o">-</span><span class="n">desc</span> <span class="o">~/</span><span class="n">imaging</span><span class="o">.</span><span class="n">clusterdesc</span> <span class="o">--</span><span class="n">db</span> <span class="n">ldb001</span> <span class="o">--</span><span class="n">db</span><span class="o">-</span><span class="n">user</span> <span class="n">postgres</span> <span class="o">&lt;</span><span class="n">gds</span> <span class="n">file</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">parset</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">source</span> <span class="n">catalog</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">working</span> <span class="n">directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>which is a single command, spread over multiple lines, as indicated by a backslash. The important arguments provided to the <strong>calibrate</strong> script in this example are:</p>
+<ul class="simple">
+<li><strong>&lt;key&gt;</strong>, which is a single word that identifies the BBS run. If you want to start a BBS run <em>while another run is still active</em>, make sure that the runs have <em>different</em> keys (using this option).</li>
+<li><strong>&lt;gds file&gt;</strong>, which contains the locations of all the MS (subbands) that constitute the observation. It should be given here by its full path, for example /data/scratch/<span class="math">\(&lt;`username:math:\)</span>&gt;`/<span class="math">\(&lt;`global gds file:math:\)</span>&gt;`.</li>
+<li><strong>&lt;parset&gt;</strong>, which defines the reduction (see Section~ref{bbs:example-reductions}).</li>
+<li><strong>&lt;source catalog&gt;</strong>, which defines a list of sources that can be used for calibration (see Section~ref{bbs:source-catalog}).</li>
+<li><strong>&lt;working directory&gt;</strong>, which is the working directory where BBS processes will be run and where the logs will be written (usually <strong>/data/scratch/&lt;user name&gt;</strong>). It should be created on each compute node that you intend to use. You can use the <strong>cexec</strong> command for this (see Section~ref{logginontotheofflineprocessingcluster}).</li>
+<li>The <strong>-f</strong> option, which overwrites stale information from previous runs.</li>
+</ul>
+<p>You can run the <strong>calibrate</strong> script without arguments for a description of all the options and the mandatory arguments. You can also use the <strong>-v</strong> option to get a more verbose output. Note that the arguments of <strong>calibrate</strong> are very much like <a class="footnote-reference" href="#f14" id="id16">[14]</a> those of <strong>calibrate-stand-alone</strong>.</p>
+<p>The <strong>calibrate</strong> script does not show progress information, which makes it difficult to estimate how long a BBS run will take to complete. One way around this is to log on to one of the compute nodes where BBS is processing, change to your local working directory, and monitor one of the <strong>bbs-reducer</strong> log files. These log files are named <strong>&lt;key&gt;_-kernel_-&lt;pid&gt;.log</strong>. The default key is <strong>default</strong>, and therefore you will often see log files named e.g. <strong>default_-kernel_-12345.log</strong>. The following command will print the number of times a chunk of visibility data was read from disk:</p>
+<blockquote>
+<div>&gt; grep “nextchunk” default_kernel_12345.log | wc -l</div></blockquote>
+<p>You can compute the total number of chunks by dividing the total number of time stamps in the observation by the chunk size specified in the parset (<strong>Strategy.ChunkSize</strong>). Of course, if you make the chunk size large, it may take BBS a long time to process a single chunk and this way of gauging progress is not so useful. Generally, it is not advisable to use a chunk size larger than several hundreds of time samples. This will waste memory. A chunk size smaller than several tens of time stamps is also not advisable, because it leads to inefficient disk access patterns.</p>
+</div>
+<div class="section" id="defining-a-global-solve">
+<h3>Defining a global solve<a class="headerlink" href="#defining-a-global-solve" title="Permalink to this headline">¶</a></h3>
+<p>Solving across multiple subbands can be useful if there is not enough signal in a single subband to achieve reasonable calibration solutions, i.e. the phase and amplitude solutions look more or less random. Basically, there should be enough source flux in the field for calibration. Of course, one first has to verify that the sky model used for calibration is accurate enough, because using an inaccurate sky model can also result in bad calibration solutions.</p>
+<p>To enable global parameter estimation, include the following keys in your parset. Note that the value of the <strong>Step.&lt;name&gt;.Solve.CalibrationGroups</strong> key is just an example. This key is described in more detail below</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Strategy</span><span class="o">.</span><span class="n">UseSolver</span> <span class="o">=</span> <span class="n">T</span>
+<span class="n">Step</span><span class="o">.&lt;</span><span class="n">name</span><span class="o">&gt;.</span><span class="n">Solve</span><span class="o">.</span><span class="n">CalibrationGroups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The <strong>Step.&lt;name&gt;.Solve.CalibrationGroups</strong> key specifies the partition of the set of all available subbands into separate <em>calibration groups</em>. Each value in the list specifies the number of subbands that belong to the same calibration group. Subbands are ordered from the lowest to the highest starting frequency. The sum of the values in the list <strong>must</strong> equal the total number of subbands in the <strong>gds</strong> file. By default, the <strong>CalibrationGroups</strong> key is set to the empty list. This indicates that there are no interdependencies and therefore each subband can use its own solver. Global parameter estimation will <em>not</em> be used in this case (even if <strong>Strategy.UseSolver = T</strong>).</p>
+<p>When using global parameter estimation, it is important to realize that drifting station clocks and the ionosphere cause frequency dependent phase changes. Additionally, due to the global bandpass, the effective sensitivity of the telescope is a function of frequency. Therefore, at this moment, it is not very useful to perform global parameter estimation using more than about 1–2 MHz of bandwidth (5–10 consecutive subbands).</p>
+<p>A few examples of using global parameter estimation with 10 bands would be:</p>
+<ul>
+<li><p class="first">Estimate parameters using all bands together:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Step</span><span class="o">.&lt;</span><span class="n">name</span><span class="o">&gt;.</span><span class="n">Solve</span><span class="o">.</span><span class="n">CalibrationGroups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Estimate parameters for the first 5 bands together, and separately for the last 5 bands together</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Step</span><span class="o">.&lt;</span><span class="n">name</span><span class="o">&gt;.</span><span class="n">Solve</span><span class="o">.</span><span class="n">CalibrationGroups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Do not use global parameter estimation (even if <strong>Strategy.UseSolver = T</strong>)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Step</span><span class="o">.&lt;</span><span class="n">name</span><span class="o">&gt;.</span><span class="n">Solve</span><span class="o">.</span><span class="n">CalibrationGroups</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Estimate parameters for band 0 separately, bands 1–3 together, bands 4–5 together, and bands 6–9 together (note that 1+3+2+4=10, the total number of subbands in our example)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Step</span><span class="o">.&lt;</span><span class="n">name</span><span class="o">&gt;.</span><span class="n">Solve</span><span class="o">.</span><span class="n">CalibrationGroups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="pre-computed-visibilities">
+<h2>Pre-computed visibilities<a class="headerlink" href="#pre-computed-visibilities" title="Permalink to this headline">¶</a></h2>
+<p>Diffuse, extended sources can only be approximately represented by a collection of point sources. Exporting clean-component (CC) models from catalogues (e.g. VLSS, WENSS) or first iteration major cycle selfcal images tend to contain many CCs, ranging up to 50,000. By using <strong>casapy2bbs.py</strong> these can be imported into a BBS catalog file, but processing these can take long and memory requirements might not even allow their usage at all. <a class="footnote-reference" href="#f15" id="id17">[15]</a></p>
+<p>An alternative lies in (fast) Fourier transforming model images directly into <em>uv</em>-data columns. These can then be used in BBS as model data. The import can be done with a tool called <strong>addUV2MS</strong>.</p>
+<p>The first argument is the MS to which the <em>uv</em>-data is to be added. The second argument is a CASA image (extension .model). The filename of the image is stripped of its leading path and file extension. This is then the column name it is identified by in the parset, and can be seen in the MS. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>&gt; addUV2MS -w 512 L24380SB030uv.MS.dppp.dppp $HOME/Images/3C196_5SBs.model
+</pre></div>
+</div>
+<p>This will create a column of name <strong>3C196_5SBs</strong>, containing the <em>uv</em>-data FFT’ed from this model image, using 512 w-projection planes. You can run <strong>addUV2MS</strong> multiple times with different images, or also with several images as additional command arguments, to create more than one <em>uv</em>-data column. While this works in principle with normal images, it is advisable to use clean component model images generated by CASA.</p>
+<p>A few notes of caution though:</p>
+<ul class="simple">
+<li>The image must have the same phase center as the MS, because the internal CASA-routine which is used, does not do any phase shifting.</li>
+<li>For wide field images you should set an appropriate value for the number of w-planes used in the w-projection term (default=128).</li>
+<li>Direction dependent effects cannot be handled for “large” images. This means the image has to be small on the scale over which the direction dependent effects change.</li>
+<li><strong>addUV2MS</strong> temporarily overwrites the frequency in the input images to match that in the MS. It restores the original frequency, but only one (multi-frequency channel images aren’t supported). Aborting the run may leave you then with a model image having an incorrect frequency entry.</li>
+<li>Successive runs with the same input model image will overwrite the data in the respective column.</li>
+</ul>
+<p>The column name generated by <strong>addUV2MS</strong> can be used in the BBS parset as:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Step</span><span class="o">.&lt;</span><span class="n">name</span><span class="o">&gt;.</span><span class="n">Model</span><span class="o">.</span><span class="n">Sources</span> <span class="o">=</span> <span class="p">[</span><span class="nd">@columnname</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>You can use <strong>casabrowser</strong> to find out which data columns are available in a given MS. Be careful about dots in the filename, and verify that your model refers to the name of the created column. Running <strong>addUV2MS -h</strong> will give you more information about its usage.</p>
+<p>You can use <strong>cexecms</strong> to add model <em>uv</em>-data to more than one MS, for example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">cexecms</span> <span class="s2">&quot;addUV2MS -w 512 &lt;FN&gt; $HOME/Images/3C1965_SBs.model&quot;</span> <span class="s2">&quot;/data/scratch/pipeline/L2011_08175/*&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="inspecting-the-solutions">
+<h2>Inspecting the solutions<a class="headerlink" href="#inspecting-the-solutions" title="Permalink to this headline">¶</a></h2>
+<p>You can inspect the solutions using the python script <strong>parmdbplot.py</strong>. To start <strong>parmdbplot.py</strong> from the command line, you should first initialize the <strong>lofar</strong> environment (see Section~ref{settings}). Then you can type, for example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">parmdbplot</span><span class="o">.</span><span class="n">py</span> <span class="n">SB23</span><span class="o">.</span><span class="n">MS</span><span class="o">.</span><span class="n">dppp</span><span class="o">/</span><span class="n">instrument</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>The first thing you should see after starting the script should be the main window (see Figure~ref{fig:main_window}). Here you can select a set of parameters of the same type to be plotted together in a single plot. Note that some features will not be available if you select multiple parameters. Parmdbplot is able to properly handle the following solution types: Gain, DirectionalGain, CommonRotationAngle, RotationAngle, CommonScalarPhase, ScalarPhase, Clock, TEC, RM. The last three (Clock, TEC and RM) are properly converted into a phase – they are stored differently in the parmdb internally.</p>
+<p>The “Use resolution” option is best left <em>unchecked</em>. If it is checked, the plotter tries to find a resolution that will yield a <span class="math">\(100 \times 100\)</span> grid in <span class="math">\(\mathrm{frequency} \times \mathrm{time}\)</span>. Usually, you just want to use the sampling intervals that are present in the parmdb. In that case, leave the box unchecked.</p>
+<div class="figure align-center" id="id24">
+<img alt="_images/parmdbplot_main.png" src="_images/parmdbplot_main.png" />
+<p class="caption"><span class="caption-text">The main window of <strong>parmdbplot</strong>.</span></p>
+</div>
+<div class="figure align-center" id="id25">
+<img alt="_images/parmdbplot_figure.png" src="_images/parmdbplot_figure.png" />
+<p class="caption"><span class="caption-text">The plot window of <strong>parmdbplot</strong>.</span></p>
+</div>
+<div class="figure align-center" id="id26">
+<img alt="_images/parmdbplot_phasesum.png" src="_images/parmdbplot_phasesum.png" />
+<p class="caption"><span class="caption-text">The plot window of <strong>parmdbplot</strong> with a phase sum.</span></p>
+</div>
 <p class="rubric">Footnotes</p>
 <table class="docutils footnote" frame="void" id="f1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>This section is maintained by Tammo Jan Dijkema (<a class="reference external" href="mailto:dijkema&#37;&#52;&#48;astron&#46;nl">dijkema[at]astron[dot]nl</a>). It was originally written by Joris van Zwieten and Reinout van Weeren.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>This section was contributed by Bart Scheers.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>For calibration with DPPP this is not necessary.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>Examples of these files can be found at <cite>https://github.com/lofar-astron/LOFAR-Cookbook &lt;https://github.com/lofar-astron/LOFAR-Cookbook&gt;</cite>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[5]</a></td><td>Use DPPP’s <strong>predict</strong> step for this, it is much more efficient.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[6]</a></td><td>This example can be found at <a class="reference external" href="https://github.com/lofar-astron/LOFAR-Cookbook">https://github.com/lofar-astron/LOFAR-Cookbook</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id8">[7]</a></td><td>This example can be found at <a class="reference external" href="https://github.com/lofar-astron/LOFAR-Cookbook">https://github.com/lofar-astron/LOFAR-Cookbook</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id9">[8]</a></td><td>This is important when doing a self calibration. In that case only the CORRECTED_DATA column should be used for imaging, while a next calibration step should go back to take the DATA column as input to refine the calibration.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id10">[9]</a></td><td>This example can be found at <a class="reference external" href="https://github.com/lofar-astron/LOFAR-Cookbook">https://github.com/lofar-astron/LOFAR-Cookbook</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id11">[10]</a></td><td>This source catalog is available at <a class="reference external" href="https://github.com/lofar-astron/LOFAR-Cookbook">https://github.com/lofar-astron/LOFAR-Cookbook</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f11" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id12">[11]</a></td><td>Currently, it is not possible to combine multithreading with a global solve or with the <strong>calibrate</strong> script.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f12" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id13">[12]</a></td><td>You can copy this file from <a class="reference external" href="https://github.com/lofar-astron/LOFAR-Cookbook">https://github.com/lofar-astron/LOFAR-Cookbook</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f13" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id14">[13]</a></td><td>Examples can be found in <a class="reference external" href="https://github.com/lofar-astron/LOFAR-Cookbook">https://github.com/lofar-astron/LOFAR-Cookbook</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f14" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id16">[14]</a></td><td>Actually, both scripts use different terminology, <strong>sky-db</strong> in the one is called <strong>sourcedb</strong> in the other. This will be fixed.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f15" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id17">[15]</a></td><td>On CEP3, catalog files with up to ca. 10,000 clean components can be processed until the nodes run out of memory.</td></tr>
 </tbody>
 </table>
 </div>
