@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>AOFlagger &mdash; LOFAR Imaging Cookbook 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="LOFAR Imaging Cookbook 0.0.1 documentation" href="index.html"/>
+        <link rel="next" title="The Default Pre-Processing Pipeline (DPPP)" href="dppp.html"/>
+        <link rel="prev" title="Data inspection" href="datainspection.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> LOFAR Imaging Cookbook
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started </a></li>
+<li class="toctree-l1"><a class="reference internal" href="datainspection.html">Data inspection </a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">AOFlagger </a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tutorial">Tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#browsing-baselines">Browsing baselines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plotting-flagging">Plotting &amp; flagging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-a-flagging-strategy">Testing a flagging strategy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#editing-the-flagging-strategy">Editing the flagging strategy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-aoflagger-command-line-program">Running the <strong>aoflagger</strong> command line program</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dppp.html">The Default Pre-Processing Pipeline (DPPP) </a></li>
+<li class="toctree-l1"><a class="reference internal" href="dpppcalibrate.html">Gain calibration with DPPP </a></li>
+<li class="toctree-l1"><a class="reference internal" href="losoto.html">LoSoTo: LOFAR Solution Tool </a></li>
+<li class="toctree-l1"><a class="reference internal" href="wsclean.html">The WSClean Imager </a></li>
+<li class="toctree-l1"><a class="reference internal" href="sourcedetection.html">Source detection and sky model manipulation: PyBDSF and LSMTool </a></li>
+<li class="toctree-l1"><a class="reference internal" href="factor.html">Factor: Facet Calibration for LOFAR </a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">Useful resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bbs.html">Black-Board Selfcal (BBS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shapelets.html">Sky Model Construction Using Shapelets </a></li>
+<li class="toctree-l1"><a class="reference internal" href="sagecal.html">SAGECAL </a></li>
+<li class="toctree-l1"><a class="reference internal" href="awimager.html">The AW Imager </a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">LOFAR Imaging Cookbook</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>AOFlagger </li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/aoflagger.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="aoflagger">
+<h1>AOFlagger <a class="footnote-reference" href="#f1" id="id1">[1]</a><a class="headerlink" href="#aoflagger" title="Permalink to this headline">¶</a></h1>
+<p>The frequencies covered by LOFAR are considerably affected by RFI, both in the low and the high band. Without proper flagging of the RFI, the RFI affects the image quality or can make calibration fail. This chapter describes how to analyze and flag LOFAR observations using the AOFlagger.</p>
+<p>In most cases, one would normally use the AOFlagger step in NDPPP with the default settings to flag the data. In this chapter we look at what the flagger does and how to alter its behaviour.</p>
+<div class="section" id="tutorial">
+<h2>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h2>
+<p>The tutorial data can be downloaded from the LOFAR LTA. Please refer to  Chapter~ref{practicalexamples} for details.</p>
+<p>The AOFlagger program comes with a tool called <strong>rfigui</strong> that is part of the <strong>lofar</strong> module on the CEP3 cluster. If you haven’t done so, load the module:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">lofar</span>
+</pre></div>
+</div>
+<p>We will use the rfigui to display the measurement set. The rfigui will not write to the measurement set, so you do not need to copy the measurement set yet. Use the following command to open the measurement set in rfigui:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rfigui</span> <span class="n">L74759_SAP000_SB001_uv</span><span class="o">.</span><span class="n">MS</span>
+</pre></div>
+</div>
+<div class="section" id="browsing-baselines">
+<h3>Browsing baselines<a class="headerlink" href="#browsing-baselines" title="Permalink to this headline">¶</a></h3>
+<p>A window should pop-up which can be used to select how to open the measurement set. Note that the visualized column can be selected here, which is useful to analyze data in a different column (e.g. CORRECTED_DATA). Since this is raw data, it will only have a DATA (“observed”) column, so leave the settings as they are and press “Open”.</p>
+<p>Another window will pop-up which allows you to select two antennas, a band and a field. Since LOFAR measurement sets never have multiple bands or fields, they will always have only one option. With the two antenna selection boxes, you can select which cross-correlation to visualize. Select antenna CS002HBA0 in both selection frames and press “Load”. It will take some while before the visibilities are loaded.</p>
+<p>You should now see a dynamic spectrum (time on the x-axis, frequency on the y-axis) of auto-correlation CS002HBA0 x CS002HBA0. Note several things:</p>
+<ul class="simple">
+<li>When you move the mouse over the dynamic spectrum, the status bar will provide some information of the visibilities at the location of the mouse.</li>
+<li>At the bottom of the plot is a purple line. The rfigui uses purple to indicate visibilities that are flagged. In this case, it is flagged because in raw LOFAR data, channel 0 contains invalid data due to how the poly-phase filter works. The purple overlay can be turned off with the “Original flags” toggle button in the toolbox.</li>
+<li>Note the sharp patterns that recur in a horizontal way, such as at 119.05 and 119.18 MHz. These are common, and are caused by normal transmitters. Use the mouse to find which features I mean.</li>
+<li>Around 13.30 h, vertical features are visible. These can be caused by broadband RFI such as lightning, or by a malfunctioning instrument.</li>
+<li>Finally, there are some big wavy features visible. These are intermodulations in the receivers, and are only present in auto-correlations (and sometimes in the cross-baseline of a dual split station, e.g. CS002HBA0 x CS002HBA1).</li>
+</ul>
+<p>Auto-correlations are much more sensitive to RFI. Because the auto-correlations are normally not used in imaging, in fact this RFI situation is not representative. Let’s go to a cross-correlation: press the “Forward” button. This will load the correlations for the baseline of this antenna by the next antenna, in this case CS002HBA0 x CS002HBA1. Notice that the RFI situation is much better, and the dominating features are the consistent transmitters at 119.05 MHz and 119.18 MHz. Press “Forward” a few more times and notice the changes.</p>
+<p>Let’s go to a remote station: go to the “Go” (newer version: “Browse”) menu and select “Go to…”. Load baseline CS004HBA0 x RS106HBA. Note the smooth vertical features in the background. These are fringes caused by observed sources. Therefore, a flagging strategy should not flag these.</p>
+</div>
+<div class="section" id="plotting-flagging">
+<h3>Plotting &amp; flagging<a class="headerlink" href="#plotting-flagging" title="Permalink to this headline">¶</a></h3>
+<p>Power spectra and time-power plots can be helpful to analyze the magnitude of RFI. In menu “Plot”, select “Power spectrum”. A pop-up window appears with the power over frequency over the selected region in the main window. The RFI is clearly visible as spikes in the spectrum. Note also that the bandpass shape is curving down at 119.23 MHz. One normally does not want to include these edge channels because of these features, and they are therefore cut-off in NDPPP (see the NDPPP tutorial).</p>
+<p>Now select “Plot time scatter” in the “Plot” menu, and notice how the RFI looks like in this plot. In this plot, different colours show the different polarizations. Also try the “mean spectrum” and “power vs time” plots, and notice how they differ.</p>
+<p>Normally, the time-frequency plot shows the Stokes I power of the visibilities. However, internally AOFlagger has loaded complex correlations for all four polarizations. Select “Data” <span class="math">\(\rightarrow\)</span> “Keep real data”. Fringes are more pronounced in the real data. When you press one of the “Keep…” options, the rfigui will no longer keep the other parts in memory. This can be confusing: for example, try selecting “Data” <span class="math">\(\rightarrow\)</span> “Keep imaginary data” and understand the error message. To see the imaginary data, first reload the baseline with “Go” <span class="math">\(\rightarrow\)</span> “Go to…” (new version: refresh button). Try analyzing the different parts of this correlation by using the other “Data” <span class="math">\(\rightarrow\)</span> “Keep…” buttons and reloading the baseline when necessary.</p>
+<p>Before continuing, close the plot window and reload the baseline.</p>
+</div>
+<div class="section" id="testing-a-flagging-strategy">
+<h3>Testing a flagging strategy<a class="headerlink" href="#testing-a-flagging-strategy" title="Permalink to this headline">¶</a></h3>
+<p>Select “Actions” <span class="math">\(\rightarrow\)</span> “Execute strategy”. A progress window will pop-up, which you can close once the flagging is done. Notice that yellow flags have appeared in the time-frequency plot. The default flagging strategy has indeed flagged all visible RFI. Additionally, it has flagged a bit of the edge channels (e.g. in the top-right), because of the curvature in the pass-band at the edges. This is normally not a problem, since these channels will be cut off with NDPPP.</p>
+<p>Try toggling the yellow flags off and on with the “Alternative flags” button on the toolbar. Before continuing, make sure that the yellow flags are shown. Plot the power spectrum and time scatter plots as before. The power spectrum will now have two lines: the original one, and one that shows the spectrum after the flagged visibilities have been taken off. The time scatter plot will only show unflagged samples. Indeed, the RFI samples have been removed, and a clear difference between XX/YY and XY/YX is visible. If you hide the yellow flags and replot the scatter plot, the flagged samples will be shown again.</p>
+<p>Clear the flags by reloading the baseline.</p>
+</div>
+<div class="section" id="editing-the-flagging-strategy">
+<h3>Editing the flagging strategy<a class="headerlink" href="#editing-the-flagging-strategy" title="Permalink to this headline">¶</a></h3>
+<p>Press “Action” <span class="math">\(\rightarrow\)</span> “Edit strategy”. A window will pop-up that shows a tree that represents the flagging script. Every row is an action, and certain actions can have sub-actions <a class="footnote-reference" href="#f2" id="id2">[2]</a>.</p>
+<p>Notice that there are two “SumThreshold” actions: one is in the “iterate 2 times” loop, while the other is below the loop. When you press one of the SumThreshold actions, a settings box will appear. Set the “Base sensitivity” to 0.7 and press “Apply” for both SumThreshold actions. Now, rerun the strategy with “Actions” <span class="math">\(\rightarrow\)</span> “Execute strategy” and notice the difference.</p>
+<p>Try playing with the settings below, and rerun the flagger each time. Do not forget to press “Apply” after changing the settings of an action. If you make modifications you don’t like, you can press the “Default” button in the edit startegy window to reset the strategy.</p>
+<ul class="simple">
+<li>The strategy normally slowly converges by iterating a couple of times. Only in the last SumThreshold action, the maximum sensitivity is used. The “Iterate 2 times” action performs this slow convergence. In the “Iterate 2 times” action, try changing the number of iterations to 1 and see if this is enough for this baseline.</li>
+<li>Normally, each polarization is searched for RFI. Change the “For each polarization” action so that only Stokes Q is searched for RFI.</li>
+<li>In the “Statistical flagging” action, play with the “Minimum time ratio” and “Minimum frequency ratio”. For example, is a “Minimum time ratio” of 60% a good setting?</li>
+<li>Try setting the threshold of the “Time selection” action to 2.5.</li>
+</ul>
+<p>This subband is a rather good subbands. While for LOFAR many subbands are like this, there are also subbands which are much worse. Typically you want to try the strategy on some good and bad subband, as well as on some small on some long baselines. You can chose to flag different subbands with a different strategy, but in general it is easier to have one generic strategy. It is also generally better to flag slightly too much than too little. Finally, it is not necessary to consider the flagging speed.</p>
+<p>Once you have made a modified strategy, you can save it with the “Save” button in the “Edit strategy window”. When saving a strategy, give the filename an extension of “.rfis”. These strategies can be used by the AOFlagger step inside NDPPP, to flag and average the data at the same time, as well as that they can be used by the “<strong>aoflagger</strong>” command line program. It is normally faster to do this with NDPPP.</p>
+</div>
+<div class="section" id="running-the-aoflagger-command-line-program">
+<h3>Running the <strong>aoflagger</strong> command line program<a class="headerlink" href="#running-the-aoflagger-command-line-program" title="Permalink to this headline">¶</a></h3>
+<p>We are now going to flag the measurement set without running NDPPP. To do this, we need write access to the measurement set. Therefore, copy the measurement set mentioned above to your scratch directory. Measurement sets that are created by the LOFAR correlator have a special “raw” format. To make the flag table writeable by aoflagger, it is necessary to store the flags with a different format. This can be done with the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">makeFLAGwritable</span> <span class="n">L74759_SAP000_SB001_uv</span><span class="o">.</span><span class="n">MS</span>
+<span class="n">Successful</span> <span class="n">read</span><span class="o">/</span><span class="n">write</span> <span class="nb">open</span> <span class="n">of</span> <span class="n">default</span><span class="o">-</span><span class="n">locked</span> <span class="n">table</span> <span class="n">L74759_SAP000_SB001_uv</span><span class="o">.</span><span class="n">MS</span><span class="p">:</span>
+  <span class="mi">23</span> <span class="n">columns</span><span class="p">,</span> <span class="mi">5337090</span> <span class="n">rows</span>
+<span class="n">Created</span> <span class="n">new</span> <span class="n">FLAG</span> <span class="n">column</span><span class="p">;</span> <span class="n">copying</span> <span class="n">old</span> <span class="n">values</span> <span class="o">...</span>
+<span class="n">FLAG</span> <span class="n">column</span> <span class="n">now</span> <span class="n">stored</span> <span class="k">with</span> <span class="n">SSM</span> <span class="n">to</span> <span class="n">make</span> <span class="n">it</span> <span class="n">writable</span>
+</pre></div>
+</div>
+<p>The measurement set can now be flagged with the aoflagger command. To get a list of commands, run the program without parameters:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">aoflagger</span>
+<span class="n">AOFlagger</span> <span class="mf">2.7</span><span class="o">.</span><span class="mi">1</span> <span class="p">(</span><span class="mi">2015</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">01</span><span class="p">)</span> <span class="n">command</span> <span class="n">line</span> <span class="n">application</span>
+<span class="n">This</span> <span class="n">program</span> <span class="n">will</span> <span class="n">execute</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>Two settings need to be changed: i) for large raw sets, it is best to use the indirect reading mode; ii) since we have made a modified strategy, we want to specify our new strategy. If you are using aoflagger 2.7, you can immediately specify the .rfis file that you have created in the gui. At the point of writing, you will need to use a file which has been prepared by me, because there is an issue with different versions of the gui and the command line aoflagger.</p>
+<p>Combined all together, run aoflagger like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">aoflagger</span> <span class="o">-</span><span class="n">indirect</span><span class="o">-</span><span class="n">read</span> <span class="o">-</span><span class="n">strategy</span> <span class="o">~</span><span class="n">offringa</span><span class="o">/</span><span class="n">tutorials</span><span class="o">/</span><span class="n">aoflagger</span><span class="o">-</span><span class="n">tutorial</span><span class="o">.</span><span class="n">rfis</span> <span class="n">L74759_SAP000_SB001_uv</span><span class="o">.</span><span class="n">MS</span>
+<span class="n">AOFlagger</span> <span class="mf">2.7</span><span class="o">.</span><span class="mi">1</span> <span class="p">(</span><span class="mi">2015</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">01</span><span class="p">)</span> <span class="n">command</span> <span class="n">line</span> <span class="n">application</span>
+<span class="o">...</span>
+<span class="mi">0</span><span class="o">%</span> <span class="p">:</span> <span class="o">+-+-+-+-+-+-</span><span class="n">Initializing</span><span class="o">...</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>Please note that the current working directory will be used as a temporary storage location, and a lot of temporary data will be written there. Once the flagger is done, you can open the measurement set in the rfigui, and the found flags will be shown with purple.</p>
+</div>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>The manual for AOFlagger can be found on the site <a class="reference external" href="http://aoflagger.sourceforge.net/">http://aoflagger.sourceforge.net/</a>. The properties and performance of the AOFlagger have been described in the following papers:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://arxiv.org/abs/1002.1957">Post-correlation radio frequency interference classification methods</a>.</li>
+<li><a class="reference external" href="http://arxiv.org/abs/1201.3364">A morphological algorithm for improving radio-frequency interference detection</a>.</li>
+</ul>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>This author of this chapter is Andre Offringa (<strong>offringa[at]astron[dot]nl</strong>)</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>A description of the steps in the pipeline is given in <a class="reference external" href="http://pos.sissa.it/archive/conferences/107/036/RFI2010_036.pdf">this paper</a>.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dppp.html" class="btn btn-neutral float-right" title="The Default Pre-Processing Pipeline (DPPP)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="datainspection.html" class="btn btn-neutral" title="Data inspection" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Sarrvesh Sridhar.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

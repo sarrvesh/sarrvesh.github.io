@@ -1,0 +1,476 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Source detection and sky model manipulation: PyBDSF and LSMTool &mdash; LOFAR Imaging Cookbook 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="LOFAR Imaging Cookbook 0.0.1 documentation" href="index.html"/>
+        <link rel="next" title="Factor: Facet Calibration for LOFAR" href="factor.html"/>
+        <link rel="prev" title="The WSClean Imager" href="wsclean.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> LOFAR Imaging Cookbook
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started </a></li>
+<li class="toctree-l1"><a class="reference internal" href="datainspection.html">Data inspection </a></li>
+<li class="toctree-l1"><a class="reference internal" href="aoflagger.html">AOFlagger </a></li>
+<li class="toctree-l1"><a class="reference internal" href="dppp.html">The Default Pre-Processing Pipeline (DPPP) </a></li>
+<li class="toctree-l1"><a class="reference internal" href="dpppcalibrate.html">Gain calibration with DPPP </a></li>
+<li class="toctree-l1"><a class="reference internal" href="losoto.html">LoSoTo: LOFAR Solution Tool </a></li>
+<li class="toctree-l1"><a class="reference internal" href="wsclean.html">The WSClean Imager </a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Source detection and sky model manipulation: PyBDSF and LSMTool </a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#source-detection-pybdsf">Source detection: PyBDSF</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setup">Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tutorials">Tutorials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simple-example">Simple Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#image-with-artifacts">Image with artifacts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#image-with-extended-emission">Image with extended emission</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage-in-python-scripts">Usage in python scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sky-model-manipulation-lsmtool">Sky model manipulation: LSMTool</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Tutorials</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#filter-and-group-a-sky-model">Filter and Group a Sky Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#select-sources-within-a-given-region">Select sources within a given region</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#find-sources-below-a-given-size-in-a-clean-component-sky-model">Find Sources below a Given Size in a Clean-component Sky Model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="factor.html">Factor: Facet Calibration for LOFAR </a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">Useful resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bbs.html">Black-Board Selfcal (BBS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shapelets.html">Sky Model Construction Using Shapelets </a></li>
+<li class="toctree-l1"><a class="reference internal" href="sagecal.html">SAGECAL </a></li>
+<li class="toctree-l1"><a class="reference internal" href="awimager.html">The AW Imager </a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">LOFAR Imaging Cookbook</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Source detection and sky model manipulation: PyBDSF and LSMTool </li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/sourcedetection.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="source-detection-and-sky-model-manipulation-pybdsf-and-lsmtool">
+<h1>Source detection and sky model manipulation: PyBDSF and LSMTool <a class="footnote-reference" href="#f" id="id1">[1]</a><a class="headerlink" href="#source-detection-and-sky-model-manipulation-pybdsf-and-lsmtool" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="source-detection-pybdsf">
+<h2>Source detection: PyBDSF<a class="headerlink" href="#source-detection-pybdsf" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="introduction">
+<h3>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h3>
+<p>PyBDSF ( <strong>Py</strong>thon <strong>B</strong>lob <strong>D</strong>etection and <strong>S</strong>ource <strong>F</strong>inder) is a Python source-finding software package written by Niruj Mohan, Alexander Usov, and David Rafferty. PyBDSF can process FITS and CASA images and can output source lists in a variety of formats, including <strong>makesourcedb</strong> (BBS), FITS and ASCII formats. It can be used interactively in a casapy-like shell or in Python scripts. The full PyBDSF manual can be found <a class="reference external" href="http://www.astron.nl/citt/pybdsf">here</a>.</p>
+</div>
+<div class="section" id="setup">
+<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h3>
+<p>The latest version of PyBDSF is installed on the CEP3 cluster. To initialize your environment for PyBDSF, run:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">pybdsf</span>
+</pre></div>
+</div>
+<p>After initialization, the interactive PyBDSF shell can be started with the command <strong>pybdsf</strong> and PyBDSF can be imported into Python scripts with the command <strong>import bdsf</strong>.</p>
+</div>
+<div class="section" id="tutorials">
+<h3>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h3>
+<p>This section gives examples of using PyBDSF on the following: an image that contains only fairly simple sources and no strong artifacts, an image with strong artifacts around bright sources, and an image with complex diffuse emission. It is recommended that interactive mode (enabled with <strong>interactive=True</strong>) be used for initial runs on a new image, as this allows the user to check the background mean and rms images and the islands found by PyBDSF before proceeding to fitting. Also, if a very large image is being fit, it is often helpful to run on a smaller (but still representative) portion of the image (defined using the <strong>trim_box</strong> parameter) to verify that the chosen parameters are appropriate before fitting the entire image.</p>
+</div>
+<div class="section" id="simple-example">
+<h3>Simple Example<a class="headerlink" href="#simple-example" title="Permalink to this headline">¶</a></h3>
+<p>A simple example of using PyBDSF on a LOFAR image (an HBA image of 3C61.1) is shown below. In this case, default values are used for all parameters. Generally, the default values work well on images that contain relatively simple sources with no strong artifacts.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">BDSF</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">inp</span> <span class="n">process_image</span>
+<span class="n">BDSF</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;sb48.fits&#39;</span>
+<span class="n">BDSF</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">go</span>
+<span class="o">--------&gt;</span> <span class="n">go</span><span class="p">()</span>
+<span class="o">--&gt;</span> <span class="n">Opened</span> <span class="s1">&#39;sb48.fits&#39;</span>
+<span class="n">Image</span> <span class="n">size</span> <span class="o">..............................</span> <span class="p">:</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span> <span class="n">pixels</span>
+<span class="n">Number</span> <span class="n">of</span> <span class="n">channels</span> <span class="o">......................</span> <span class="p">:</span> <span class="mi">1</span>
+<span class="n">Beam</span> <span class="n">shape</span> <span class="p">(</span><span class="n">major</span><span class="p">,</span> <span class="n">minor</span><span class="p">,</span> <span class="n">pos</span> <span class="n">angle</span><span class="p">)</span> <span class="o">....</span> <span class="p">:</span> <span class="p">(</span><span class="mf">0.002916</span><span class="p">,</span> <span class="mf">0.002654</span><span class="p">,</span> <span class="o">-</span><span class="mf">173.36</span><span class="p">)</span> <span class="n">degrees</span>
+<span class="n">Frequency</span> <span class="n">of</span> <span class="n">averaged</span> <span class="n">image</span> <span class="o">.............</span> <span class="p">:</span> <span class="mf">146.497</span> <span class="n">MHz</span>
+<span class="n">Blank</span> <span class="n">pixels</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">image</span> <span class="o">...............</span> <span class="p">:</span> <span class="mi">0</span> <span class="p">(</span><span class="mf">0.0</span><span class="o">%</span><span class="p">)</span>
+<span class="n">Flux</span> <span class="kn">from</span> <span class="nn">sum</span> <span class="n">of</span> <span class="p">(</span><span class="n">non</span><span class="o">-</span><span class="n">blank</span><span class="p">)</span> <span class="n">pixels</span> <span class="o">.....</span> <span class="p">:</span> <span class="mf">29.565</span> <span class="n">Jy</span>
+<span class="n">Derived</span> <span class="n">rms_box</span> <span class="p">(</span><span class="n">box</span> <span class="n">size</span><span class="p">,</span> <span class="n">step</span> <span class="n">size</span><span class="p">)</span> <span class="o">...</span> <span class="p">:</span> <span class="p">(</span><span class="mi">61</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="n">pixels</span>
+<span class="o">--&gt;</span> <span class="n">Variation</span> <span class="ow">in</span> <span class="n">rms</span> <span class="n">image</span> <span class="n">significant</span>
+<span class="o">--&gt;</span> <span class="n">Using</span> <span class="mi">2</span><span class="n">D</span> <span class="nb">map</span> <span class="k">for</span> <span class="n">background</span> <span class="n">rms</span>
+<span class="o">--&gt;</span> <span class="n">Variation</span> <span class="ow">in</span> <span class="n">mean</span> <span class="n">image</span> <span class="n">significant</span>
+<span class="o">--&gt;</span> <span class="n">Using</span> <span class="mi">2</span><span class="n">D</span> <span class="nb">map</span> <span class="k">for</span> <span class="n">background</span> <span class="n">mean</span>
+<span class="n">Min</span><span class="o">/</span><span class="nb">max</span> <span class="n">values</span> <span class="n">of</span> <span class="n">background</span> <span class="n">rms</span> <span class="nb">map</span> <span class="o">....</span> <span class="p">:</span> <span class="p">(</span><span class="mf">0.05358</span><span class="p">,</span> <span class="mf">0.25376</span><span class="p">)</span> <span class="n">Jy</span><span class="o">/</span><span class="n">beam</span>
+<span class="n">Min</span><span class="o">/</span><span class="nb">max</span> <span class="n">values</span> <span class="n">of</span> <span class="n">background</span> <span class="n">mean</span> <span class="nb">map</span> <span class="o">...</span> <span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.03656</span><span class="p">,</span> <span class="mf">0.06190</span><span class="p">)</span> <span class="n">Jy</span><span class="o">/</span><span class="n">beam</span>
+<span class="o">--&gt;</span> <span class="n">Expected</span> <span class="mi">5</span><span class="o">-</span><span class="n">sigma</span><span class="o">-</span><span class="n">clipped</span> <span class="n">false</span> <span class="n">detection</span> <span class="n">rate</span> <span class="o">&lt;</span> <span class="n">fdr_ratio</span>
+<span class="o">--&gt;</span> <span class="n">Using</span> <span class="n">sigma</span><span class="o">-</span><span class="n">clipping</span> <span class="n">thresholding</span>
+<span class="n">Number</span> <span class="n">of</span> <span class="n">islands</span> <span class="n">found</span> <span class="o">.................</span> <span class="p">:</span> <span class="mi">4</span>
+<span class="n">Fitting</span> <span class="n">islands</span> <span class="k">with</span> <span class="n">Gaussians</span> <span class="o">..........</span> <span class="p">:</span> <span class="p">[</span><span class="o">====</span><span class="p">]</span> <span class="mi">4</span><span class="o">/</span><span class="mi">4</span>
+<span class="n">Total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">Gaussians</span> <span class="n">fit</span> <span class="n">to</span> <span class="n">image</span> <span class="o">..</span> <span class="p">:</span> <span class="mi">12</span>
+<span class="n">Total</span> <span class="n">flux</span> <span class="ow">in</span> <span class="n">model</span> <span class="o">.....................</span> <span class="p">:</span> <span class="mf">27.336</span> <span class="n">Jy</span>
+<span class="n">Number</span> <span class="n">of</span> <span class="n">sources</span> <span class="n">formed</span> <span class="kn">from</span> <span class="nn">Gaussians</span>   <span class="p">:</span> <span class="mi">6</span>
+
+<span class="n">BDSF</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">show_fit</span>
+<span class="o">--------&gt;</span> <span class="n">show_fit</span><span class="p">()</span>
+<span class="o">========================================================================</span>
+<span class="n">NOTE</span> <span class="o">--</span> <span class="n">With</span> <span class="n">the</span> <span class="n">mouse</span> <span class="n">pointer</span> <span class="ow">in</span> <span class="n">plot</span> <span class="n">window</span><span class="p">:</span>
+  <span class="n">Press</span> <span class="s2">&quot;i&quot;</span> <span class="o">........</span> <span class="p">:</span> <span class="n">Get</span> <span class="n">integrated</span> <span class="n">fluxes</span> <span class="ow">and</span> <span class="n">mean</span> <span class="n">rms</span> <span class="n">values</span>
+                       <span class="k">for</span> <span class="n">the</span> <span class="n">visible</span> <span class="n">portion</span> <span class="n">of</span> <span class="n">the</span> <span class="n">image</span>
+  <span class="n">Press</span> <span class="s2">&quot;m&quot;</span> <span class="o">........</span> <span class="p">:</span> <span class="n">Change</span> <span class="nb">min</span> <span class="ow">and</span> <span class="nb">max</span> <span class="n">scaling</span> <span class="n">values</span>
+  <span class="n">Press</span> <span class="s2">&quot;0&quot;</span> <span class="o">........</span> <span class="p">:</span> <span class="n">Reset</span> <span class="n">scaling</span> <span class="n">to</span> <span class="n">default</span>
+  <span class="n">Click</span> <span class="n">Gaussian</span> <span class="o">...</span> <span class="p">:</span> <span class="n">Print</span> <span class="n">Gaussian</span> <span class="ow">and</span> <span class="n">source</span> <span class="n">IDs</span> <span class="p">(</span><span class="n">zoom_rect</span> <span class="n">mode</span><span class="p">,</span>
+                       <span class="n">toggled</span> <span class="k">with</span> <span class="n">the</span> <span class="s2">&quot;zoom&quot;</span> <span class="n">button</span> <span class="ow">and</span> <span class="n">indicated</span> <span class="ow">in</span>
+                       <span class="n">the</span> <span class="n">lower</span> <span class="n">right</span> <span class="n">corner</span><span class="p">,</span> <span class="n">must</span> <span class="n">be</span> <span class="n">off</span><span class="p">)</span>
+<span class="n">________________________________________________________________________</span>
+</pre></div>
+</div>
+<p>The figure made by <strong>show_fit</strong> is shown in Figure~ref{F:example}. In the plot window, one can zoom in, save the plot to a file, etc. The list of best-fit Gaussians found by PyBDSF may be written to a file for use in other programs, such as TOPCAT or BBS, as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">BDSM</span> <span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="n">write_catalog</span>
+<span class="o">--------&gt;</span> <span class="n">write_catalog</span><span class="p">()</span>
+<span class="o">--&gt;</span> <span class="n">Wrote</span> <span class="n">FITS</span> <span class="n">file</span> <span class="s1">&#39;sb48.pybdsf.srl.fits&#39;</span>
+</pre></div>
+</div>
+<p>The output Gaussian or source list contains source positions, fluxes, etc. BBS patches are also supported.</p>
+<div class="figure align-center" id="id6">
+<img alt="_images/example.png" src="_images/example.png" />
+<p class="caption"><span class="caption-text">Output of <strong>show_fit</strong>, showing the original image with and without sources, the model image, and the residual (original minus model) image. Boundaries of the islands of emission found by PyBDSF are shown in light blue. The fitted Gaussians are shown for each island as ellipses (the sizes of which correspond to the FWHMs of the Gaussians). Gaussians that have been grouped together into a source are shown with the same color. For example, the two red Gaussians of island #1 have been grouped together into one source, and the nine Gaussians of island #0 have been grouped into 4 separate sources. The user can obtain information about a Gaussian by clicking on it. Additionally, with the mouse inside the plot window, the display scaling can be modified by pressing the “m” key, and information about the image flux, model flux, and rms can be obtained by pressing the “i” key.</span></p>
+</div>
+</div>
+<div class="section" id="image-with-artifacts">
+<h3>Image with artifacts<a class="headerlink" href="#image-with-artifacts" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="image-with-extended-emission">
+<h3>Image with extended emission<a class="headerlink" href="#image-with-extended-emission" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="usage-in-python-scripts">
+<h3>Usage in python scripts<a class="headerlink" href="#usage-in-python-scripts" title="Permalink to this headline">¶</a></h3>
+<p>PyBDSF may also be used non-interactively in Python scripts (for example, to automate source detection in a large number of images for which the optimal analysis parameters are known). To use PyBDSF in a Python script, import it by calling <strong>from lofar import bdsm</strong> inside your script. Processing may then be done using <strong>bdsm.process_image()</strong> as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">bdsm</span><span class="o">.</span><span class="n">process_image</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">args</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <strong>filename</strong> is the name of the image (in FITS or CASA format) or PyBDSF parameter save file and <strong>&lt;args&gt;</strong> is a comma-separated list of arguments defined as in the interactive environment (e.g., <strong>beam = (0.033, 0.033, 0.0), rms_map=False</strong>). If the fit is successful, PyBDSF will return an “Image” object (in this example named “img”) which contains the results of the fit (among many other things). The same tasks used in the interactive PyBDSF shell are available for examining the fit and writing out the source list, residual image, etc. These tasks are methods of the Image object returned by <strong>bdsm.process_image()</strong> and are described below:</p>
+<ul class="simple">
+<li><strong>img.show_fit()</strong>: This method shows a quick summary of the fit by plotting the input image with the islands and Gaussians found, along with the model and residual images.</li>
+<li><strong>img.export_image()</strong>: Write an internally derived image (e.g., the model image) to a FITS file.</li>
+<li><strong>img.write_catalog()</strong>: This method writes the Gaussian or source list to a file.</li>
+</ul>
+<p>The input parameters to each of these tasks are the same as those available in the interactive shell. For more details and scripting examples, see <a class="reference external" href="http://www.astron.nl/citt/pybdsf/">PyBDSF documentation</a>.</p>
+</div>
+</div>
+<div class="section" id="sky-model-manipulation-lsmtool">
+<h2>Sky model manipulation: LSMTool<a class="headerlink" href="#sky-model-manipulation-lsmtool" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3>Introduction<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>LSMTool is a Python package which allows for the manipulation of sky models in the <strong>makesourcedb</strong> format (used by BBS and DPPP). Such models include those output by PyBDSF, those made by <strong>gsm.py</strong>, and CASA clean-component models (after conversion with <strong>casapy2bbs.py</strong>). The full LSMTool manual is located at <a class="reference external" href="http://www.astron.nl/citt/lsmtool">http://www.astron.nl/citt/lsmtool</a>.</p>
+</div>
+<div class="section" id="id3">
+<h3>Setup<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>To initialize your environment for LSMTool, users on the CEP3 cluster should run the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">lsmtool</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>Tutorials<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>This section gives examples of using LSMTool to select sources and group them into patches.</p>
+<div class="section" id="filter-and-group-a-sky-model">
+<h4>Filter and Group a Sky Model<a class="headerlink" href="#filter-and-group-a-sky-model" title="Permalink to this headline">¶</a></h4>
+<p>As with many of the LOFAR tools (e.g., DPPP), LSMTool can be run with a parset that specifies the operations to perform and their parameters. Below is an example parset that filters on the Stokes I flux density (selecting only those sources with flux densities above 1 mJy), adds a source to the sky model, and then groups the sources into patches (so that each patch has a total flux density of around 50 Jy):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LSMTool</span><span class="o">.</span><span class="n">Steps</span> <span class="o">=</span> <span class="p">[</span><span class="n">selectbright</span><span class="p">,</span> <span class="n">addsrc</span><span class="p">,</span> <span class="n">grp</span><span class="p">,</span> <span class="n">setpos</span><span class="p">]</span>
+
+ <span class="c1"># Select only sources above 1 mJy</span>
+ <span class="n">LSMTool</span><span class="o">.</span><span class="n">Steps</span><span class="o">.</span><span class="n">selectbright</span><span class="o">.</span><span class="n">Operation</span> <span class="o">=</span> <span class="n">SELECT</span>
+ <span class="n">LSMTool</span><span class="o">.</span><span class="n">Steps</span><span class="o">.</span><span class="n">selectbright</span><span class="o">.</span><span class="n">FilterExpression</span> <span class="o">=</span> <span class="n">I</span> <span class="o">&gt;</span> <span class="mf">1.0</span> <span class="n">mJy</span>
+
+ <span class="c1"># Add a source</span>
+ <span class="n">LSMTool</span><span class="o">.</span><span class="n">Steps</span><span class="o">.</span><span class="n">addsrc</span><span class="o">.</span><span class="n">Operation</span> <span class="o">=</span> <span class="n">ADD</span>
+ <span class="n">LSMTool</span><span class="o">.</span><span class="n">Steps</span><span class="o">.</span><span class="n">addsrc</span><span class="o">.</span><span class="n">Name</span> <span class="o">=</span> <span class="n">new_source</span>
+ <span class="n">LSMTool</span><span class="o">.</span><span class="n">Steps</span><span class="o">.</span><span class="n">addsrc</span><span class="o">.</span><span class="n">Type</span> <span class="o">=</span> <span class="n">POINT</span>
+ <span class="n">LSMTool</span><span class="o">.</span><span class="n">Steps</span><span class="o">.</span><span class="n">addsrc</span><span class="o">.</span><span class="n">Ra</span> <span class="o">=</span> <span class="mf">277.4232</span>
+ <span class="n">LSMTool</span><span class="o">.</span><span class="n">Steps</span><span class="o">.</span><span class="n">addsrc</span><span class="o">.</span><span class="n">Dec</span> <span class="o">=</span> <span class="mf">48.3689</span>
+ <span class="n">LSMTool</span><span class="o">.</span><span class="n">Steps</span><span class="o">.</span><span class="n">addsrc</span><span class="o">.</span><span class="n">I</span> <span class="o">=</span> <span class="mf">0.69</span>
+
+ <span class="c1"># Group using tessellation to a target flux of 50 Jy</span>
+ <span class="n">LSMTool</span><span class="o">.</span><span class="n">Steps</span><span class="o">.</span><span class="n">grp</span><span class="o">.</span><span class="n">Operation</span> <span class="o">=</span> <span class="n">GROUP</span>
+ <span class="n">LSMTool</span><span class="o">.</span><span class="n">Steps</span><span class="o">.</span><span class="n">grp</span><span class="o">.</span><span class="n">Algorithm</span> <span class="o">=</span> <span class="n">tessellate</span>
+ <span class="n">LSMTool</span><span class="o">.</span><span class="n">Steps</span><span class="o">.</span><span class="n">grp</span><span class="o">.</span><span class="n">TargetFlux</span> <span class="o">=</span> <span class="mf">50.0</span> <span class="n">Jy</span>
+ <span class="n">LSMTool</span><span class="o">.</span><span class="n">Steps</span><span class="o">.</span><span class="n">grp</span><span class="o">.</span><span class="n">Method</span> <span class="o">=</span> <span class="n">mid</span>
+
+ <span class="c1"># Set the patch positions to their midpoint and write final skymodel</span>
+ <span class="n">LSMTool</span><span class="o">.</span><span class="n">Steps</span><span class="o">.</span><span class="n">setpos</span><span class="o">.</span><span class="n">Operation</span> <span class="o">=</span> <span class="n">SETPATCHPOSITIONS</span>
+ <span class="n">LSMTool</span><span class="o">.</span><span class="n">Steps</span><span class="o">.</span><span class="n">setpos</span><span class="o">.</span><span class="n">Method</span> <span class="o">=</span> <span class="n">mid</span>
+ <span class="n">LSMTool</span><span class="o">.</span><span class="n">Steps</span><span class="o">.</span><span class="n">setpos</span><span class="o">.</span><span class="n">OutFile</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">sky</span>
+</pre></div>
+</div>
+<p>In the first line of this parset the step names are defined. Steps are applied sequentially, in the same order defined in the list of steps. See the full manual for a list of steps and their allowed parameters.</p>
+<p>LSMTool can also be used interactively (in IPython, for example) or in Python scripts without the need for a parset, which is generally more convenient. To use LSMTool in a Python script or interpreter, import it as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">lsmtool</span>
+</pre></div>
+</div>
+<p>A sky model can then be loaded with, e.g.:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">lsmtool</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;skymodel.sky&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The following commands duplicate the steps done using the parset above:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Select only sources above 1 mJy</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;I &gt; 1.0 mJy&#39;</span><span class="p">)</span>
+
+ <span class="c1"># Add a source</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">({</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span><span class="s1">&#39;new_source&#39;</span><span class="p">,</span> <span class="s1">&#39;Type&#39;</span><span class="p">:</span><span class="s1">&#39;POINT&#39;</span><span class="p">,</span> <span class="s1">&#39;Ra&#39;</span><span class="p">:</span><span class="mf">277.4232</span><span class="p">,</span> <span class="s1">&#39;Dec&#39;</span><span class="p">:</span><span class="mf">48.3689</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">:</span><span class="mf">0.69</span><span class="p">})</span>
+
+ <span class="c1"># Group using tessellation to a target flux of 50 Jy</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;tesselate&#39;</span><span class="p">,</span> <span class="n">targetFlux</span><span class="o">=</span><span class="s1">&#39;10.0 Jy&#39;</span><span class="p">)</span>
+
+ <span class="c1"># Set the patch positions to their midpoint and write final skymodel</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">setPatchPositions</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;mid&#39;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;grouped.sky&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="select-sources-within-a-given-region">
+<h4>Select sources within a given region<a class="headerlink" href="#select-sources-within-a-given-region" title="Permalink to this headline">¶</a></h4>
+<p>In this example, LSMTool is used to select only those sources within a radius of 1 degree of a given position (RA = 123.2123 deg, Dec = +34.3212 deg):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Get the distance of each source to the given position (here specified as</span>
+<span class="c1"># RA, Dec in degrees; one can also specify the postion in makesourcedb format)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dist</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">getDistance</span><span class="p">(</span><span class="mf">123.2123</span><span class="p">,</span> <span class="mf">34.3212</span><span class="p">)</span>
+
+<span class="c1"># Remove sources with distances of more than 1 degree</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">dist</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="find-sources-below-a-given-size-in-a-clean-component-sky-model">
+<h4>Find Sources below a Given Size in a Clean-component Sky Model<a class="headerlink" href="#find-sources-below-a-given-size-in-a-clean-component-sky-model" title="Permalink to this headline">¶</a></h4>
+<p>It can be difficult to identify sources in a clean-component sky model (such as one made by <strong>casapy2bbs.py</strong>), as there is no explicit connection between the components. LSMTool provides a grouping algorithm (named <strong>threshold</strong>) that can be used to find sources in such a sky model. For example, the following lines will identify sources and select only those smaller than 3 arcmin:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Use thresholding to group clean components into patches by smoothing the</span>
+<span class="c1"># clean-component model with a Gaussian of 60 arcsec FWHM</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;threshold&#39;</span><span class="p">,</span> <span class="n">FWHM</span><span class="o">=</span><span class="s1">&#39;60.0 arcsec&#39;</span><span class="p">)</span>
+
+<span class="c1"># Get the sizes (in arcmin) of the patches, weighted by the clean-component</span>
+<span class="c1"># fluxes</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sizes</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">getPatchSizes</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="s1">&#39;arcmin&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Select sources with sizes below 3 arcmin (the &quot;aggregate&quot; parameter means</span>
+<span class="c1"># to select on the patch sizes instead of the individual source sizes)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">sizes</span> <span class="o">&lt;</span> <span class="mf">3.0</span><span class="p">,</span> <span class="n">aggregate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="f" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>This section is maintained by David Rafferty (drafferty[at]hs[dot]uni-hamburg[dot]de).</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="factor.html" class="btn btn-neutral float-right" title="Factor: Facet Calibration for LOFAR" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="wsclean.html" class="btn btn-neutral" title="The WSClean Imager" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Sarrvesh Sridhar.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

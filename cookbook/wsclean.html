@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The WSClean Imager &mdash; LOFAR Imaging Cookbook 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="LOFAR Imaging Cookbook 0.0.1 documentation" href="index.html"/>
+        <link rel="next" title="Source detection and sky model manipulation: PyBDSF and LSMTool" href="sourcedetection.html"/>
+        <link rel="prev" title="LoSoTo: LOFAR Solution Tool" href="losoto.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> LOFAR Imaging Cookbook
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started </a></li>
+<li class="toctree-l1"><a class="reference internal" href="datainspection.html">Data inspection </a></li>
+<li class="toctree-l1"><a class="reference internal" href="aoflagger.html">AOFlagger </a></li>
+<li class="toctree-l1"><a class="reference internal" href="dppp.html">The Default Pre-Processing Pipeline (DPPP) </a></li>
+<li class="toctree-l1"><a class="reference internal" href="dpppcalibrate.html">Gain calibration with DPPP </a></li>
+<li class="toctree-l1"><a class="reference internal" href="losoto.html">LoSoTo: LOFAR Solution Tool </a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The WSClean Imager </a></li>
+<li class="toctree-l1"><a class="reference internal" href="sourcedetection.html">Source detection and sky model manipulation: PyBDSF and LSMTool </a></li>
+<li class="toctree-l1"><a class="reference internal" href="factor.html">Factor: Facet Calibration for LOFAR </a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">Useful resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bbs.html">Black-Board Selfcal (BBS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shapelets.html">Sky Model Construction Using Shapelets </a></li>
+<li class="toctree-l1"><a class="reference internal" href="sagecal.html">SAGECAL </a></li>
+<li class="toctree-l1"><a class="reference internal" href="awimager.html">The AW Imager </a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">LOFAR Imaging Cookbook</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>The WSClean Imager </li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/wsclean.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="the-wsclean-imager">
+<h1>The WSClean Imager <a class="footnote-reference" href="#f1" id="id1">[1]</a><a class="headerlink" href="#the-wsclean-imager" title="Permalink to this headline">¶</a></h1>
+<p>WSClean is a command-line imager that is tailered for wide-field imaging. It supports several deconvolution methods, including multi-scale and multi-frequency deconvolution and an “RM-synthesis”-deconvolution mode. It also supports correcting images for the LOFAR beam.</p>
+<p>To use WSClean on one of the CEP clusters, first include the WSClean environment:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">Wsclean</span>
+</pre></div>
+</div>
+<p>A list of command line options can be acquired by running <strong>wsclean</strong> without parameters:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ wsclean
+WSClean version 2.4 (2017-05-28)
+This software package is released under the GPL version 3.
+...
+</pre></div>
+</div>
+<p>An extensive manual for WSClean is available on-line, at <a class="reference external" href="https://sourceforge.net/p/wsclean/wiki/Home/">wsclean homepage</a>. It includes a chapter about LOFAR beam correction. WSClean has also been described in the following article: <a class="reference external" href="http://arxiv.org/abs/1407.1943">http://arxiv.org/abs/1407.1943</a>.</p>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>The author of this chapter is AndrU+00E9 Offringa (offringa[at]astron[dot]nl).</td></tr>
+</tbody>
+</table>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sourcedetection.html" class="btn btn-neutral float-right" title="Source detection and sky model manipulation: PyBDSF and LSMTool" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="losoto.html" class="btn btn-neutral" title="LoSoTo: LOFAR Solution Tool" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Sarrvesh Sridhar.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

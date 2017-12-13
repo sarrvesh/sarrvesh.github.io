@@ -1,0 +1,406 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The AW Imager &mdash; LOFAR Imaging Cookbook 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="LOFAR Imaging Cookbook 0.0.1 documentation" href="index.html"/>
+        <link rel="prev" title="SAGECAL" href="sagecal.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> LOFAR Imaging Cookbook
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started </a></li>
+<li class="toctree-l1"><a class="reference internal" href="datainspection.html">Data inspection </a></li>
+<li class="toctree-l1"><a class="reference internal" href="aoflagger.html">AOFlagger </a></li>
+<li class="toctree-l1"><a class="reference internal" href="dppp.html">The Default Pre-Processing Pipeline (DPPP) </a></li>
+<li class="toctree-l1"><a class="reference internal" href="dpppcalibrate.html">Gain calibration with DPPP </a></li>
+<li class="toctree-l1"><a class="reference internal" href="losoto.html">LoSoTo: LOFAR Solution Tool </a></li>
+<li class="toctree-l1"><a class="reference internal" href="wsclean.html">The WSClean Imager </a></li>
+<li class="toctree-l1"><a class="reference internal" href="sourcedetection.html">Source detection and sky model manipulation: PyBDSF and LSMTool </a></li>
+<li class="toctree-l1"><a class="reference internal" href="factor.html">Factor: Facet Calibration for LOFAR </a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">Useful resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bbs.html">Black-Board Selfcal (BBS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shapelets.html">Sky Model Construction Using Shapelets </a></li>
+<li class="toctree-l1"><a class="reference internal" href="sagecal.html">SAGECAL </a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The AW Imager </a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#output-files">Output files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#input-parameters">Input Parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-selection">Data selection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#image-properties">Image properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#weighting">Weighting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#operation">Operation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deconvolution">Deconvolution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gridding">Gridding</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">LOFAR Imaging Cookbook</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>The AW Imager </li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/awimager.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="the-aw-imager">
+<h1>The AW Imager <a class="footnote-reference" href="#f1" id="id1">[1]</a><a class="headerlink" href="#the-aw-imager" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>In this section we will describe the necessary steps needed to perform
+successful imaging of LOFAR data using the AWimager <a class="footnote-reference" href="#f2" id="id2">[2]</a>.</p>
+<p>Note that the AWimager is still in the development phase, therefore this documentation is very dynamic and it is currently meant to provide the basic instructions on how to use the code.</p>
+</div>
+<div class="section" id="background">
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
+<p>The AWimager is specially adapted to image wide fields of view, and imaging data produced by non-coplanar arrays, where the W term in the measured visibilities is not negligible. Furthermore, AWimager corrects for direction dependent effects (LOFAR beam and ionosphere) varying in time and frequency. The used algorithm is A-projection.</p>
+<p>The algorithm is implemented using some CASA libraries.</p>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>To run AWimager, you first need to setup your environment using:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">lofar</span>
+</pre></div>
+</div>
+<p>Before running AWimager, it is necessary to calibrate the dataset and correct
+the visibilities towards the phase center of the observation. This can now be
+done by not specifying any direction in the <strong>correct</strong> step of BBS.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Step</span><span class="o">.</span><span class="n">correct</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">Sources</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<p>AWimager can run in a parallel fashion. The number of processing cores
+(<strong>n</strong>) to be used during imaging can be specified:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">OMP_NUM_THREADS</span><span class="o">=</span><span class="n">n</span>
+</pre></div>
+</div>
+<p>If not specified, all cores will be used. AWimager is quite memory hungry, so the number of cores should be limited in case it fails due a <strong>‘bad alloc’</strong> error.</p>
+</div>
+<div class="section" id="output-files">
+<h2>Output files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h2>
+<p>AWimager creates several image output files. Note that in the following list <strong>&lt;image&gt;</strong> is the image name given using the <strong>image</strong> parameter.</p>
+<ul class="simple">
+<li><strong>&lt;image&gt;.model</strong> is the uncorrected dirty image.</li>
+<li><strong>&lt;image&gt;.model.corr</strong> is the dirty image corrected for the average primary beam.</li>
+<li><strong>&lt;image&gt;.restored</strong> and <strong>&lt;image&gt;.restored.corr</strong> are the restored images.</li>
+<li><strong>&lt;image&gt;.residual</strong> and <strong>&lt;image&gt;.residual.corr</strong> are the residual images.</li>
+<li><strong>&lt;image&gt;.psf</strong> is the point spread function.</li>
+<li><strong>&lt;image&gt;0.avgpb</strong> is the average primary beam.</li>
+</ul>
+<p>Furthermore, a few other files might be created for AWimager’s internal use.</p>
+</div>
+<div class="section" id="input-parameters">
+<h2>Input Parameters<a class="headerlink" href="#input-parameters" title="Permalink to this headline">¶</a></h2>
+<p>An extensive list of the parameters that can be used by the AWimager
+can be obtained by typing:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">awimager</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+<p>Eventually, to run the imager, you can type:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">awimager</span> <span class="n">ms</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">MS</span> <span class="n">image</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">img</span> <span class="n">weight</span><span class="o">=</span><span class="n">natural</span> <span class="n">wprojplanes</span><span class="o">=</span><span class="mi">64</span> <span class="n">npix</span><span class="o">=</span><span class="mi">512</span> <span class="n">cellsize</span><span class="o">=</span><span class="mi">60</span><span class="n">arcsec</span> <span class="n">data</span><span class="o">=</span><span class="n">CORRECTED_DATA</span> <span class="n">padding</span><span class="o">=</span><span class="mf">1.</span> <span class="n">niter</span><span class="o">=</span><span class="mi">2000</span> <span class="n">timewindow</span><span class="o">=</span><span class="mi">300</span> <span class="n">stokes</span><span class="o">=</span><span class="n">IQUV</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="n">Jy</span> <span class="n">operation</span><span class="o">=</span><span class="n">csclean</span>
+</pre></div>
+</div>
+<p>It is also possible to specify these parameters in a parset and run it like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">awimager</span> <span class="n">parsetname</span>
+</pre></div>
+</div>
+<p>Many parameters can be set for the AWimager. Several of them are currently being tested by the commissioners. The most important parameters are listed below.</p>
+<div class="section" id="data-selection">
+<h3>Data selection<a class="headerlink" href="#data-selection" title="Permalink to this headline">¶</a></h3>
+<p>These parameters specify the input data.</p>
+<ul class="simple">
+<li><strong>ms</strong> - The name of the input MeasurementSet.</li>
+<li><strong>data</strong> - The name of the data column to use in the MeasurementSet. The default is DATA.</li>
+<li><strong>antenna</strong> - Baseline selection following the CASA baseline selection syntax</li>
+<li><strong>wmax</strong> - Ignore baselines whose w-value exceeds wmax (in meters).</li>
+<li><strong>uvdist</strong> - Ignore baselines whose length (in wavelengths) exceed uvdist.</li>
+<li><strong>select</strong> - Only use data matching this TaQL selection string. For example, <strong>sumsqr(UVW[:2])&lt;1e8</strong> selects baselines with length &lt;10km.</li>
+</ul>
+</div>
+<div class="section" id="image-properties">
+<h3>Image properties<a class="headerlink" href="#image-properties" title="Permalink to this headline">¶</a></h3>
+<p>These parameters define the properties of the output image.</p>
+<ul class="simple">
+<li><strong>image</strong> - The name of the image.</li>
+<li><strong>npix</strong> - The number of pixels in the RA and DEC direction</li>
+<li><strong>cellsize</strong> - The size of each pixel. An unit can be given at the end. E.g.  <strong>30arcsec</strong></li>
+<li><strong>padding</strong> - The padding factor to use when imaging. It can be used to get rid of effects at the edges of the image. If, say, 1.5 is given, the number of pixels used internally is 50% more.</li>
+<li><strong>stokes</strong> - The Stokes parameters for which an image is made. If A-projection is used, it must be IQUV.</li>
+</ul>
+</div>
+<div class="section" id="weighting">
+<h3>Weighting<a class="headerlink" href="#weighting" title="Permalink to this headline">¶</a></h3>
+<p>These parameters select the weighting scheme to be used.</p>
+<ul class="simple">
+<li><strong>weight</strong> - Weighting scheme (uniform, superuniform, natural, briggs (robust), briggsabs, or radial)</li>
+<li><strong>robust</strong> - Robust weighting parameter.</li>
+</ul>
+</div>
+<div class="section" id="operation">
+<h3>Operation<a class="headerlink" href="#operation" title="Permalink to this headline">¶</a></h3>
+<p>This parameter selects the operation to be performed by awimager.</p>
+<ul>
+<li><p class="first"><strong>operation</strong> - The operation to be performed by the AWImager.</p>
+<blockquote>
+<div><ul class="simple">
+<li>csclean - make an image and clean it (using Cotton-Schwab).</li>
+<li>multiscale - use multiscale cleaning.</li>
+<li>image - make dirty image only.</li>
+<li>predict - fill the data column in the MeasurementSet by predicting the data from the image.</li>
+<li>empty - make an empty image. This can be useful if only image coordinate info is needed.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="deconvolution">
+<h3>Deconvolution<a class="headerlink" href="#deconvolution" title="Permalink to this headline">¶</a></h3>
+<p>These parameters control the deconvolution algorithm. Only those parameters that are applicable to the selected operation will be used.</p>
+<ul class="simple">
+<li><strong>niter</strong> - The number of clean iterations to be done. The default is 1000.</li>
+<li><strong>gain</strong> - The loop gain for cleaning. The default is 0.1.</li>
+<li><strong>threshold</strong> - The flux level at which to stop cleaning. The default is 0Jy.</li>
+<li><strong>uservector</strong> - Comma separated list of scales (in pixels) to be used by multiscale deconvolution</li>
+</ul>
+</div>
+<div class="section" id="gridding">
+<h3>Gridding<a class="headerlink" href="#gridding" title="Permalink to this headline">¶</a></h3>
+<p>These parameters control the AW-projection algorithm.</p>
+<ul class="simple">
+<li><strong>wprojplanes</strong> - The number of W projection planes to use.</li>
+<li><strong>maxsupport</strong> - The maximum of W convolution functions. The default is 1024.</li>
+<li><strong>oversample</strong> - The oversampling to use for the convolution functions. The default is 8.</li>
+<li><strong>timewindow</strong> - The width of the time window (in sec) where the AW-term is assumed to be constant. Default is 300 sec. The wider the window, the faster the imager will be.</li>
+<li><strong>splitbeam</strong> - Evaluate station beam and element beam separately? The default is true. AWimager will work much faster if the correction for the station and element beam can be applied separately. This should only be done if the element beam is the same for all stations used.</li>
+</ul>
+<p>For more details, the user can refer to the Busy Wednesday <a class="reference external" href="http://www.lofar.org/operations/doku.php?id=commissioning:busy_wednesdays">commissioning reports</a> (specifically those from September 28 and October 26 2011).</p>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>This chapter is maintained by Bas van der Tol (tol[at]astron[dot]nl).</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Cyril Tasse, Bas van der Tol, Joris van Zwieten, Ger van Diepen, Sanjay Bhatnagar 2013, <strong>Applying full polarization A-Projection to very wide field of view instruments: An imager for LOFAR}. A&amp;A, 553, A105</strong>.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="sagecal.html" class="btn btn-neutral" title="SAGECAL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Sarrvesh Sridhar.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

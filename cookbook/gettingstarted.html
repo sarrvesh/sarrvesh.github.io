@@ -1,0 +1,451 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Getting started &mdash; LOFAR Imaging Cookbook 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="LOFAR Imaging Cookbook 0.0.1 documentation" href="index.html"/>
+        <link rel="next" title="Data inspection" href="datainspection.html"/>
+        <link rel="prev" title="Welcome to LOFAR Imaging Cookbook’s documentation!" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> LOFAR Imaging Cookbook
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started </a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-lofar-cluster-layout">The LOFAR cluster layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-lofar-phase-4-cluster-cep4">The LOFAR phase 4 cluster - CEP4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cep3">CEP3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logging-on-to-cep3">Logging on to CEP3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-your-working-environment">Setting up your working environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#login-scripts">Login scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generation-of-ssh-keys">Generation of SSH keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disable-ssh-host-key-checking">Disable SSH Host Key Checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#copying-data-from-and-to-cep3-cluster">Copying data from and to CEP3 cluster</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datainspection.html">Data inspection </a></li>
+<li class="toctree-l1"><a class="reference internal" href="aoflagger.html">AOFlagger </a></li>
+<li class="toctree-l1"><a class="reference internal" href="dppp.html">The Default Pre-Processing Pipeline (DPPP) </a></li>
+<li class="toctree-l1"><a class="reference internal" href="dpppcalibrate.html">Gain calibration with DPPP </a></li>
+<li class="toctree-l1"><a class="reference internal" href="losoto.html">LoSoTo: LOFAR Solution Tool </a></li>
+<li class="toctree-l1"><a class="reference internal" href="wsclean.html">The WSClean Imager </a></li>
+<li class="toctree-l1"><a class="reference internal" href="sourcedetection.html">Source detection and sky model manipulation: PyBDSF and LSMTool </a></li>
+<li class="toctree-l1"><a class="reference internal" href="factor.html">Factor: Facet Calibration for LOFAR </a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">Useful resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bbs.html">Black-Board Selfcal (BBS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shapelets.html">Sky Model Construction Using Shapelets </a></li>
+<li class="toctree-l1"><a class="reference internal" href="sagecal.html">SAGECAL </a></li>
+<li class="toctree-l1"><a class="reference internal" href="awimager.html">The AW Imager </a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">LOFAR Imaging Cookbook</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Getting started </li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/gettingstarted.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="getting-started">
+<h1>Getting started <a class="footnote-reference" href="#f1" id="id1">[1]</a><a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="the-lofar-cluster-layout">
+<h2>The LOFAR cluster layout<a class="headerlink" href="#the-lofar-cluster-layout" title="Permalink to this headline">¶</a></h2>
+<p>The correlated data coming from the Cobalt <a class="footnote-reference" href="#f2" id="id2">[2]</a> correlator are stored on a cluster of machines called CEP4 cluster (see Sect.~ref{cep4} for an extensive overview).
+CEP4 has been added to the LOFAR offline system at the beginning of 2017.
+Till December 2016, another cluster of computing machines was used to store and process the data (CEP2).
+Nowadays, CEP4 is normally used by the Radio Observatory to process the data through the initial stages of the data reduction (flagging and averaging of the visibilities), while another CEP facility is currently used by both the commissioners and LOFAR users to manually play with the data and understand which strategy to use for the calibration and the imaging: the new  commissioning cluster CEP3 (see~Sect.~ref{cep3}).
+CEP4 facility provides technologies that were not available on CEP2, especially with respect to resource management.</p>
+<p>In the following sections we will focus on discussing the architecture of CEP facilities as well as their usage policies.</p>
+</div>
+<div class="section" id="the-lofar-phase-4-cluster-cep4">
+<h2>The LOFAR phase 4 cluster - CEP4<a class="headerlink" href="#the-lofar-phase-4-cluster-cep4" title="Permalink to this headline">¶</a></h2>
+<p>The LOFAR CEP4 cluster is composed by 50 compute nodes (<strong>cpu01-50</strong>), 4 GPU nodes (<strong>gpu01-04</strong>), 18 storage nodes (<strong>data01-18</strong>), 50 compute nodes (<strong>cpu01-50</strong>), 2 meta-data nodes (<strong>meta01-02</strong>), 2 head nodes (<strong>head01-head02</strong>) and 1 management node (<strong>mgmt01</strong>).
+A detailed description of all the packages available on the new cluster and on its network interface can be found on the <a class="reference external" href="https://www.astron.nl/lofarwiki/doku.php?id=cep4:system">wiki</a>. Processed data products will usually made available to the user via the Long-Term Archive, but may also be copied to the CEP3 cluster upon request for further analysis by the user in the original proposal. Due to the intensive nature of the standard data pipelines and the need for these compute resources to be allocated and scheduled by Radio Observatory staff, access to the resources on CEP4 will be strictly limited, with a few exceptions, to the Radio Observatory. In the following, a short description of the computing characteristics/performances of the new cluster is given.</p>
+<p>The Lofar Phase 4 cluster consists of:</p>
+<ul class="simple">
+<li>50 compute nodes (called cpu01..cpu50)</li>
+<li>4 GPU nodes (gpu01..gpu04)</li>
+<li>18 storage nodes (data01..data18)</li>
+<li>2 meta-data nodes (meta01..meta02)</li>
+<li>2 head nodes (head01..head02)</li>
+<li>1 management node (mgmt01)</li>
+</ul>
+<p>Each node is reachable as XXXX.cep4.control.lofar. Users are only allowed on head01 and head02. Each compute node consists of:</p>
+<ul class="simple">
+<li>CPU: Intel Xeon E5-2680v3 2.5 GHz (12 cores, HyperThreading disabled)</li>
+<li>Memory: 256GB &#64; 2133 MHz</li>
+<li>Disk: 2x 300GB 10Krpm SAS RAID</li>
+<li>Network: 2x 1GbE, 2x 10GbE, 1x FDR InfiniBand</li>
+</ul>
+<p>Each GPU node consists of:</p>
+<ul class="simple">
+<li>CPU: Intel Xeon E5-2630v3 $2.4$ GHz (8 cores, HyperThreading disabled)</li>
+<li>Memory: 320GB &#64; 1866 MHz</li>
+<li>Disk: 2x 300GB 10Krpm SAS RAID + 2x 6TB $7.2$Krpm SAS RAID</li>
+<li>Network: 2x 1GbE, 2x 10GbE, 1x FDR InifiniBand</li>
+</ul>
+<p>Each head node consists of:</p>
+<ul class="simple">
+<li>CPU: Intel Xeon E5-2603v3 $1.6$ GHz (6 cores, HyperThreading disabled)</li>
+<li>Memory: 128GB at 1600 MHz</li>
+<li>Disk: 2x 300GB 10Krpm SAS RAID + 2x 6TB $7.2$Krpm SAS RAID</li>
+<li>Network: 2x 1GbE, 2x 10GbE, 1x FDR InifiniBand</li>
+</ul>
+<p>The other nodes are not accessible (storage, meta-data, and management nodes).</p>
+<p><strong>Storage:</strong> The storage and meta-data nodes provide about 2PB LustreFS global filesystem through the InfiniBand network to all nodes in the data partition, thus implying that all nodes see the same data.</p>
+<p><strong>Processing:</strong> CEP4 will use a SLURM batch scheduling system to schedule and run all observation and processing jobs on the cluster.</p>
+<p>NOTE: It is emphasised again that CEP4 is not meant for commissioning work. For that, commissioners can use CEP3 (see access policies here). It is emphasized that the disks on CEP3 are not intended for long term storage of results. As it is impossible for the Observatory to micro-manage the disk space, commissioners should be aware that disk deletions could happen with very little warning.</p>
+</div>
+<div class="section" id="cep3">
+<h2>CEP3<a class="headerlink" href="#cep3" title="Permalink to this headline">¶</a></h2>
+<p>The CEP3 cluster is available since November 2014 and allows running science processing close to the CEP4 facility as well as for commissioning work. An overview of the hardware and software as well as of major policies and procedures is available on the <a class="reference external" href="http://www.lofar.org/operations/doku.php?id=cep3:start">LOFAR wiki</a>. The cluster consists of 24 equivalent servers with the following specifications:</p>
+<ul class="simple">
+<li>DELL PowerEdge R720 Rack server</li>
+<li>Dual Intel Xeon e5 2660 v2 processors (10 cores each)</li>
+<li>128 GB memory</li>
+<li>4x 8 TB internal disk configured in RAID 6 (24 TB net capacity)</li>
+<li>10 GE data interconnect</li>
+<li>1 GE management network</li>
+</ul>
+<p>In the future the servers can be fitted with up to two GPU cards (e.g. NVIDIA K20X).</p>
+<p>Two head nodes (lhd001 &amp; lhd002) are available for logging in and (limited) interactive development and processing purposes. Access to CEP3 can only be done through the <strong>lhdhead.offline.lofar</strong> head node, access to the twenty two worker nodes is managed through a job management system. Users are required to submit requests for processing jobs/sessions on the worker nodes. In general, data will be distributed across the local disks on the worker nodes and processing jobs are distributed accordingly.</p>
+<p><strong>USAGE POLICY:</strong> Observing, CEP4 processing time and the use of CEP3 are allocated by the LOFAR Programme Committee and the ILT director during the regular proposal evaluation stages, or under Director’s Discretionary Time. Access and use of CEP3 is under the sole control of the Radio Observatory’s Science Operations &amp; Support (SOS). Access for Users will be granted only at the discretion of the Science Operations &amp; Support. Users should conform to the access, resource allocation and data deletion policies issued by the SOS at all times.</p>
+<p>To have access to CEP3 a formal request must be submitted to <a class="reference external" href="mailto:sos&#37;&#52;&#48;astron&#46;nl">sos<span>&#64;</span>astron<span>&#46;</span>nl</a> or be explicitly given in a proposal for LOFAR observing time. When submitting a request users should clearly include the following information:</p>
+<ul class="simple">
+<li>A brief explanation of why access to CEP3 is required (e.g., you do not have access to suitable computing resources elsewhere)</li>
+<li>Project to be worked on (i.e. commissioning, cycle or archived data (post) processing)</li>
+<li>Description of the kind of processing for which CEP3 access is requested</li>
+<li>List of collaborators (if any) who should also have access</li>
+<li>General description of the data to be processed (e.g. data size)</li>
+<li>Estimated processing time required</li>
+</ul>
+<p>Users awarded with access to CEP3 will be able to access the cluster for a limited period of time (2 months by default). The awarded period starts:</p>
+<ul class="simple">
+<li>from the moment the user’s data is copied from CEP4 (after Radio Observatory pipeline processing) to CEP3</li>
+<li>following the timeline communicated to the user via the SOS notification and available at href{<a class="reference external" href="http://www.lofar.org/operations/doku.php?id=cep3:earlyaccess">http://www.lofar.org/operations/doku.php?id=cep3:earlyaccess</a>}{<a class="reference external" href="http://www.lofar.org/operations/doku.php?id=cep3:earlyaccess">http://www.lofar.org/operations/doku.php?id=cep3:earlyaccess</a>}.</li>
+</ul>
+<p>At the beginning of a Cycle, users requesting CEP3 processing time in their observing proposals can derive this timeline by checking the observing schedule, which is available at href{<a class="reference external" href="http://www.astron.nl/radio-observatory/cycles/cycles">http://www.astron.nl/radio-observatory/cycles/cycles</a>}{<a class="reference external" href="http://www.astron.nl/radio-observatory/cycles/cycles">http://www.astron.nl/radio-observatory/cycles/cycles</a>}. Access timelines related to observing programs involving observations spread in time will be discussed between the PI and Science Support. In general, info about CEP3 access of users are detailed at href{<a class="reference external" href="http://www.lofar.org/operations/doku.php?id=cep3:earlyaccess">http://www.lofar.org/operations/doku.php?id=cep3:earlyaccess</a>}{<a class="reference external" href="http://www.lofar.org/operations/doku.php?id=cep3:earlyaccess">http://www.lofar.org/operations/doku.php?id=cep3:earlyaccess</a>}. After the granted period on CEP3 has expired, all users data products generated on the cluster will be automatically and promptly removed, to enable new users to have enough disk space to perform their data reduction.</p>
+<p>Extensions to the default 8-weeks period will be granted only in exceptional circumstances and only if properly justified through a formal request to be sent to <a class="reference external" href="mailto:sos&#37;&#52;&#48;astron&#46;nl">sos<span>&#64;</span>astron<span>&#46;</span>nl</a> no later than 1 week before the expiration of your access privileges. Monitoring of node usage during allocated time will be performed and the evaluation of extension requests will be based on such statistics.</p>
+</div>
+<div class="section" id="logging-on-to-cep3">
+<h2>Logging on to CEP3<a class="headerlink" href="#logging-on-to-cep3" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned above, normal users have access only to CEP3 head node(s), while the access to processing nodes is controlled using the Slurm cluster management software. In the head node users can experience the quality of the data and understand the best approach to use in the lof node(s) for the calibration and imaging of the visibilities. After Science Support has set up a reservation on a particular processing node(s), you should have a reservationID needed for setting up access to the working node(s).</p>
+<p>To access CEP3, begin by logging on to <strong>portal.lofar.eu</strong> <a class="footnote-reference" href="#f3" id="id3">[3]</a></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="o">-</span><span class="n">Y</span> <span class="o">&lt;</span><span class="n">user</span> <span class="n">name</span><span class="o">&gt;</span><span class="nd">@portal</span><span class="o">.</span><span class="n">lofar</span><span class="o">.</span><span class="n">eu</span>
+</pre></div>
+</div>
+<p>where <em>&lt;user name&gt;</em> is likely to be the user’s surname.  Type in your default password <a class="footnote-reference" href="#f4" id="id4">[4]</a>. Once you are on the portal, you can then log in to the front end (you are requested to use <strong>lhdhead.offline.lofar</strong>) <a class="footnote-reference" href="#f5" id="id5">[5]</a> as</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="o">-</span><span class="n">Y</span> <span class="n">lhdhead</span><span class="o">.</span><span class="n">offline</span><span class="o">.</span><span class="n">lofar</span>
+</pre></div>
+</div>
+<p>If this is the first time you will be logging onto the cluster, you are advised to change your password by typing</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ypasswd</span>
+</pre></div>
+</div>
+<p>in the usual fashion (old default password, new password, confirm new password).</p>
+<p>In order to log on to (for example) <strong>lof019</strong> <a class="footnote-reference" href="#f6" id="id6">[6]</a>, start a Slurm job from the head node <strong>lhdhead.offline.lofar</strong>. Any job will do, but we advice starting an interactive bash shell</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">srun</span> <span class="o">--</span><span class="n">reservation</span><span class="o">=&lt;</span><span class="n">reservationID</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">N</span><span class="o">&lt;</span><span class="n">nr</span> <span class="n">of</span> <span class="n">nodes</span><span class="o">&gt;</span> <span class="n">bash</span> <span class="o">-</span><span class="n">i</span>
+</pre></div>
+</div>
+<p>This should give you a prompt (or more than one if you have more nodes on your job). Once you have the Slurm job running and log using ssh-keys enabled (see~Sect.~ref{sec:ssh-keys} for instructions), you are allowed standard SSH access with X-forwarding to the reserved nodes from the head node starting from a new terminal screen on the head node <strong>lhdhead.offline.lofar</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="o">-</span><span class="n">XY</span> <span class="o">&lt;</span><span class="n">user</span> <span class="n">name</span><span class="o">&gt;</span><span class="nd">@lof019</span>
+</pre></div>
+</div>
+<p>Once on the compute node, you will be located in your home directory ( <em>/home/&lt;user name&gt;</em>), which is visible from any node.</p>
+<p>For more information on the cluster architecture/properties, see:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.lofar.org/operations/doku.php?id=public:lofar_cluster">LOFAR cluster page on the wiki</a></li>
+<li><a class="reference external" href="http://www.lofar.org/operations/doku.php?id=cep3:start">CEP3 page on the wiki</a></li>
+</ul>
+</div>
+<div class="section" id="setting-up-your-working-environment">
+<h2>Setting up your working environment<a class="headerlink" href="#setting-up-your-working-environment" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="login-scripts">
+<h3>Login scripts<a class="headerlink" href="#login-scripts" title="Permalink to this headline">¶</a></h3>
+<p>After an account is created, you will have a separate CEP3 <em>$HOME</em> directory. At the first login, it will be empty and needs to be setup properly to be able to use the provided tools and programs on CEP3. Log in to the front end cluster and from your <em>$HOME</em> directory follow the approaches reported below.</p>
+<ul class="simple">
+<li>Check if your <em>$HOME</em> directory contains</li>
+</ul>
+</div>
+<div class="section" id="generation-of-ssh-keys">
+<h3>Generation of SSH keys<a class="headerlink" href="#generation-of-ssh-keys" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="disable-ssh-host-key-checking">
+<h3>Disable SSH Host Key Checking<a class="headerlink" href="#disable-ssh-host-key-checking" title="Permalink to this headline">¶</a></h3>
+<p>Normally, when you first connect to a new host, SSH will prompt you for confirmation of the host key:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ ssh lof019
+The authenticity of host &#39;lce019 (10.176.0.19)&#39; can&#39;t be established.
+RSA key fingerprint is 73:27:96:cd:f5:04:b7:c3:57:47:49:97:8b:87:8b:15.
+Are you sure you want to continue connecting (yes/no)?
+</pre></div>
+</div>
+<p>When trying to run a command over many compute (and/or storage) nodes using
+multiple SSH connections, that can get pretty annoying. To get around it, set
+<strong>StrictHostKeyChecking</strong> to <strong>no</strong> in <strong>$HOME/.ssh/config</strong>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cat ~/.ssh/config
+StrictHostKeyChecking no
+</pre></div>
+</div>
+</div>
+<div class="section" id="copying-data-from-and-to-cep3-cluster">
+<h3>Copying data from and to CEP3 cluster<a class="headerlink" href="#copying-data-from-and-to-cep3-cluster" title="Permalink to this headline">¶</a></h3>
+<p>Data transfers from CEP4 to CEP3 should always be coordinated with the Radio Observatory <a class="footnote-reference" href="#f7" id="id7">[7]</a>. Data retrieval from LTA locations as well as from/to other computing facilities is also possible as detailed in <a class="reference external" href="http://www.lofar.org/wiki/doku.php?id=cep3:userdata">the LOFAR wiki</a>. Although access to the CEP3 systems can only be done through the <strong>lhdhead.offline.lofar</strong> head node, data transfers to the outside world can be done directly. Because data will be transferred via the LOFAR portal, care should be taken not to flood the available network bandwidth with the public internet. Thus <em>we recommend to limit the bandwidth</em> to not disturb the portal access of other users. Note that the portal capacity is 120MB/s.</p>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>This chapter is maintained by M. Iacobello (iacobelli[at]astron[dot]nl)</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>It is located in Groningen, The Netherlands.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>The actual host name is lfw.lofar.eu (lfw=LOFAR firewall), but this alias will work fine.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>Your default password will be communicated to you at the moment of the creation of your Lofar account by Teun Grit (grit[at]astron[dot]nl).</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td>You may have to log out of and log in again to the portal first.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td>The Radio Observatory will assign you with a suitable <em>lof</em> node to work on.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[7]</a></td><td>sos[at]astron[dot]nl</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="datainspection.html" class="btn btn-neutral float-right" title="Data inspection" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to LOFAR Imaging Cookbook’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Sarrvesh Sridhar.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

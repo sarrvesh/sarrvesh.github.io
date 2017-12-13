@@ -1,0 +1,44 @@
+Calibration with BBS [#f1]_
+===========================
+
+BBS is a software package that was designed for the calibration and simulation of LOFAR data. This section provides a practical guide to reducing LOFAR data with BBS. Do not expect a description of the optimal way to calibrate LOFAR data that works on all possible fields. Much still has to be learned about the reduction of LOFAR data. This chapter should rather be viewed as a written record of the experience gained so far, through the efforts of many commissioners and developers.
+
+NOTE: the most common calibration scenarios can now be performed in DPPP, which is a lot faster (at least 10 times). Please first see if your calibration can be done with DPPP, see Chapter~\ref{sec:dpppcalibration}.
+
+--------
+Overview
+--------
+
+The sky as observed by LOFAR is the "true" sky distorted by characteristics of the instrument (station beam, global bandpass, clock drift, and so on) and the environment (ionosphere). The goal of calibration (and imaging) is to compute an accurate estimate of the "true" sky from the distorted measurements.
+
+The influence of the instrument and the environment on the measured signal can be described by the **measurement equation**. Calibration involves solving the following inverse problem: Given the measured signal (observations) and a parameterized measurement equation (model), find the set of parameter values that minimizes the difference between the model and the observations.
+
+The core functionality of BBS can conceptually be split into two parts. One part concerns the simulation of visibilities given a model. The other part concerns estimating best-fit parameter values given a model and a set of observed visibilities. This is an iterative procedure: A set of simulated visibilities is computed using the current values of the parameters. Then, the values of the parameters are adjusted to minimize the difference between simulated visibilities and observed visibilities, and an updated set of simulated visibilities is computed. This continues in a loop until a convergence criteria is met.
+
+BBS has two modes of running. The first is to run as a stand-alone tool to calibrate one subband. If a single subband does not contain enough signal, BBS offers the possibility to use data from multiple subbands together for parameter estimation. This is called *global* parameter estimation. In this chapter, we will focus on the stand-alone version; only in Section~\ref{bbs:global-parameter-estimation} we will treat the global solve.
+
+As input, BBS requires an observation (one or more subbands / measurement sets), a source catalog (see Section~\ref{bbs:source-catalog}), a table of initial model parameters (see Section~\ref{bbs:model-parameters}), and a configuration file (also called *parset*, see Section~\ref{bbs:example-reductions}) that specifies the operations that need to be performed on the observation as a whole. As output, BBS produces a processed observation, a table of estimated model parameters, and a bunch of log files.
+
+-----
+Usage
+-----
+
+To calibrate a single MS, execute the **calibrate-stand-alone** script on the command line::
+
+    > calibrate-stand-alone -f <MS> <parset> <source catalog>
+    
+The important arguments provided to the **calibrate-stand-alone** script in this example are:
+
++ **<MS>**, which is the name of the MS to process.
++ **<parset>**, which defines the reduction (see Section~\ref{bbs:example-reductions}).
++ **<source catalog>**, which defines a list of sources that can be used for calibration (see Section~\ref{bbs:source-catalog}).
++ The **-f** option, which overwrites stale information (the instrument table and sky model) from previous runs.
+
+You can run the script without arguments for a description of all the options and the mandatory arguments, such as the **-v** option to get a more verbose output.
+
+
+
+
+.. rubric:: Footnotes
+
+.. [#f1] This section is maintained by Tammo Jan Dijkema (`dijkema[at]astron[dot]nl <mailto:dijkema@astron.nl>`_). It was originally written by Joris van Zwieten and Reinout van Weeren.

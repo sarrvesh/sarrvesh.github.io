@@ -1,0 +1,340 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Welcome to LOFAR Imaging Cookbook’s documentation! &mdash; LOFAR Imaging Cookbook 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="LOFAR Imaging Cookbook 0.0.1 documentation" href="#"/>
+        <link rel="next" title="Getting started" href="gettingstarted.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> LOFAR Imaging Cookbook
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started </a></li>
+<li class="toctree-l1"><a class="reference internal" href="datainspection.html">Data inspection </a></li>
+<li class="toctree-l1"><a class="reference internal" href="aoflagger.html">AOFlagger </a></li>
+<li class="toctree-l1"><a class="reference internal" href="dppp.html">The Default Pre-Processing Pipeline (DPPP) </a></li>
+<li class="toctree-l1"><a class="reference internal" href="dpppcalibrate.html">Gain calibration with DPPP </a></li>
+<li class="toctree-l1"><a class="reference internal" href="losoto.html">LoSoTo: LOFAR Solution Tool </a></li>
+<li class="toctree-l1"><a class="reference internal" href="wsclean.html">The WSClean Imager </a></li>
+<li class="toctree-l1"><a class="reference internal" href="sourcedetection.html">Source detection and sky model manipulation: PyBDSF and LSMTool </a></li>
+<li class="toctree-l1"><a class="reference internal" href="factor.html">Factor: Facet Calibration for LOFAR </a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">Useful resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bbs.html">Calibration with BBS </a></li>
+<li class="toctree-l1"><a class="reference internal" href="shapelets.html">Sky Model Construction Using Shapelets </a></li>
+<li class="toctree-l1"><a class="reference internal" href="sagecal.html">SAGECAL </a></li>
+<li class="toctree-l1"><a class="reference internal" href="awimager.html">The AW Imager </a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">LOFAR Imaging Cookbook</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Welcome to LOFAR Imaging Cookbook’s documentation!</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="welcome-to-lofar-imaging-cookbook-s-documentation">
+<h1>Welcome to LOFAR Imaging Cookbook’s documentation!<a class="headerlink" href="#welcome-to-lofar-imaging-cookbook-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started </a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted.html#the-lofar-cluster-layout">The LOFAR cluster layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted.html#the-lofar-phase-4-cluster-cep4">The LOFAR phase 4 cluster - CEP4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted.html#cep3">CEP3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted.html#logging-on-to-cep3">Logging on to CEP3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted.html#setting-up-your-working-environment">Setting up your working environment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datainspection.html">Data inspection </a><ul>
+<li class="toctree-l2"><a class="reference internal" href="datainspection.html#analyzing-the-data-quality-with-aoqplot">Analyzing the data quality with <strong>aoqplot</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="datainspection.html#additional-information-manual-flagging-in-casa">Additional information: manual flagging in CASA</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="aoflagger.html">AOFlagger </a><ul>
+<li class="toctree-l2"><a class="reference internal" href="aoflagger.html#tutorial">Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aoflagger.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dppp.html">The Default Pre-Processing Pipeline (DPPP) </a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dppp.html#how-to-run-dppp">How to run DPPP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dppp.html#the-parset-file">The ParSet File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dppp.html#flag-statistics">Flag statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dpppcalibrate.html">Gain calibration with DPPP </a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dpppcalibrate.html#calibration-variants">Calibration variants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dpppcalibrate.html#making-a-skymodel">Making a skymodel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dpppcalibrate.html#calibration">Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dpppcalibrate.html#applying-solutions">Applying solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dpppcalibrate.html#transferring-solutions-and-the-beam">Transferring solutions and the beam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dpppcalibrate.html#applying-the-beam">Applying the beam</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="losoto.html">LoSoTo: LOFAR Solution Tool </a><ul>
+<li class="toctree-l2"><a class="reference internal" href="losoto.html#h5parm">H5parm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="losoto.html#losoto">LoSoTo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="losoto.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="losoto.html#developing-in-losoto">Developing in LoSoTo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="losoto.html#clock-tec-separation">Clock/TEC separation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wsclean.html">The WSClean Imager </a></li>
+<li class="toctree-l1"><a class="reference internal" href="sourcedetection.html">Source detection and sky model manipulation: PyBDSF and LSMTool </a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sourcedetection.html#source-detection-pybdsf">Source detection: PyBDSF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sourcedetection.html#sky-model-manipulation-lsmtool">Sky model manipulation: LSMTool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="factor.html">Factor: Facet Calibration for LOFAR </a><ul>
+<li class="toctree-l2"><a class="reference internal" href="factor.html#data-preparation-pre-facet-calibration-pipeline">Data preparation: Pre-facet calibration pipeline </a></li>
+<li class="toctree-l2"><a class="reference internal" href="factor.html#factor-tutorials">Factor tutorials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">Useful resources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="resources.html#webpages">Webpages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html#useful-analysis-scripts">Useful analysis scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html#contact-points">Contact points</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bbs.html">Calibration with BBS </a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bbs.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bbs.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="shapelets.html">Sky Model Construction Using Shapelets </a><ul>
+<li class="toctree-l2"><a class="reference internal" href="shapelets.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shapelets.html#software-overview">Software overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shapelets.html#step-by-step-example">Step by Step Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shapelets.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sagecal.html">SAGECAL </a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sagecal.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sagecal.html#using-sagecal">Using SAGECAL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sagecal.html#distributed-calibration">Distributed calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sagecal.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="awimager.html">The AW Imager </a><ul>
+<li class="toctree-l2"><a class="reference internal" href="awimager.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="awimager.html#background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="awimager.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="awimager.html#output-files">Output files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="awimager.html#input-parameters">Input Parameters</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="gettingstarted.html" class="btn btn-neutral float-right" title="Getting started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Sarrvesh Sridhar.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

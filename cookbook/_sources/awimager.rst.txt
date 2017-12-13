@@ -1,0 +1,152 @@
+The AW Imager [#f1]_
+====================
+
+------------
+Introduction
+------------
+
+In this section we will describe the necessary steps needed to perform
+successful imaging of LOFAR data using the AWimager [#f2]_. 
+
+Note that the AWimager is still in the development phase, therefore this documentation is very dynamic and it is currently meant to provide the basic instructions on how to use the code.
+
+----------
+Background
+----------
+
+The AWimager is specially adapted to image wide fields of view, and imaging data produced by non-coplanar arrays, where the W term in the measured visibilities is not negligible. Furthermore, AWimager corrects for direction dependent effects (LOFAR beam and ionosphere) varying in time and frequency. The used algorithm is A-projection.
+
+The algorithm is implemented using some CASA libraries.
+
+------
+Usage
+------
+
+To run AWimager, you first need to setup your environment using::
+
+   module load lofar
+
+Before running AWimager, it is necessary to calibrate the dataset and correct
+the visibilities towards the phase center of the observation. This can now be
+done by not specifying any direction in the **correct** step of BBS. ::
+
+   Step.correct.Model.Sources = []
+
+AWimager can run in a parallel fashion. The number of processing cores
+(**n**) to be used during imaging can be specified::
+
+   export OMP_NUM_THREADS=n
+
+If not specified, all cores will be used. AWimager is quite memory hungry, so the number of cores should be limited in case it fails due a **'bad alloc'** error.
+
+------------
+Output files
+------------
+
+AWimager creates several image output files. Note that in the following list **<image>** is the image name given using the **image** parameter. 
+
++ **<image>.model** is the uncorrected dirty image.
++ **<image>.model.corr** is the dirty image corrected for the average primary beam.
++ **<image>.restored** and **<image>.restored.corr** are the restored images.
++ **<image>.residual** and **<image>.residual.corr** are the residual images.
++ **<image>.psf** is the point spread function.
++ **<image>0.avgpb** is the average primary beam.
+
+Furthermore, a few other files might be created for AWimager's internal use.
+
+----------------
+Input Parameters
+----------------
+
+An extensive list of the parameters that can be used by the AWimager
+can be obtained by typing::
+
+   awimager -h
+   
+Eventually, to run the imager, you can type::
+
+   awimager ms=test.MS image=test.img weight=natural wprojplanes=64 npix=512 cellsize=60arcsec data=CORRECTED_DATA padding=1. niter=2000 timewindow=300 stokes=IQUV threshold=0.1Jy operation=csclean
+
+It is also possible to specify these parameters in a parset and run it like::
+
+   awimager parsetname
+
+Many parameters can be set for the AWimager. Several of them are currently being tested by the commissioners. The most important parameters are listed below.
+
+^^^^^^^^^^^^^^
+Data selection
+^^^^^^^^^^^^^^
+
+These parameters specify the input data.
+
++ **ms** - The name of the input MeasurementSet.
++ **data** - The name of the data column to use in the MeasurementSet. The default is DATA.
++ **antenna** - Baseline selection following the CASA baseline selection syntax
++ **wmax** - Ignore baselines whose w-value exceeds wmax (in meters).
++ **uvdist** - Ignore baselines whose length (in wavelengths) exceed uvdist.
++ **select** - Only use data matching this TaQL selection string. For example, **sumsqr(UVW[:2])<1e8** selects baselines with length <10km.
+
+^^^^^^^^^^^^^^^^
+Image properties
+^^^^^^^^^^^^^^^^
+
+These parameters define the properties of the output image.
+
++ **image** - The name of the image.
++ **npix** - The number of pixels in the RA and DEC direction
++ **cellsize** - The size of each pixel. An unit can be given at the end. E.g.  **30arcsec**
++ **padding** - The padding factor to use when imaging. It can be used to get rid of effects at the edges of the image. If, say, 1.5 is given, the number of pixels used internally is 50% more.
++ **stokes** - The Stokes parameters for which an image is made. If A-projection is used, it must be IQUV.
+
+^^^^^^^^^
+Weighting
+^^^^^^^^^
+
+These parameters select the weighting scheme to be used.
+
++ **weight** - Weighting scheme (uniform, superuniform, natural, briggs (robust), briggsabs, or radial)
++ **robust** - Robust weighting parameter.
+
+^^^^^^^^^
+Operation
+^^^^^^^^^
+
+This parameter selects the operation to be performed by awimager.
+
++ **operation** - The operation to be performed by the AWImager.
+
+   + csclean - make an image and clean it (using Cotton-Schwab).
+   + multiscale - use multiscale cleaning.
+   + image - make dirty image only.
+   + predict - fill the data column in the MeasurementSet by predicting the data from the image.
+   + empty - make an empty image. This can be useful if only image coordinate info is needed.
+   
+^^^^^^^^^^^^^
+Deconvolution
+^^^^^^^^^^^^^
+
+These parameters control the deconvolution algorithm. Only those parameters that are applicable to the selected operation will be used.
+
++ **niter** - The number of clean iterations to be done. The default is 1000.
++ **gain** - The loop gain for cleaning. The default is 0.1.
++ **threshold** - The flux level at which to stop cleaning. The default is 0Jy.
++ **uservector** - Comma separated list of scales (in pixels) to be used by multiscale deconvolution
+   
+^^^^^^^^
+Gridding
+^^^^^^^^
+
+These parameters control the AW-projection algorithm.
+
++ **wprojplanes** - The number of W projection planes to use.
++ **maxsupport** - The maximum of W convolution functions. The default is 1024.
++ **oversample** - The oversampling to use for the convolution functions. The default is 8.
++ **timewindow** - The width of the time window (in sec) where the AW-term is assumed to be constant. Default is 300 sec. The wider the window, the faster the imager will be.
++ **splitbeam** - Evaluate station beam and element beam separately? The default is true. AWimager will work much faster if the correction for the station and element beam can be applied separately. This should only be done if the element beam is the same for all stations used.
+
+For more details, the user can refer to the Busy Wednesday `commissioning reports <http://www.lofar.org/operations/doku.php?id=commissioning:busy_wednesdays>`_ (specifically those from September 28 and October 26 2011).
+
+.. rubric:: Footnotes
+
+.. [#f1] This chapter is maintained by Bas van der Tol (tol[at]astron[dot]nl).
+.. [#f2] Cyril Tasse, Bas van der Tol, Joris van Zwieten, Ger van Diepen, Sanjay Bhatnagar 2013, **Applying full polarization A-Projection to very wide field of view instruments: An imager for LOFAR}. A&A, 553, A105**.

@@ -1,0 +1,81 @@
+Useful resources
+================
+
+--------
+Webpages
+--------
+
+The LOFAR wiki is a key resource, and you need an account to access the software areas. You can register for an account `here <http://www.lofar.org/operations/doku.php?id=start&do=register>`_.
+
+Essential pages on the wiki are:
+
++ `Main imaging wiki page <http://www.lofar.org/wiki/doku.php?id=public:\%20user_software:documentation:standard_imaging_pipeline>`_
+
++ `DPPP <http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:ndppp>`_
+
++ `BBS <http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:bbs>`_
+
+-----------------------
+Useful analysis scripts
+-----------------------
+
+A compilation of some practical python scripts is available at the `LOFAR-Contributions GitHub repository <https://github.com/lofar-astron/LOFAR-Contributions>`_.
+
+The scripts provided are [#f1]_ :
+
++ **autoflagger.py**: flags autocorrelations in a Measurement Set
++ **average.py**: averages images from multiple sub bands together
++ **average_weights.py**: averages images weighting them by the inverse of their variance.
++ **baseline.py**: plots amplitude/phase vs time/uvdistance/elevation
++ **CallSolFlag.py**: flags calibrated data
++ **closure.py**: prints closure phase vs time/elevation for selected antennas
++ **coordinates_mode.py**: routines to work with astronomical coordinates
++ **plot.py**: inspect gain solutions
++ **solfetch.py**: modules required for solflag.py
++ **solflag.py**: carries out solution-based flagging
++ **solplot.py**: modules required for solflag.py
++ **uvcoverage.py**: plots the uv coverage for a Measurement
++ **plot_flags.py**: plots "images" of frequency versus time on a baseline-by-baseline basis, with the pixel values equal to the visibility amplitudes
++ **img2fits.py**: converts CASA images to fits images
++ **compare_gaincal.py**: plots CASA and BBS gain solutions against each other for comparison. It can also plot CASA vs CASA and BBS vs BBS. Only supports gain solutions, and only if a solution was computed for each integration time
++ **traces.py**: plots L,M tracks for the zenith, azimuth and elevation of the NCP, CasA, CygA, and the target against time for a given MS or time range. Observer location is fixed to Dwingeloo. It is easy to add other sources of interest, or to modify the observer location, but it does require editing the Python code. The script is useful to check the elevation of possible interfering sources like CasA and CygA.
++ **casapy2bbs**: written by Joris van Zwieten. Converts a clean component image produced by casa into a skymodel file readable by BBS. See also modelclip.py.
++ **embiggen.csh**: increases the size of plotted points in postscript files. Useful when producing ps output from e.g. uvplot.py.
++ **lin2circ.py**: given a Measurement Set with a DATA column given in XX,XY,YX,YY correlations, converts to circular correlations RR,RL,LR,LL and writes them to a column in the Measurement Set.
++ **modelclip.py**: sorts a skymodel file with respect to Stokes I flux, and truncates the list of sources such that N\% of the total flux is kept in the model (where N is specified on the command line). Useful for clean component skymodels produced by e.g. casapy2bbs.
++ **msHistory.py**: prints information from the HISTORY table of a Measurement Set. Useful for obtaining a quick listing of the parset values used in e.g. DPPP.
++ **plotElevation.py**: given a Measurement Set, plots the elevation of the target source as a function of time
++ **split_ms_by_time.py**: extracts part of a Measurement Set (selected by timerange) and writes out to a new Measurement Set. Optionally excludes selected antennas.
++ **uvcov.py**: plots uv coverage for one or more Measurement Sets. If all Measurement Sets are for the same source at the same time (in other words are different subbands of the same observation), then use the '-s' option to save a lot of time. Do NOT use that option if the input Measurement Sets are not coincident in time.
++ **uvplot.py**: plots data from a Measurement Set in several combinations, in a per-baseline fashion. Not as flexible as casaplotms, but should be faster.
++ **uvrms.py**: performs RM Synthesis on the data in a Measurement Set. 
++ **fixlofaruvw.py**: corrects the faulty UVW column header. Use this on all data sets recorded before 20/03/2011 to get the astrometry correct. This script changes the MEASINFO.Ref label in the UVW column to J2000.
++ **plot_Ateam_elevation.py**: it makes plots of the elevation and angular distance of the Ateam and other sources (Sun, Jupiter) given a Measurement Set.
++ **do_demixing.py**: applies the demixing routine from Bas vdTol to the data to get rid of the A-team sources. The instructions are at the top of the file.
++ **CutBeamFromSkyModel.py**: given a skymodel, it produces two sub-skymodels, the first containing all the components within a particular radius from a given coordinate, the second all the rest.
++ **modskymodel.py**: it can shift skymodels by a given angular amount. It can manipulate skymodels also in other ways, like masking them and updating their spectral index values. 
++ **listr_v2.py**: it is a clone of the old AIPS matrix listing of data files. For the data or corrected-data column, it lists amplitudes (or phases) averaged by baseline over a specified time interval. It does also cross-hands and identifies the antennas.
++ **fromsky.py**: it converts a BBS skymodel file into the MODEL_DATA column of a visibility dataset.
++ **flagnancorrected.py**: it searches CORRECTED_DATA column for NaN and flags them.
++ **flagnandata.py**: it searches DATA column for NaN and flags them.
++ **Solution_Plotter.py**: it plots amplitude, phase solutions per antenna and the differential TEC on a baseline. 
++ **skymodel_to_ds9reg.py**: it plots the output of gsm.py with ds9.
+
+--------------
+Contact points
+--------------
+
+Some key contact points are listed below:
+
++ **LOFAR Imaging Cookbook** - Sarrvesh Sridhar (sarrvesh[at]astron[dot]nl)
++ **DPPP** - Ger van Diepen (diepen[at]astron[dot]nl), Tammo Jan Dijkema (dijkema[at]astron[dot]nl, and David Rafferty (rafferty[at]strw[dot]leidenuniv[dot]nl)
++ **AOFlagger** - Andr\'e Offringa (offringa[at]astron[dot]nl)
++ **BBS** - Tammo Jan Dijkema (dijkema[at]astron[dot]nl), Vishambhar Nath Pandey (pandey[at]astron[dot]nl)
++ **AWImager** - Tammo Jan Dijkema (dijkema[at]astron[dot]nl), and Bas van der Tol (tol[at]astron[dot]nl)
++ **Python-casacore/TaQL/Casacore** - Ger van Diepen (diepen[at]astron[dot]nl) and Tammo Jan Dijkema (dijkema[at]astron[dot]nl)
++ **SAGECAL, Shapelets** - Sarod Yatawatta (yatawatta[at]astron[dot]nl)
++ **PyBDSM, LSMTool** - David Rafferty (rafferty[at]strw[dot]leidenuniv[dot]nl)
+
+.. rubric:: Footnotes
+
+.. [#f1] If you have other scripts that could be useful for other commissioners, please contact Sarrvesh Sridhar at sarrvesh[at]astron[dot]nl.
