@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Gain calibration with DPPP &mdash; LOFAR Imaging Cookbook 0.0.1 documentation</title>
+  <title>Gain calibration with DPPP &mdash; LOFAR Imaging Cookbook 22.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="LOFAR Imaging Cookbook 0.0.1 documentation" href="index.html"/>
+    <link rel="top" title="LOFAR Imaging Cookbook 22.0.0 documentation" href="index.html"/>
         <link rel="next" title="LoSoTo: LOFAR Solution Tool" href="losoto.html"/>
         <link rel="prev" title="The Default Pre-Processing Pipeline (DPPP)" href="dppp.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.1
+                22.0
               </div>
             
           
@@ -92,7 +92,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started </a></li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Introduction to computing facilities at ASTRON </a></li>
 <li class="toctree-l1"><a class="reference internal" href="datainspection.html">Data inspection </a></li>
 <li class="toctree-l1"><a class="reference internal" href="aoflagger.html">AOFlagger </a></li>
 <li class="toctree-l1"><a class="reference internal" href="dppp.html">The Default Pre-Processing Pipeline (DPPP) </a></li>
@@ -109,13 +109,14 @@
 <li class="toctree-l1"><a class="reference internal" href="wsclean.html">The WSClean Imager </a></li>
 <li class="toctree-l1"><a class="reference internal" href="sourcedetection.html">Source detection and sky model manipulation: PyBDSF and LSMTool </a></li>
 <li class="toctree-l1"><a class="reference internal" href="factor.html">Factor: Facet Calibration for LOFAR </a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="resources.html">Useful resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bbs.html">Black-Board Selfcal (BBS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bbs.html">Calibration with BBS </a></li>
 <li class="toctree-l1"><a class="reference internal" href="shapelets.html">Sky Model Construction Using Shapelets </a></li>
 <li class="toctree-l1"><a class="reference internal" href="sagecal.html">SAGECAL </a></li>
 <li class="toctree-l1"><a class="reference internal" href="awimager.html">The AW Imager </a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples </a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
             
@@ -181,7 +182,7 @@
             
   <div class="section" id="gain-calibration-with-dppp">
 <h1>Gain calibration with DPPP <a class="footnote-reference" href="#f1" id="id1">[1]</a><a class="headerlink" href="#gain-calibration-with-dppp" title="Permalink to this headline">¶</a></h1>
-<p>The most common gain calibration procedures can be <a class="reference external" href="http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:ndppp#gaincal">performed</a> with DPPP. Formerly BBS (Appendix~ref{BBS}) was the standard calibration tool, but for the supported calibration scenarios DPPP is at least 10 times faster. For calibration scenarios that are not (yet) supported in DPPP, is may be necessary to resort to BBS, see (Appendix~ref{BBS}).</p>
+<p>The most common gain calibration procedures can be <a class="reference external" href="http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:ndppp#gaincal">performed</a> with DPPP. Formerly <a class="reference external" href="./bbs.html">BBS</a> was the standard calibration tool, but for the supported calibration scenarios DPPP is at least 10 times faster. For calibration scenarios that are not (yet) supported in DPPP, it may be necessary to resort to BBS, see the chapter on <a class="reference external" href="./bbs.html">BBS</a>.</p>
 <p>The calibration problem that DPPP can solve is the following: find a set of Jones matrices <span class="math">\({\mathbf{G}_p}\)</span> (one for every station <span class="math">\(p\)</span>) which corrects the measured visibilities <span class="math">\(\mathbf{V}_{pq}\)</span> to closely resemble the model visibilities <span class="math">\(\mathbf{M}_{pq}\)</span> (for all baselines <span class="math">\(pq\)</span>), i.e. minimize</p>
 <div class="math">
 \[\| \mathbf{V}_{\!pq}-\mathbf{G}_{p}\mathbf{M}_{pq}\mathbf{G}_{q}^H \|\]</div>
@@ -223,7 +224,7 @@
 </div>
 <div class="section" id="making-a-skymodel">
 <h2>Making a skymodel<a class="headerlink" href="#making-a-skymodel" title="Permalink to this headline">¶</a></h2>
-<p>To perform a calibration, you need a sky model (see Section~ref{bbs:source-catalog}). You can get one from the catalogs in <strong>gsm.py</strong> (see Section~ref{bbs:gsm}), or make your own. To make the sky model (in text format) readable by DPPP, it needs to be converted from plain text to a <strong>sourcedb</strong>. That is done with the program <strong>makesourcedb</strong>. Usually the sourcedb is called ‘sky’ and copied into the data set you’re reducing. If you put it elsewhere, it is customary to give it the extension <strong>.sourcedb</strong>.</p>
+<p>To perform a calibration, you need a sky model (see section <a class="reference internal" href="bbs.html#sourcecatalog"><span class="std std-ref">Source catalog</span></a> for details). You can get one from the catalogs in <strong>gsm.py</strong> (see section on <a class="reference internal" href="bbs.html#gsm"><span class="std std-ref">GSM</span></a> for details), or make your own. To make the sky model (in text format) readable by DPPP, it needs to be converted from plain text to a <strong>sourcedb</strong>. That is done with the program <strong>makesourcedb</strong>. Usually the sourcedb is called ‘sky’ and copied into the data set you’re reducing. If you put it elsewhere, it is customary to give it the extension <strong>.sourcedb</strong>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">makesourcedb</span> <span class="ow">in</span><span class="o">=</span><span class="n">my</span><span class="o">.</span><span class="n">skymodel</span> <span class="n">out</span><span class="o">=</span><span class="n">L123</span><span class="o">.</span><span class="n">MS</span><span class="o">/</span><span class="n">sky</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;&lt;&#39;</span>
 </pre></div>
 </div>
@@ -290,7 +291,7 @@
 <table class="docutils footnote" frame="void" id="f1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>This section is maintained by Tammo Jan Dijkema (<strong>dijkema[at]astron[dot]nl</strong>).</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>This section is maintained by <a class="reference external" href="mailto:dijkema&#37;&#52;&#48;astron&#46;nl">Tammo Jan Dijkema</a>.</td></tr>
 </tbody>
 </table>
 </div>
@@ -318,7 +319,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Sarrvesh Sridhar.
+      Last updated on Jan 08, 2018.
 
     </p>
   </div>
@@ -340,7 +341,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.1',
+            VERSION:'22.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

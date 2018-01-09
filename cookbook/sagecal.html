@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>SAGECAL &mdash; LOFAR Imaging Cookbook 0.0.1 documentation</title>
+  <title>SAGECAL &mdash; LOFAR Imaging Cookbook 22.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="LOFAR Imaging Cookbook 0.0.1 documentation" href="index.html"/>
+    <link rel="top" title="LOFAR Imaging Cookbook 22.0.0 documentation" href="index.html"/>
         <link rel="next" title="The AW Imager" href="awimager.html"/>
         <link rel="prev" title="Sky Model Construction Using Shapelets" href="shapelets.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.1
+                22.0
               </div>
             
           
@@ -92,7 +92,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started </a></li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Introduction to computing facilities at ASTRON </a></li>
 <li class="toctree-l1"><a class="reference internal" href="datainspection.html">Data inspection </a></li>
 <li class="toctree-l1"><a class="reference internal" href="aoflagger.html">AOFlagger </a></li>
 <li class="toctree-l1"><a class="reference internal" href="dppp.html">The Default Pre-Processing Pipeline (DPPP) </a></li>
@@ -101,10 +101,9 @@
 <li class="toctree-l1"><a class="reference internal" href="wsclean.html">The WSClean Imager </a></li>
 <li class="toctree-l1"><a class="reference internal" href="sourcedetection.html">Source detection and sky model manipulation: PyBDSF and LSMTool </a></li>
 <li class="toctree-l1"><a class="reference internal" href="factor.html">Factor: Facet Calibration for LOFAR </a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="resources.html">Useful resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bbs.html">Black-Board Selfcal (BBS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bbs.html">Calibration with BBS </a></li>
 <li class="toctree-l1"><a class="reference internal" href="shapelets.html">Sky Model Construction Using Shapelets </a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">SAGECAL </a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
@@ -127,6 +126,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="awimager.html">The AW Imager </a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples </a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
             
@@ -207,7 +208,7 @@
 </div>
 <div class="section" id="model">
 <h3>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h3>
-<p>Make an image of your MS (using casapy or awimager). You can use Duchamp to create a mask for the image. To create a sky model, you can adopt buildsky  for point sources and shapelet_gui in case of extended emission (see Chapter~ref{sec:skymodelconstructionuningshapelets}). Note that you are free to use any other source finder (like PyBDSF - see (Chapter~ref{PyBDSF})) if you feel more confident with it. A new functionality has been implemented to transform the the BBS model into the model format used by SAGECAL (Chapter~ref{sec:skymodelconstructionuningshapelets}. The important is that in the sky model any source name starting with ‘S’ indicates shapelet, ‘D’ a disk, ‘R’ a ring, ‘G’ a Gaussian, while others keys are point sources. In the following, we report a few useful sky models examples:</p>
+<p>Make an image of your MS (using casapy or awimager). You can use Duchamp to create a mask for the image. To create a sky model, you can adopt buildsky  for point sources and shapelet_gui in case of extended emission (see <a class="reference external" href="./shapelets.html">Sky model construction using Shapelets</a>). Note that you are free to use any other source finder (like <a class="reference external" href="./sourcedetection.html">PyBDSF</a>) if you feel more confident with it. A new functionality has been implemented to transform the the BBS model into the model format used by SAGECAL. The important is that in the sky model any source name starting with ‘S’ indicates shapelet, ‘D’ a disk, ‘R’ a ring, ‘G’ a Gaussian, while others keys are point sources. In the following, we report a few useful sky models examples:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">## name h m s d m s I Q U V spectral_index RM extent_X(rad) extent_Y(rad)</span>
 <span class="c1">## pos_angle(rad) freq0</span>
 <span class="n">P1C1</span> <span class="mi">0</span> <span class="mi">12</span> <span class="mf">42.996</span> <span class="mi">85</span> <span class="mi">43</span> <span class="mf">21.514</span> <span class="mf">0.030498</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="o">-</span><span class="mf">5.713060</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mf">115039062.0</span>
@@ -272,7 +273,7 @@
 </div>
 <p>Use a solution interval (e.g. -t 120) that is big enough to get a decent solution and not too big to make the parameters vary too much (about 20 minutes per solution is a reasonable value).</p>
 <p>In case of both bright and faint sources in the model, you might need to use different solution intervals for different clusters. In order to do that you need to define the values of the second column of the cluster file in such a way that the cluster with the longest solution interval is 1. While the cluster with shorter solution interval will be equal to n, where n is the number of times the longer solution interval is divided. This means that if -t 120 is used to select 120 timeslots, cluster 0 will find a solution using the full 120 timeslots, while cluster 1 will solve for every 120/3=40 timeslots. The option -k will allow to correct the residuals using the solutions calculated for a specific direction which is defined by the <strong>cluster_id</strong>.  The -k option is analogue to the correct step in BBS. See the simulations section later in this chapter for more detailed use of this.</p>
-<p>You are now ready to image  the residual data. Successively, run “restore” (see Sect.~ref{sec:skymodelconstructionuningshapelets}) on the residual image before updating the sky model and starting another loop of SAGECAL. SAGECAL cycles can be done till you are satisfied by the end product.</p>
+<p>You are now ready to image  the residual data. Successively, run “restore” (see <a class="reference external" href="./shapelets.html">Sky model construction using Shapelets</a>) on the residual image before updating the sky model and starting another loop of SAGECAL. SAGECAL cycles can be done till you are satisfied by the end product.</p>
 </div>
 <div class="section" id="robustness">
 <h3>Robustness<a class="headerlink" href="#robustness" title="Permalink to this headline">¶</a></h3>
@@ -351,7 +352,7 @@
 <table class="docutils footnote" frame="void" id="f1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>The authors of this chapter are Emanuela Orr’u (<strong>orru[at]astron[dot]nl</strong>) and Sarod Yatawatta (<strong>yatawatta[at]astron[dot]nl</strong>).</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>The authors of this chapter are <a class="reference external" href="mailto:orru&#37;&#52;&#48;astron&#46;nl">Emanuela Orru</a> and <a class="reference external" href="mailto:yatawatta&#37;&#52;&#48;astron&#46;nl">Sarod Yatawatta</a>.</td></tr>
 </tbody>
 </table>
 </div>
@@ -379,7 +380,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Sarrvesh Sridhar.
+      Last updated on Jan 08, 2018.
 
     </p>
   </div>
@@ -401,7 +402,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.1',
+            VERSION:'22.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

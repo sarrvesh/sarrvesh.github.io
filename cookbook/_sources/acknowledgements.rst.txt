@@ -1,7 +1,7 @@
 Acknowledgements
 ================
 
-Many commissioners and software developers have contributed to this cookbook. As the routines, the hardware, and the software needed for LOFAR develop very quickly, what is reported in this manual might be sometimes incorrect. We try to keep it as up to date as possible, but we surely need your feedback to improve its quality. Please send comments and suggestions of improvements to Sarrvesh Sridhar (`sarrvesh[at]astron[dot]nl <mailto:sarrvesh@astron.nl>`_).
+Many commissioners and software developers have contributed to this cookbook. As the routines, the hardware, and the software needed for LOFAR develop very quickly, what is reported in this manual might be sometimes incorrect. We try to keep it as up to date as possible, but we surely need your feedback to improve its quality. Please send comments and suggestions of improvements to `Sarrvesh Sridhar <mailto:sarrvesh@astron.nl>`_.
 
 The contact points for the various versions of the LOFAR Imaging Cookbook are listed below.
 

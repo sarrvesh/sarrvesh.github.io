@@ -148,5 +148,5 @@ For more details, the user can refer to the Busy Wednesday `commissioning report
 
 .. rubric:: Footnotes
 
-.. [#f1] This chapter is maintained by Bas van der Tol (tol[at]astron[dot]nl).
+.. [#f1] This chapter is maintained by `Bas van der Tol <mailto:tol@astron.nl>`_.
 .. [#f2] Cyril Tasse, Bas van der Tol, Joris van Zwieten, Ger van Diepen, Sanjay Bhatnagar 2013, **Applying full polarization A-Projection to very wide field of view instruments: An imager for LOFAR}. A&A, 553, A105**.

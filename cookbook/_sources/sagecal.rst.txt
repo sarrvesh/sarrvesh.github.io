@@ -27,7 +27,7 @@ All the programs related to the SAGECAL can be found in **/opt/cep/sagecal/bin/*
 Model
 ^^^^^
 
-Make an image of your MS (using casapy or awimager). You can use Duchamp to create a mask for the image. To create a sky model, you can adopt buildsky  for point sources and shapelet_gui in case of extended emission (see Chapter~\ref{sec:skymodelconstructionuningshapelets}). Note that you are free to use any other source finder (like PyBDSF - see (Chapter~\ref{PyBDSF})) if you feel more confident with it. A new functionality has been implemented to transform the the BBS model into the model format used by SAGECAL (Chapter~\ref{sec:skymodelconstructionuningshapelets}. The important is that in the sky model any source name starting with 'S' indicates shapelet, 'D' a disk, 'R' a ring, 'G' a Gaussian, while others keys are point sources. In the following, we report a few useful sky models examples::
+Make an image of your MS (using casapy or awimager). You can use Duchamp to create a mask for the image. To create a sky model, you can adopt buildsky  for point sources and shapelet_gui in case of extended emission (see `Sky model construction using Shapelets <./shapelets.html>`_). Note that you are free to use any other source finder (like `PyBDSF <./sourcedetection.html>`_) if you feel more confident with it. A new functionality has been implemented to transform the the BBS model into the model format used by SAGECAL. The important is that in the sky model any source name starting with 'S' indicates shapelet, 'D' a disk, 'R' a ring, 'G' a Gaussian, while others keys are point sources. In the following, we report a few useful sky models examples::
 
     ## name h m s d m s I Q U V spectral_index RM extent_X(rad) extent_Y(rad) 
     ## pos_angle(rad) freq0 
@@ -98,7 +98,7 @@ Use a solution interval (e.g. -t 120) that is big enough to get a decent solutio
 
 In case of both bright and faint sources in the model, you might need to use different solution intervals for different clusters. In order to do that you need to define the values of the second column of the cluster file in such a way that the cluster with the longest solution interval is 1. While the cluster with shorter solution interval will be equal to n, where n is the number of times the longer solution interval is divided. This means that if -t 120 is used to select 120 timeslots, cluster 0 will find a solution using the full 120 timeslots, while cluster 1 will solve for every 120/3=40 timeslots. The option -k will allow to correct the residuals using the solutions calculated for a specific direction which is defined by the **cluster_id**.  The -k option is analogue to the correct step in BBS. See the simulations section later in this chapter for more detailed use of this.
 
-You are now ready to image  the residual data. Successively, run "restore" (see Sect.~\ref{sec:skymodelconstructionuningshapelets}) on the residual image before updating the sky model and starting another loop of SAGECAL. SAGECAL cycles can be done till you are satisfied by the end product.
+You are now ready to image  the residual data. Successively, run "restore" (see `Sky model construction using Shapelets <./shapelets.html>`__) on the residual image before updating the sky model and starting another loop of SAGECAL. SAGECAL cycles can be done till you are satisfied by the end product.
 
 ^^^^^^^^^^
 Robustness
@@ -182,4 +182,4 @@ References
 
 .. rubric:: Footnotes
 
-.. [#f1] The authors of this chapter are Emanuela Orr\'u (**orru[at]astron[dot]nl**) and Sarod Yatawatta (**yatawatta[at]astron[dot]nl**).
+.. [#f1] The authors of this chapter are `Emanuela Orru <mailto:orru@astron.nl>`_ and `Sarod Yatawatta <mailto:yatawatta@astron.nl>`_.

@@ -1,7 +1,7 @@
 Gain calibration with DPPP [#f1]_
 =================================
 
-The most common gain calibration procedures can be `performed <http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:ndppp#gaincal>`_ with DPPP. Formerly BBS (Appendix~\ref{BBS}) was the standard calibration tool, but for the supported calibration scenarios DPPP is at least 10 times faster. For calibration scenarios that are not (yet) supported in DPPP, is may be necessary to resort to BBS, see (Appendix~\ref{BBS}).
+The most common gain calibration procedures can be `performed <http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:ndppp#gaincal>`_ with DPPP. Formerly `BBS <./bbs.html>`_ was the standard calibration tool, but for the supported calibration scenarios DPPP is at least 10 times faster. For calibration scenarios that are not (yet) supported in DPPP, it may be necessary to resort to BBS, see the chapter on `BBS <./bbs.html>`_.
 
 The calibration problem that DPPP can solve is the following: find a set of Jones matrices :math:`{\mathbf{G}_p}` (one for every station :math:`p`) which corrects the measured visibilities :math:`\mathbf{V}_{pq}` to closely resemble the model visibilities :math:`\mathbf{M}_{pq}` (for all baselines :math:`pq`), i.e. minimize
 
@@ -30,7 +30,7 @@ There are various options to restrict the shape of :math:`\mathbf{G}`. The main 
 Making a skymodel
 -----------------
 
-To perform a calibration, you need a sky model (see Section~\ref{bbs:source-catalog}). You can get one from the catalogs in **gsm.py** (see Section~\ref{bbs:gsm}), or make your own. To make the sky model (in text format) readable by DPPP, it needs to be converted from plain text to a **sourcedb**. That is done with the program **makesourcedb**. Usually the sourcedb is called 'sky' and copied into the data set you're reducing. If you put it elsewhere, it is customary to give it the extension **.sourcedb**. ::
+To perform a calibration, you need a sky model (see section :ref:`sourcecatalog` for details). You can get one from the catalogs in **gsm.py** (see section on :ref:`gsm` for details), or make your own. To make the sky model (in text format) readable by DPPP, it needs to be converted from plain text to a **sourcedb**. That is done with the program **makesourcedb**. Usually the sourcedb is called 'sky' and copied into the data set you're reducing. If you put it elsewhere, it is customary to give it the extension **.sourcedb**. ::
 
     makesourcedb in=my.skymodel out=L123.MS/sky format='<'
     
@@ -109,4 +109,4 @@ When applying the solutions of the calibrator to the target, you should probably
 
 .. rubric:: Footnotes
 
-.. [#f1] This section is maintained by Tammo Jan Dijkema (**dijkema[at]astron[dot]nl**).
+.. [#f1] This section is maintained by `Tammo Jan Dijkema <mailto:dijkema@astron.nl>`_.

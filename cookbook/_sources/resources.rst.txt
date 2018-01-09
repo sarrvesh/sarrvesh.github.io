@@ -67,15 +67,15 @@ Contact points
 
 Some key contact points are listed below:
 
-+ **LOFAR Imaging Cookbook** - Sarrvesh Sridhar (sarrvesh[at]astron[dot]nl)
-+ **DPPP** - Ger van Diepen (diepen[at]astron[dot]nl), Tammo Jan Dijkema (dijkema[at]astron[dot]nl, and David Rafferty (rafferty[at]strw[dot]leidenuniv[dot]nl)
-+ **AOFlagger** - Andr\'e Offringa (offringa[at]astron[dot]nl)
-+ **BBS** - Tammo Jan Dijkema (dijkema[at]astron[dot]nl), Vishambhar Nath Pandey (pandey[at]astron[dot]nl)
-+ **AWImager** - Tammo Jan Dijkema (dijkema[at]astron[dot]nl), and Bas van der Tol (tol[at]astron[dot]nl)
-+ **Python-casacore/TaQL/Casacore** - Ger van Diepen (diepen[at]astron[dot]nl) and Tammo Jan Dijkema (dijkema[at]astron[dot]nl)
-+ **SAGECAL, Shapelets** - Sarod Yatawatta (yatawatta[at]astron[dot]nl)
-+ **PyBDSM, LSMTool** - David Rafferty (rafferty[at]strw[dot]leidenuniv[dot]nl)
++ **LOFAR Imaging Cookbook** - `Sarrvesh Sridhar <mailto:sarrvesh@astron.nl>`_
++ **DPPP** - `Ger van Diepen <mailto:diepen@astron.nl>`_, `Tammo Jan Dijkema <mailto:dijkema@astron.nl>`_, and `David Rafferty <mailto:rafferty@strw.leidenuniv.nl>`_
++ **AOFlagger** - `Andre Offringa <mailto:offringa@astron.nl>`_
++ **BBS** - `Tammo Jan Dijkema <mailto:dijkema@astron.nl>`_, `Vishambhar Nath Pandey <mailto:pandey@astron.nl>`_
++ **AWImager** - `Tammo Jan Dijkema <mailto:dijkema@astron.nl>`_, and `Bas van der Tol <mailto:tol@astron.nl>`_
++ **Python-casacore/TaQL/Casacore** - `Ger van Diepen <mailto:diepen@astron.nl>`_ and `Tammo Jan Dijkema <mailto:dijkema@astron.nl>`_
++ **SAGECAL, Shapelets** - `Sarod Yatawatta <mailto:yatawatta@astron.nl>`_
++ **PyBDSM, LSMTool** - `David Rafferty <mailto:rafferty@strw.leidenuniv.nl>`_
 
 .. rubric:: Footnotes
 
-.. [#f1] If you have other scripts that could be useful for other commissioners, please contact Sarrvesh Sridhar at sarrvesh[at]astron[dot]nl.
+.. [#f1] If you have other scripts that could be useful for other commissioners, please contact `Sarrvesh Sridhar <mailto:sarrvesh@astron.nl>`_.

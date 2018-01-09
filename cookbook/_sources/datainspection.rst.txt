@@ -21,7 +21,7 @@ where the **verbose** parameter allows you to have more detailed information abo
 
 + The low frequency radio sky  is dominated by a few bright sources that form the so called A-team: CasA, CygA, VirA, TauA, HydA, HerA. The removal of these sources from the target visibilities is very important in order to achieve high dynamic range images. The script **plot_Ateam_elevation.py**, which is available as part of the `LOFAR repository <https://github.com/lofar-astron/LOFAR-Contributions>`_, can be used to inspect the contribution of these A-team sources to the observed visibility data.
 
-+ For manipulating measurement sets, you can use TaQL (Table Query Language); this is an SQL-like language which works on MS, and can perform all kinds of selections (and more). A detailed documentation of TaQL can be found `here <http://www.astron.nl/casacore/trunk/casacore/doc/notes/199.html>`_ and `here <http://taql.astron.nl>`_.
++ For manipulating measurement sets, you can use TaQL (Table Query Language); this is an SQL-like language which works on MS, and can perform all kinds of selections (and more). A detailed documentation of TaQL can be found `here <http://www.astron.nl/casacore/trunk/casacore/doc/notes/199.html>`__ and `here <http://taql.astron.nl>`__.
 
 -------------------------------------------
 Analyzing the data quality with **aoqplot**
@@ -111,12 +111,13 @@ Observations at 'low' elevation (below :math:`\sim30^{\circ}` for Cygnus~A,
 and below :math:`\sim40^{\circ}` for 3C196) are sufficiently noisy that they
 are of limited use. These bad time ranges need to be identified and
 removed. This could be done through DPPP, but also by manual flagging
-in CASA or using the CASA **SPLIT** [#f4]_ task or the python script **split_ms_by_time.py** (Section~\ref{sec:scripts}). Splitting out part of a MeasurementSet can be done as part of the distributed pipeline and will most likely be necessary until more robust flagging routines are implemented.
+in CASA or using the CASA **SPLIT** [#f4]_ task or the python script **split_ms_by_time.py** [#f5]_. Splitting out part of a MeasurementSet can be done as part of the distributed pipeline and will most likely be necessary until more robust flagging routines are implemented.
 
 
 .. rubric:: Footnotes
 
-.. [#f1] This chapter is maintained by A. Shulevski (shulevski[at]astron[dot]nl) and Valentina Vacca (vvacca[at]mpa-garching[dot]mpg[dot]de).
+.. [#f1] This chapter is maintained by `A. Shulevski <mailto:shulevski@astron.nl>`_ and `Valentina Vacca <mailto:vvacca@mpa-garching.mpg.de>`_.
 .. [#f2] The script was written by George Heald and is available through the `LOFAR GitHub repository <https://github.com/lofar-astron/LOFAR-Contributions>`_.
 .. [#f3] This is due to the fact that the MS writer version used during those months was specifying the antenna mount as FIXED, and not as ALT-AZ, which is CASA friendly. To solve this problem, you can run the following **taql** command on your MS as *taql 'update <ms name>/ANTENNA set MOUNT="X-Y" '*
 .. [#f4] The **SPLIT** task will be deprecated in favor of the **MSTRANSFORM** task beginning with CASA v.4.1.0.
+.. [#f5] The script is available through the `LOFAR GitHub repository <https://github.com/lofar-astron/LOFAR-Contributions>`_.

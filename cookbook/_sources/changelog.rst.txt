@@ -1,0 +1,20 @@
+Changelog
+=========
+
+The latest released version of the cookbook is available `online <http://www.astron.nl/radio-observatory/lofar/lofar-imaging-cookbook>`_.
+
+This link is advertised on the LOFAR wiki. The very latest (development) version of the cookbook can also be found on the `USG repository <http://usg.lofar.org/svn/documents/trunk/Tutorials/Imaging/>`_.
+
+The LOFAR software is continuously improving and, as a consequence, several procedures (and the cookbook itself) continuously change. In the following, we report an overview of the (recent) changes applied to the manual.
+
+--------------------------
+Overview of recent changes
+--------------------------
+
+^^^^^^^^^^^^^^^^^^^^^^^^
+Version 22 (INSERT DATE)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
++ Converted source from LATEX to reStructuredText.
++ Removed now-obsolete appendix on "Automated self-calibration" and "GNU Screen"
++ Replaced all "use" to "module load".

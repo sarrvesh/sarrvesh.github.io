@@ -24,12 +24,14 @@ Throughout this tutorial, we will calibrate an observation of Virgo-A around 50 
       
 .. only:: html
 
+   .. _virgoA:
+
    .. figure:: figures/vira_74vla.png
       :align: center
    
       Virgo-A image made by the VLA at 74 MHz. The red circle on top right corner is the PSF.
       
-Looking closer at Fig. \ref{shp:viravla}, we see that there is bright compact structure at the center and weak diffuse structure surrounding it. You should always keep in mind the golden rule in source modeling: A point source is best modeled by a point source and nothing else. Almost always, you will have images with both compact structure (best modeled by point sources) and extended structure (best modeled using shapelets). In our example, we need to model the central compact structure as point sources and the remainder as shapelets. See Yatawatta (2010) for a theoretical explanation.
+Looking closer at :numref:`virgoA`, we see that there is bright compact structure at the center and weak diffuse structure surrounding it. You should always keep in mind the golden rule in source modeling: A point source is best modeled by a point source and nothing else. Almost always, you will have images with both compact structure (best modeled by point sources) and extended structure (best modeled using shapelets). In our example, we need to model the central compact structure as point sources and the remainder as shapelets. See Yatawatta (2010) for a theoretical explanation.
 
 -----------------
 Software overview
@@ -139,7 +141,7 @@ and also it can read an LSM sky model like (see chapter on SAGECAL for more info
     ##    extent_X(rad) extent_Y(rad) pos_angle(rad) freq0
     P1C1 1 35 29.128 84 21 51.699 0.061585 0 0 0 0 0 0 0 0 1000000.0
 
-using **-o 0** for BBS and **-o 1** or **-o 1** for LSM. Note that **buildsky** will now (version 0.0.6) only produce LSM with 3rd order spectra.  Spectral indices use natural logarithm, :math:`\exp(ln(I_0) + p1*ln(f/f_0) + p2*ln(f/f_0)^2 + \ldots)` so if you have a model with common logarithms like 
+using **-o 0** for BBS and **-o 1** or **-o 1** for LSM. Note that **buildsky** will now (version 0.0.6) only produce LSM with 3rd order spectra.  Spectral indices use natural logarithm, :math:`\exp(\ln(I_0) + p1*\ln(f/f_0) + p2*\ln(f/f_0)^2 + \ldots)` so if you have a model with common logarithms like 
 
 .. math::
 
@@ -177,7 +179,7 @@ As before, you can see more options by typing ::
 shapelet_gui
 ^^^^^^^^^^^^
 
-The GUI used in decomposing FITS file to shapelets is called **shapelet_gui**. Once you run this program you will be seeing the GUI as in Fig. \ref{shp:gui0}. 
+The GUI used in decomposing FITS file to shapelets is called **shapelet_gui**. Once you run this program you will be seeing the GUI as in :numref:`shap_gui0`. 
 
 .. only:: latex
 
@@ -188,12 +190,14 @@ The GUI used in decomposing FITS file to shapelets is called **shapelet_gui**. O
 
 .. only:: html
 
+   .. _shap_gui0:
+
    .. figure:: figures/shap_gui0.png
       :align: center
       
       The **shapelet_gui** initial screen.
 
-The essential parameters can be changed by using **View->Change Options** menu item. Once you select this, you will see the dialog as in Fig. \ref{shp:gui1}.
+The essential parameters can be changed by using **View->Change Options** menu item. Once you select this, you will see the dialog as in :numref:`shap_gui1`.
 
 .. only:: latex
 
@@ -203,6 +207,8 @@ The essential parameters can be changed by using **View->Change Options** menu i
       The options dialog for shapelet decomposition.
 
 .. only:: html
+
+   .. _shap_gui1:
 
    .. figure:: figures/shap_gui1.png
       :align: center
@@ -225,7 +231,7 @@ We will go through the options in Fig. \ref{shp:gui1} one by one.
 
 It is advised to always enable **Use Mask** and **Convolve modes with PSF** options to get best performance. You can also get more information on all these options by clicking the **Help** button.
 
-Finally, after fine tuning your options, you can select **File->Open** to select your FITS file and it will produce an output like Fig. \ref{shp:gui2}. If you are not satisfied with the result, you can go back and **View->Change Options** to re-tune your parameters. Once you have done that, you can decompose the same FITS file by selecting **View->Decompose** from the menu. 
+Finally, after fine tuning your options, you can select **File->Open** to select your FITS file and it will produce an output like :numref:`shap_gui2`. If you are not satisfied with the result, you can go back and **View->Change Options** to re-tune your parameters. Once you have done that, you can decompose the same FITS file by selecting **View->Decompose** from the menu. 
 
 .. only:: latex
 
@@ -235,6 +241,8 @@ Finally, after fine tuning your options, you can select **File->Open** to select
       Output of shapelet modelling: (top left) original image (top right) shapelet modes (bottom left) residual image (bottom right) shapelet model.
 
 .. only:: html
+
+   .. _shap_gui2:
 
    .. figure:: figures/shap_gui2.png
       :align: center
@@ -309,13 +317,13 @@ The sky model has to be in LSM format, **-c** option gives the number of cluster
 Step by Step Example
 --------------------
 
-In this section, we will use most of the programs described before to calibrate a LOFAR observation of Virgo-A. We will use Fig. \ref{shp:viravla} (FITS file **vira-cen.fits**) to build the initial sky model.
+In this section, we will use most of the programs described before to calibrate a LOFAR observation of Virgo-A. We will use :numref:`virgoA` (FITS file **vira-cen.fits**) to build the initial sky model.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 Initial point source model
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As we mentioned in section \ref{shp:sec1}, the central compact part in Fig. \ref{shp:viravla} is best modeled using point sources. Therefore, we create the following as input to **Duchamp** ::
+As we mentioned in the Introduction_, the central compact part in :numref:`virgoA` is best modeled using point sources. Therefore, we create the following as input to **Duchamp** ::
 
     imageFile vira-cen.fits
     logFile   logfile.txt
@@ -336,7 +344,7 @@ As we mentioned in section \ref{shp:sec1}, the central compact part in Fig. \ref
     flagMaskWithObjectNum 1
     flagXOutput 0
 
-After running **Duchamp** with this input file, we select only the bright compact center (that is the reason for using :math:`10.01` as threshold) as seen on Fig. \ref{shp:viracomp}.
+After running **Duchamp** with this input file, we select only the bright compact center (that is the reason for using :math:`10.01` as threshold) as seen on :numref:`virgoA`.
 
 .. only:: latex
 
@@ -368,7 +376,7 @@ This will create the first part of the sky model for BBS (file **vira-cen.fits.s
     P1C4, POINT, 12:30:48.90, +12.23.40.67, 177.304557, 0.0, 0.0, 0.0
     P1C5, POINT, 12:30:48.75, +12.23.21.23, 155.029319, 0.0, 0.0, 0.0
 
-Using **ds9** we can also see our sky model as in Fig. \ref{shp:viracompds9}.
+Using **ds9** we can also see our sky model as in :numref:`virds9`.
 
 .. only:: latex
 
@@ -379,6 +387,8 @@ Using **ds9** we can also see our sky model as in Fig. \ref{shp:viracompds9}.
 
 .. only:: html
 
+   .. _virds9:
+
    .. figure:: figures/viracompds9.png
       :align: center
       
@@ -388,11 +398,11 @@ Using **ds9** we can also see our sky model as in Fig. \ref{shp:viracompds9}.
 Initial shaplet model
 ^^^^^^^^^^^^^^^^^^^^^
 
-Next, we need to model the extended structure inf Fig. \ref{shp:viravla}. However, before we do this we have to subtract our point source model from this figure. We use **restore** to do this ::
+Next, we need to model the extended structure in :numref:`virgoA`. However, before we do this we have to subtract our point source model from this figure. We use **restore** to do this ::
 
     restore -f vira-cen.fits -i vira-cen.fits.sky.txt -s
     
-which gives us the new image as in Fig. \ref{shp:viradiff}.
+which gives us the new image as in :numref:`viradiff`.
 
 .. only:: latex
 
@@ -403,12 +413,14 @@ which gives us the new image as in Fig. \ref{shp:viradiff}.
 
 .. only:: html
 
+   .. _viradiff:
+
    .. figure:: figures/viradiff.png
       :align: center
       
       Diffused structure after subtracting the center.
 
-Note that the bright central part in Fig. \ref{shp:viradiff} is almost subtracted. It is not completely gone, and some parts of it is negative. Nevertheless, this is all right for now because we are only building an approximate sky model. Now we need to create another mask for this image for the diffused structure. We use to following file for **Duchamp**. ::
+Note that the bright central part in :numref:`viradiff` is almost subtracted. It is not completely gone, and some parts of it is negative. Nevertheless, this is all right for now because we are only building an approximate sky model. Now we need to create another mask for this image for the diffused structure. We use to following file for **Duchamp**. ::
 
     imageFile vira-cen.fits
     logFile   logfile.txt
@@ -429,7 +441,7 @@ Note that the bright central part in Fig. \ref{shp:viradiff} is almost subtracte
     flagMaskWithObjectNum 0
     flagXOutput 0
 
-Note that we have used a lower threshold (:math:`1.01`) this time, compared to the previous value. Once running **Duchamp**, we get the mask as indicated by Fig. \ref{shp:viramaskdiff}.
+Note that we have used a lower threshold (:math:`1.01`) this time, compared to the previous value. Once running **Duchamp**, we get the mask as indicated by :numref:`viramaskdiff`.
 
 .. only:: latex
 
@@ -440,12 +452,14 @@ Note that we have used a lower threshold (:math:`1.01`) this time, compared to t
 
 .. only:: html
 
+   .. _viramaskdiff:
+
    .. figure:: figures/viramaskdiff.png
       :align: center
       
       Mask for the diffused structure.
 
-Now we are ready to build the shapelet model. We first change some parameters using **View->Change Options**. We set **Cutoff** to :math:`1.0`, **Max Modes** to :math:`200`, and the center **p** to 75 and **q** to 74 to move the origin of the shapelets a bit. Furthermore, we enable **Use Mask** and **Convolve Modes with PSF** options. Then we use **File->Open** to select **vira-cen.fits** as input. After a few seconds, we get the result as in Fig. \ref{shp:virashap}.
+Now we are ready to build the shapelet model. We first change some parameters using **View->Change Options**. We set **Cutoff** to :math:`1.0`, **Max Modes** to :math:`200`, and the center **p** to 75 and **q** to 74 to move the origin of the shapelets a bit. Furthermore, we enable **Use Mask** and **Convolve Modes with PSF** options. Then we use **File->Open** to select **vira-cen.fits** as input. After a few seconds, we get the result as in :numref:`virashap`.
 
 .. only:: latex
 
@@ -455,6 +469,8 @@ Now we are ready to build the shapelet model. We first change some parameters us
       Shapelet model of the diffused structure.
 
 .. only:: html
+
+   .. _virashap:
 
    .. figure:: figures/virashap.png
       :align: center
@@ -493,7 +509,7 @@ Simulation
 
 Once we have the point source and shapelet sky models, we can run BBS. After this is done, you are free to do whatever you like with these sky models. 
 
-First and foremost, it is advised to do a simulation with your sky model and the measurement set that you need to calibrate to make sure your sky model is correct. Moreover, this is also useful to check if there are any errors in flux scales. For a point source, there cannot be any error in flux. However, for an extended source, the flux will be slightly lower than your model in the image. This is because the Fourier transform preserves the integral of flux and not the peak value. So, it is urged to do a simulation first before doing any calibration. We have shown the simulated image in Fig. \ref{shp:virasimul}. 
+First and foremost, it is advised to do a simulation with your sky model and the measurement set that you need to calibrate to make sure your sky model is correct. Moreover, this is also useful to check if there are any errors in flux scales. For a point source, there cannot be any error in flux. However, for an extended source, the flux will be slightly lower than your model in the image. This is because the Fourier transform preserves the integral of flux and not the peak value. So, it is urged to do a simulation first before doing any calibration. We have shown the simulated image in :numref:`virasimul`. 
 
 .. only:: latex
 
@@ -503,6 +519,8 @@ First and foremost, it is advised to do a simulation with your sky model and the
       Simulated image of Virgo-A. The red ellipse is the PSF.
 
 .. only:: html
+
+   .. _virasimul:
 
    .. figure:: figures/virasimul.png
       :align: center
@@ -518,28 +536,30 @@ First and foremost, it is advised to do a simulation with your sky model and the
 
 .. only:: html
 
+   .. _viracal:
+
    .. figure:: figures/viracal.png
       :align: center
       
       Calibrated image of Virgo-A (uniform weights).
 
-By looking at Fig. \ref{shp:virasimul}, we do not see any major discrepancy in our sky model (although we have lower resolution) so we go ahead with calibration.
+By looking at :numref:`virasimul`, we do not see any major discrepancy in our sky model (although we have lower resolution) so we go ahead with calibration.
 
 ^^^^^^^^^^^
 Calibration
 ^^^^^^^^^^^
 
-You can use the normal calibration procedure you adopt with any other LOFAR observation here. So we will not go into details. We have shown the image made after calibration in Fig. \ref{shp:viracal}. 
+You can use the normal calibration procedure you adopt with any other LOFAR observation here. So we will not go into details. We have shown the image made after calibration in :numref:`viracal`. 
 
 NOTE: It is advised to use uniform weights to compare the calibrated image to the model image.
 
-Using Fig. \ref{shp:viracal}, we can repeat our sky model construction to get a better result. This of course depends on your science requirements.
+Using :numref:`viracal`, we can repeat our sky model construction to get a better result. This of course depends on your science requirements.
 
 ^^^^^^^^
 Residual
 ^^^^^^^^
 
-A better way to check the accuracy of your sky model is to subtract this model from the calibrated data and make an image of the residual. In Fig. \ref{shp:virares}, we have shown the residual for two subbands of 1.5 hour duration at 55 MHz. We clearly see an off center source (about 2 Jy) on top right hand corner.
+A better way to check the accuracy of your sky model is to subtract this model from the calibrated data and make an image of the residual. In :numref:`virares`, we have shown the residual for two subbands of 1.5 hour duration at 55 MHz. We clearly see an off center source (about 2 Jy) on top right hand corner.
 
 .. only:: latex
 
@@ -549,6 +569,8 @@ A better way to check the accuracy of your sky model is to subtract this model f
       Residual image of Virgo-A. An off center source is present on top right hand corner.
 
 .. only:: html
+
+   .. _virares:
 
    .. figure:: figures/virares.png
       :align: center
@@ -565,7 +587,7 @@ Once you have the residual image, you can also include to off center sources and
 Conclusions
 ^^^^^^^^^^^
 
-We have given only a brief overview of the software and techniques in extended source modeling using shapelets. There are many points that we have not covered in this tutorial. However, we hope you (the user) will experiment and explore all available possibilities. Questions/Comments/Bug reports can be sent to **yatawatta[at]astron[dot]nl**.
+We have given only a brief overview of the software and techniques in extended source modeling using shapelets. There are many points that we have not covered in this tutorial. However, we hope you (the user) will experiment and explore all available possibilities. Questions/Comments/Bug reports can be sent to `Sarod Yatawatta <mailto:yatawatta@astron.nl>`_.
 
 ----------
 References
@@ -584,4 +606,4 @@ References
 
 .. rubric:: Footnotes
 
-.. [#f1] The author of this chapter is Sarod Yatawatta (**yatawatta[at]astron[dot]nl**).
+.. [#f1] The author of this chapter is `Sarod Yatawatta <mailto:yatawatta@astron.nl>`_.

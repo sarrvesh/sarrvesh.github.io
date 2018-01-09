@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Data inspection &mdash; LOFAR Imaging Cookbook 0.0.1 documentation</title>
+  <title>Data inspection &mdash; LOFAR Imaging Cookbook 22.0.0 documentation</title>
   
 
   
@@ -35,9 +35,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="LOFAR Imaging Cookbook 0.0.1 documentation" href="index.html"/>
+    <link rel="top" title="LOFAR Imaging Cookbook 22.0.0 documentation" href="index.html"/>
         <link rel="next" title="AOFlagger" href="aoflagger.html"/>
-        <link rel="prev" title="Getting started" href="gettingstarted.html"/> 
+        <link rel="prev" title="Introduction to computing facilities at ASTRON" href="gettingstarted.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.1
+                22.0
               </div>
             
           
@@ -92,7 +92,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started </a></li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Introduction to computing facilities at ASTRON </a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Data inspection </a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#analyzing-the-data-quality-with-aoqplot">Analyzing the data quality with <strong>aoqplot</strong></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
@@ -110,13 +110,14 @@
 <li class="toctree-l1"><a class="reference internal" href="wsclean.html">The WSClean Imager </a></li>
 <li class="toctree-l1"><a class="reference internal" href="sourcedetection.html">Source detection and sky model manipulation: PyBDSF and LSMTool </a></li>
 <li class="toctree-l1"><a class="reference internal" href="factor.html">Factor: Facet Calibration for LOFAR </a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="resources.html">Useful resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bbs.html">Black-Board Selfcal (BBS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bbs.html">Calibration with BBS </a></li>
 <li class="toctree-l1"><a class="reference internal" href="shapelets.html">Sky Model Construction Using Shapelets </a></li>
 <li class="toctree-l1"><a class="reference internal" href="sagecal.html">SAGECAL </a></li>
 <li class="toctree-l1"><a class="reference internal" href="awimager.html">The AW Imager </a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples </a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
             
@@ -216,9 +217,9 @@
 <h2>Analyzing the data quality with <strong>aoqplot</strong><a class="headerlink" href="#analyzing-the-data-quality-with-aoqplot" title="Permalink to this headline">¶</a></h2>
 <p>Once you have succesfully run DPPP on the measurement sets in your observation, it is recommended that you validate the results of the flagger and get an impression of the quality of the full observation. For this, the <strong>aoqplot</strong> tool that is part of the LofIm build can be used.</p>
 <p>Basically, the tool allows you to plot standard deviations and RFI percentages and some other quantities, over time, frequency, baselines and the time-frequency domain of the full observation, i.e., over all sub-bands. Since an observation can be several terabytes of data, the performance of standard tools to perform such analysis is an issue, and the <strong>aoqplot</strong> was designed to overcome this problem. Fig.~ref{aoqplot-window} shows an example of the <strong>aoqplot</strong> interface, plotting the data standard deviations of an LBA set over the entire frequency range. It also allows one to plot differential statistics. “Differential” in this context means that the standard deviation is calculated over the difference between adjacent channels. Therefore, they quantify the noise, because the difference of signal in adjacent (3 kHz) channels is tiny and can be neglected. Differential quantities are prefixed with a “D”, such as DMean and DStdDev.</p>
-<div class="figure align-center" id="id7">
+<div class="figure align-center" id="id8">
 <img alt="_images/aoqplot-window.png" src="_images/aoqplot-window.png" />
-<p class="caption"><span class="caption-text">The <strong>aoqplot</strong> window showing the standard deviation of the data over frequency of a full observation.</span></p>
+<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">The <strong>aoqplot</strong> window showing the standard deviation of the data over frequency of a full observation.</span></p>
 </div>
 <div class="section" id="usage">
 <h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
@@ -275,12 +276,12 @@ button, and <strong>Quit</strong> once you are finished.</p>
 and below <span class="math">\(\sim40^{\circ}\)</span> for 3C196) are sufficiently noisy that they
 are of limited use. These bad time ranges need to be identified and
 removed. This could be done through DPPP, but also by manual flagging
-in CASA or using the CASA <strong>SPLIT</strong> <a class="footnote-reference" href="#f4" id="id6">[4]</a> task or the python script <strong>split_ms_by_time.py</strong> (Section~ref{sec:scripts}). Splitting out part of a MeasurementSet can be done as part of the distributed pipeline and will most likely be necessary until more robust flagging routines are implemented.</p>
+in CASA or using the CASA <strong>SPLIT</strong> <a class="footnote-reference" href="#f4" id="id5">[4]</a> task or the python script <strong>split_ms_by_time.py</strong> <a class="footnote-reference" href="#f5" id="id6">[5]</a>. Splitting out part of a MeasurementSet can be done as part of the distributed pipeline and will most likely be necessary until more robust flagging routines are implemented.</p>
 <p class="rubric">Footnotes</p>
 <table class="docutils footnote" frame="void" id="f1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>This chapter is maintained by A. Shulevski (shulevski[at]astron[dot]nl) and Valentina Vacca (vvacca[at]mpa-garching[dot]mpg[dot]de).</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>This chapter is maintained by <a class="reference external" href="mailto:shulevski&#37;&#52;&#48;astron&#46;nl">A<span>&#46;</span> Shulevski</a> and <a class="reference external" href="mailto:vvacca&#37;&#52;&#48;mpa-garching&#46;mpg&#46;de">Valentina Vacca</a>.</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="f2" rules="none">
@@ -298,7 +299,13 @@ in CASA or using the CASA <strong>SPLIT</strong> <a class="footnote-reference" h
 <table class="docutils footnote" frame="void" id="f4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id6">[4]</a></td><td>The <strong>SPLIT</strong> task will be deprecated in favor of the <strong>MSTRANSFORM</strong> task beginning with CASA v.4.1.0.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id5">[4]</a></td><td>The <strong>SPLIT</strong> task will be deprecated in favor of the <strong>MSTRANSFORM</strong> task beginning with CASA v.4.1.0.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[5]</a></td><td>The script is available through the <a class="reference external" href="https://github.com/lofar-astron/LOFAR-Contributions">LOFAR GitHub repository</a>.</td></tr>
 </tbody>
 </table>
 </div>
@@ -317,7 +324,7 @@ in CASA or using the CASA <strong>SPLIT</strong> <a class="footnote-reference" h
         <a href="aoflagger.html" class="btn btn-neutral float-right" title="AOFlagger" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="gettingstarted.html" class="btn btn-neutral" title="Getting started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="gettingstarted.html" class="btn btn-neutral" title="Introduction to computing facilities at ASTRON" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -326,7 +333,7 @@ in CASA or using the CASA <strong>SPLIT</strong> <a class="footnote-reference" h
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Sarrvesh Sridhar.
+      Last updated on Jan 08, 2018.
 
     </p>
   </div>
@@ -348,7 +355,7 @@ in CASA or using the CASA <strong>SPLIT</strong> <a class="footnote-reference" h
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.1',
+            VERSION:'22.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

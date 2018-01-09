@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Source detection and sky model manipulation: PyBDSF and LSMTool &mdash; LOFAR Imaging Cookbook 0.0.1 documentation</title>
+  <title>Source detection and sky model manipulation: PyBDSF and LSMTool &mdash; LOFAR Imaging Cookbook 22.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="LOFAR Imaging Cookbook 0.0.1 documentation" href="index.html"/>
+    <link rel="top" title="LOFAR Imaging Cookbook 22.0.0 documentation" href="index.html"/>
         <link rel="next" title="Factor: Facet Calibration for LOFAR" href="factor.html"/>
         <link rel="prev" title="The WSClean Imager" href="wsclean.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.1
+                22.0
               </div>
             
           
@@ -92,7 +92,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started </a></li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Introduction to computing facilities at ASTRON </a></li>
 <li class="toctree-l1"><a class="reference internal" href="datainspection.html">Data inspection </a></li>
 <li class="toctree-l1"><a class="reference internal" href="aoflagger.html">AOFlagger </a></li>
 <li class="toctree-l1"><a class="reference internal" href="dppp.html">The Default Pre-Processing Pipeline (DPPP) </a></li>
@@ -124,13 +124,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="factor.html">Factor: Facet Calibration for LOFAR </a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="resources.html">Useful resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bbs.html">Black-Board Selfcal (BBS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bbs.html">Calibration with BBS </a></li>
 <li class="toctree-l1"><a class="reference internal" href="shapelets.html">Sky Model Construction Using Shapelets </a></li>
 <li class="toctree-l1"><a class="reference internal" href="sagecal.html">SAGECAL </a></li>
 <li class="toctree-l1"><a class="reference internal" href="awimager.html">The AW Imager </a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples </a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
             
@@ -257,7 +258,8 @@
 <span class="n">________________________________________________________________________</span>
 </pre></div>
 </div>
-<p>The figure made by <strong>show_fit</strong> is shown in Figure~ref{F:example}. In the plot window, one can zoom in, save the plot to a file, etc. The list of best-fit Gaussians found by PyBDSF may be written to a file for use in other programs, such as TOPCAT or BBS, as follows:</p>
+<p>The figure made by <strong>show_fit</strong> is shown in <a class="reference internal" href="#bdsfhtml"><span class="std std-numref">Fig. 6</span></a>.</p>
+<p>In the plot window, one can zoom in, save the plot to a file, etc. The list of best-fit Gaussians found by PyBDSF may be written to a file for use in other programs, such as TOPCAT or BBS, as follows:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">BDSM</span> <span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="n">write_catalog</span>
 <span class="o">--------&gt;</span> <span class="n">write_catalog</span><span class="p">()</span>
 <span class="o">--&gt;</span> <span class="n">Wrote</span> <span class="n">FITS</span> <span class="n">file</span> <span class="s1">&#39;sb48.pybdsf.srl.fits&#39;</span>
@@ -265,15 +267,31 @@
 </div>
 <p>The output Gaussian or source list contains source positions, fluxes, etc. BBS patches are also supported.</p>
 <div class="figure align-center" id="id6">
-<img alt="_images/example.png" src="_images/example.png" />
-<p class="caption"><span class="caption-text">Output of <strong>show_fit</strong>, showing the original image with and without sources, the model image, and the residual (original minus model) image. Boundaries of the islands of emission found by PyBDSF are shown in light blue. The fitted Gaussians are shown for each island as ellipses (the sizes of which correspond to the FWHMs of the Gaussians). Gaussians that have been grouped together into a source are shown with the same color. For example, the two red Gaussians of island #1 have been grouped together into one source, and the nine Gaussians of island #0 have been grouped into 4 separate sources. The user can obtain information about a Gaussian by clicking on it. Additionally, with the mouse inside the plot window, the display scaling can be modified by pressing the “m” key, and information about the image flux, model flux, and rms can be obtained by pressing the “i” key.</span></p>
+<span id="bdsfhtml"></span><img alt="_images/example.png" src="_images/example.png" />
+<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">Output of <strong>show_fit</strong>, showing the original image with and without sources, the model image, and the residual (original minus model) image. Boundaries of the islands of emission found by PyBDSF are shown in light blue. The fitted Gaussians are shown for each island as ellipses (the sizes of which correspond to the FWHMs of the Gaussians). Gaussians that have been grouped together into a source are shown with the same color. For example, the two red Gaussians of island #1 have been grouped together into one source, and the nine Gaussians of island #0 have been grouped into 4 separate sources. The user can obtain information about a Gaussian by clicking on it. Additionally, with the mouse inside the plot window, the display scaling can be modified by pressing the “m” key, and information about the image flux, model flux, and rms can be obtained by pressing the “i” key.</span></p>
 </div>
 </div>
 <div class="section" id="image-with-artifacts">
 <h3>Image with artifacts<a class="headerlink" href="#image-with-artifacts" title="Permalink to this headline">¶</a></h3>
+<p>Occasionally, an analysis run with the default parameters does not produce good results. For example, if there are significant deconvolution artifacts in the image, the <strong>thresh_isl</strong>, <strong>thresh_pix</strong>, or <strong>rms_box</strong> parameters might need to be changed to prevent PyBDSF from fitting Gaussians to such artifacts. An example of running PyBDSF with the default parameters on such an image is shown in <a class="reference internal" href="#bdsfartefacts"><span class="std std-numref">Fig. 8</span></a>. It is clear that a number of spurious sources are being detected. Simply raising the threshold for island detection (using the <strong>thresh_pix</strong> parameter) would remove these sources but would also remove many real but faint sources in regions of low rms. Instead, by setting the <strong>rms_box</strong> parameter to better match the typical scale over which the artifacts vary significantly, one obtains much better results. In this example, the scale of the regions affected by artifacts is approximately 20 pixels, whereas PyBDSF used a <strong>rms_box</strong> of 63 pixels when run with the default parameters, resulting in an rms map that is over-smoothed. Therefore, one should set <strong>rms_box=(20,10)</strong> so that the rms map is computed using a box of 20 pixels in size with a step size of 10 pixels (i.e., the box is moved across the image in 10-pixel steps). See <a class="reference internal" href="#bdsfartefacts2"><span class="std std-numref">Fig. 10</span></a> for a summary of the results of this call.</p>
+<img alt="_images/art_fit_def.png" src="_images/art_fit_def.png" />
+<div class="figure align-center" id="id8">
+<span id="bdsfartefacts"></span><img alt="_images/art_rms_def.png" src="_images/art_rms_def.png" />
+<p class="caption"><span class="caption-number">Fig. 8 </span><span class="caption-text">Example fit with default parameters of an image with strong artifacts around bright sources. A number of artifacts near the bright sources are picked up as sources. The background rms map for the same region (produced using <strong>show_fit</strong>) is shown in the lower panel: the rms varies fairly slowly across the image, whereas ideally it would increase more strongly near the bright sources (reflecting the increased rms in those regions due to the artifacts).</span></p>
+</div>
+<img alt="_images/art_fit_alt.png" src="_images/art_fit_alt.png" />
+<div class="figure align-center" id="id10">
+<span id="bdsfartefacts2"></span><img alt="_images/art_rms_alt.png" src="_images/art_rms_alt.png" />
+<p class="caption"><span class="caption-number">Fig. 10 </span><span class="caption-text">Same as the image shown above, but with <strong>rms_box=(20,10)</strong>. The rms map now varies on scales similar to that of the regions affected by the artifacts, and both bright and faint sources are recovered properly.</span></p>
+</div>
 </div>
 <div class="section" id="image-with-extended-emission">
 <h3>Image with extended emission<a class="headerlink" href="#image-with-extended-emission" title="Permalink to this headline">¶</a></h3>
+<p>If there is extended emission that fills a significant portion of the image, the background rms map will likely be biased high in regions where extended emission is present, affecting the island determination (this can be checked during a run by setting <strong>interactive=True</strong>). Setting <strong>rms_map=False</strong> and <strong>mean_map=’const’</strong> or <strong>‘zero’</strong> will force PyBDSF to use a constant mean and rms value across the whole image. Additionally, setting <strong>atrous_do=True</strong> will fit Gaussians of various scales to the residual image to recover extended emission missed in the standard fitting. Depending on the source structure, the <strong>thresh_isl</strong> and <strong>thresh_pix</strong> parameters may also have to be adjusted as well to ensure that PyBDSF finds and fits islands of emission properly. An example analysis of an image with significant extended emission is shown in <a class="reference internal" href="#extendedemission"><span class="std std-numref">Fig. 12</span></a>.</p>
+<div class="figure align-center" id="id12">
+<span id="extendedemission"></span><img alt="_images/HydraA_74MHz_fit.png" src="_images/HydraA_74MHz_fit.png" />
+<p class="caption"><span class="caption-number">Fig. 12 </span><span class="caption-text">Example fit of an image of Hydra A with <strong>rms_map=False</strong>, <strong>mean_map=’zero’</strong>, and <strong>atrous_do=True</strong>. The values of <strong>thresh_isl</strong> and <strong>thresh_pix</strong> were adjusted before fitting (by setting <strong>interactive=True</strong>) to obtain an island that enclosed all significant emission.</span></p>
+</div>
 </div>
 <div class="section" id="usage-in-python-scripts">
 <h3>Usage in python scripts<a class="headerlink" href="#usage-in-python-scripts" title="Permalink to this headline">¶</a></h3>
@@ -392,7 +410,7 @@
 <table class="docutils footnote" frame="void" id="f" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>This section is maintained by David Rafferty (drafferty[at]hs[dot]uni-hamburg[dot]de).</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>This section is maintained by <a class="reference external" href="mailto:drafferty&#37;&#52;&#48;hs&#46;uni-hamburg&#46;de">David Rafferty</a>).</td></tr>
 </tbody>
 </table>
 </div>
@@ -422,7 +440,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Sarrvesh Sridhar.
+      Last updated on Jan 08, 2018.
 
     </p>
   </div>
@@ -444,7 +462,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.1',
+            VERSION:'22.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

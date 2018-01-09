@@ -9,7 +9,7 @@ In most cases, one would normally use the AOFlagger step in NDPPP with the defau
 Tutorial
 --------
 
-The tutorial data can be downloaded from the LOFAR LTA. Please refer to  Chapter~\ref{practicalexamples} for details.
+The tutorial data can be downloaded from the LOFAR LTA. Please refer to the chapter on `practical examples <./tutorial.html>`_ for details.
 
 The AOFlagger program comes with a tool called **rfigui** that is part of the **lofar** module on the CEP3 cluster. If you haven't done so, load the module::
 
@@ -126,5 +126,5 @@ The manual for AOFlagger can be found on the site `http://aoflagger.sourceforge.
 
 .. rubric:: Footnotes
 
-.. [#f1] This author of this chapter is Andre Offringa (**offringa[at]astron[dot]nl**)
+.. [#f1] This author of this chapter is `Andre Offringa <mailto:offringa@astron.nl>`_.
 .. [#f2] A description of the steps in the pipeline is given in `this paper <http://pos.sissa.it/archive/conferences/107/036/RFI2010_036.pdf>`_.

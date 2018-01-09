@@ -3,7 +3,7 @@ Calibration with BBS [#f1]_
 
 BBS is a software package that was designed for the calibration and simulation of LOFAR data. This section provides a practical guide to reducing LOFAR data with BBS. Do not expect a description of the optimal way to calibrate LOFAR data that works on all possible fields. Much still has to be learned about the reduction of LOFAR data. This chapter should rather be viewed as a written record of the experience gained so far, through the efforts of many commissioners and developers.
 
-NOTE: the most common calibration scenarios can now be performed in DPPP, which is a lot faster (at least 10 times). Please first see if your calibration can be done with DPPP, see Chapter~\ref{sec:dpppcalibration}.
+NOTE: the most common calibration scenarios can now be performed in DPPP, which is a lot faster (at least 10 times). Please first see if your calibration can be done with DPPP, see `gain calibration with DPPP <./dpppcalibrate.html>`_.
 
 --------
 Overview
@@ -15,9 +15,9 @@ The influence of the instrument and the environment on the measured signal can b
 
 The core functionality of BBS can conceptually be split into two parts. One part concerns the simulation of visibilities given a model. The other part concerns estimating best-fit parameter values given a model and a set of observed visibilities. This is an iterative procedure: A set of simulated visibilities is computed using the current values of the parameters. Then, the values of the parameters are adjusted to minimize the difference between simulated visibilities and observed visibilities, and an updated set of simulated visibilities is computed. This continues in a loop until a convergence criteria is met.
 
-BBS has two modes of running. The first is to run as a stand-alone tool to calibrate one subband. If a single subband does not contain enough signal, BBS offers the possibility to use data from multiple subbands together for parameter estimation. This is called *global* parameter estimation. In this chapter, we will focus on the stand-alone version; only in Section~\ref{bbs:global-parameter-estimation} we will treat the global solve.
+BBS has two modes of running. The first is to run as a stand-alone tool to calibrate one subband. If a single subband does not contain enough signal, BBS offers the possibility to use data from multiple subbands together for parameter estimation. This is called *global* parameter estimation. In this chapter, we will focus on the stand-alone version; only in section `global parameter estimation`_ we will treat the global solve.
 
-As input, BBS requires an observation (one or more subbands / measurement sets), a source catalog (see Section~\ref{bbs:source-catalog}), a table of initial model parameters (see Section~\ref{bbs:model-parameters}), and a configuration file (also called *parset*, see Section~\ref{bbs:example-reductions}) that specifies the operations that need to be performed on the observation as a whole. As output, BBS produces a processed observation, a table of estimated model parameters, and a bunch of log files.
+As input, BBS requires an observation (one or more subbands / measurement sets), a `source catalog`_, a table of initial model parameters (see section on `instrument tables`_), and a configuration file (also called *parset*, see section `example reductions`_) that specifies the operations that need to be performed on the observation as a whole. As output, BBS produces a processed observation, a table of estimated model parameters, and a bunch of log files.
 
 -----
 Usage
@@ -30,11 +30,13 @@ To calibrate a single MS, execute the **calibrate-stand-alone** script on the co
 The important arguments provided to the **calibrate-stand-alone** script in this example are:
 
 + **<MS>**, which is the name of the MS to process.
-+ **<parset>**, which defines the reduction (see Section~\ref{bbs:example-reductions}).
-+ **<source catalog>**, which defines a list of sources that can be used for calibration (see Section~\ref{bbs:source-catalog}).
++ **<parset>**, which defines the reduction (see section `example reductions`_).
++ **<source catalog>**, which defines a list of sources that can be used for calibration (see section `source catalog`_).
 + The **-f** option, which overwrites stale information (the instrument table and sky model) from previous runs.
 
 You can run the script without arguments for a description of all the options and the mandatory arguments, such as the **-v** option to get a more verbose output.
+
+.. _sourcecatalog:
 
 --------------
 Source catalog
@@ -42,9 +44,9 @@ Source catalog
 
 The source catalog / sky model defines the sources that can be used (referred to) in the reduction. It is a plain text file that is translated by the **makesourcedb** tool into a form that BBS can use. (Internally, the script converts the catalog file to a sourcedb by running **makesourcedb** on it, before starting BBS.)
 
-A sky model can be created by hand using a text editor. Using tools like **awk** and **sed**, it is relatively straight-forward to convert existing text based catalogs into **makesourcedb** format. Various catalog files created by commissioners have been collected at `https://github.com/lofar-astron/LOFAR-Cookbook <https://github.com/lofar-astron/LOFAR-Cookbook>`_.
+A sky model can be created by hand using a text editor. Using tools like **awk** and **sed**, it is relatively straight-forward to convert existing text based catalogs into **makesourcedb** format. Various catalog files created by commissioners have been collected in a `GitHub repository <https://github.com/lofar-astron/LOFAR-Cookbook>`__.
 
-Alternatively, a catalog file in **makesourcedb** format can be created using the **gsm.py** tool. This tool extracts sources in a cone of a given radius around a given position on the sky from the *Global Sky Model* or GSM. The GSM contains all the sources from the VLSS, NVSS, and WENSS survey catalogs. See Section~\ref{bbs:gsm} for more information about the GSM and **gsm.py**.
+Alternatively, a catalog file in **makesourcedb** format can be created using the **gsm.py** tool. This tool extracts sources in a cone of a given radius around a given position on the sky from the *Global Sky Model* or GSM. The GSM contains all the sources from the VLSS, NVSS, and WENSS survey catalogs. See section `GSM`_ for more information about the GSM and **gsm.py**.
 
 Below is an example catalog file for 3C196. In this example, 3C196 is modelled as a point source with a flux of 153 Jy and a spectral index of -0.56 with a curvature of -0.05212 at a reference frequency of 55.468 MHz. ::
 
@@ -63,7 +65,7 @@ If a field is left blank (e.g. the **ReferenceFrequency** in the 3C196 example a
 
 When a catalog contains sources defined by shapelets as well as point sources or Gaussian sources, it is easiest to create two catalog files (one containing the shapelet sources and one containing the rest). Using the **append** option of the **makesourcedb** tool, a single sourcedb containing all the sources can then be created and fed to the **calibrate-stand-alone** script using the **sourcedb** option.
 
-For more information about the recognized fields, default values, and units, please refer to the **makesourcedb** documentation on the `LOFAR wiki <http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:makesourcedb>`_.
+For more information about the recognized fields, default values, and units, please refer to the **makesourcedb** documentation on the `LOFAR wiki <http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:makesourcedb>`__.
 
 ^^^^^^^^^^^^^^^^
 Gaussian sources
@@ -126,13 +128,15 @@ When specifying :math:`Q` and :math:`U` at a reference wavelength :math:`\lambda
 
 Here, :math:`I(\lambda_{0})` is the total intensity at reference wavelength :math:`\lambda_{0}`, which depends on the spectral index of the source. Note that the reference wavelength :math:`\lambda_{0}` must be :math:`>0` if the source has a spectral index.
 
-----------
-GSM [#f2]_
-----------
+.. _gsm:
 
-The **Global Sky Model** or GSM is a database that contains the reported source properties from the VLSS, WENSS and NVSS surveys. The **gsm.py** script can be used to create a catalog file in **makesourcedb** format (see Section~\ref{bbs:source-catalog}) from the information available in the GSM. As such, the **gsm.py** script serves as the interface between the GSM and BBS.
+---
+GSM
+---
 
-A catalog file created by **gsm.py** contains the VLSS sources that are in the field of view. For every VLSS source, counterparts in the other catalogs are searched and associated depending on criteria described below. Spectral index and higher-order terms are fitted according to equation~\ref{eqSI} in Section~\ref{bbs:spectral-index}.
+The **Global Sky Model** or GSM is a database that contains the reported source properties from the VLSS, WENSS and NVSS surveys. The **gsm.py** script can be used to create a catalog file in **makesourcedb** format (see `Source catalog`_) from the information available in the GSM. As such, the **gsm.py** script serves as the interface between the GSM and BBS.
+
+A catalog file created by **gsm.py** contains the VLSS sources that are in the field of view. For every VLSS source, counterparts in the other catalogs are searched and associated depending on criteria described below. Spectral index and higher-order terms are fitted according to equation  in section `Spectral index`_.
 
 On CEP, there is a GSM database instance and is loaded with all the sources and their reported properties from the VLSS, WENSS and NVSS surveys. The WENSS survey is actually split up into two catalogs according to their frequencies: A main (:math:`\delta \leq 75.8`, :math:`\nu=325` MHz) and a polar (:math:`\delta \geq 74.5`, :math:`\nu=352` MHz) part. The VLSS and NVSS surveys are taken at 73.8 MHz and 1400 MHz, respectively.
 
@@ -140,9 +144,18 @@ The python wrapper script **gsm.py** can be used to generate a catalog file in *
 
     > gsm.py outfile RA DEC radius [vlssFluxCutoff [assocTheta]]
     
-The input arguments are explained in Table~\ref{tab:gsm_params}. The arguments RA and DEC can be copy-pasted from the output of 'msoverview' to select the pointing of your observation. A sensible value for **radius** is, 5 degrees.
+The input arguments are explained in :numref:`gsmparams`. The arguments RA and DEC can be copy-pasted from the output of 'msoverview' to select the pointing of your observation. A sensible value for **radius** is, 5 degrees.
 
-INSERT PARAMETERS TABLE HERE
+.. _gsmparams:
+
+.. csv-table:: The parameters and criteria that are used for creating the initial Global Sky Model.
+   :header: "Parameter", "Unit", "Description" 
+   
+   "outfile", "string", "Path to the **makesourcedb** catalog file. If it exists, it will be overwritten."
+   "RA, DEC", "degrees", "Central position of conical search."
+   "radius", "degrees", "Extent of conical search."
+   "vlssFluxCutoff", "Jy", "Minimum flux of VLSS source in outfile. Defaults to 4 Jy."
+   "assocTheta", "degrees", "Search radius centered on VLSS source for which counterparts are searched. Defaults to 10 arcsec taking into account the VLSS resolution of 80 arcsec."
 
 The **gsm.py** script calls the function **expected_fluxes_in_fov()** in **gsmutils.py** that does the actual work. It makes a connection to the GSM database and selects all the VLSS sources that fulfill the criteria. The area around every found VLSS source (out to radius **assocTheta**) is searched for candidate counterparts in the other surveys. The dimensionless distance association parameter, :math:`\rho_{i,\star}`, is used to quantify the association of VLSS source-candidate counterpart further. It weights the positional differences by the postion errors of the pair and follows a Rayleigh distribution (De Ruiter et al., 1977). A value of :math:`3.717` corresponds to an acceptance of missing 0.1% genuine source associations (Scheers, 2011). The dimensionless radius is not an input argument to **gsm.py**, but it is to the above mentioned function. For completeness, we give its definition below:
 
@@ -152,7 +165,7 @@ The **gsm.py** script calls the function **expected_fluxes_in_fov()** in **gsmut
    
 Here the sub- and superscripts :math:`\star` refers to the VLSS source and :math:`i` to its **candidate** counterpart in one of the other surveys.
 
-After being associated (or not), the corresponding fluxes and frequencies are used to fit the spectral-index and higher-order terms according to equation~\ref{eqSI} in Section~\ref{bbs:source-catalog}. Therefore, we use the python **numpy.poly1d()** functions. If no counterparts were found a default spectral index of :math:`-0.7` is assumed.
+After being associated (or not), the corresponding fluxes and frequencies are used to fit the spectral-index and higher-order terms according to the equation in section `Source catalog`_. Therefore, we use the python **numpy.poly1d()** functions. If no counterparts were found a default spectral index of :math:`-0.7` is assumed.
 
 Another optional argument when calling the function **expected_fluxes_in_fov()** in **gsmutils.py** is the boolean **storespectraplots**. When true and not performance driven, this will plot all the spectra of the sources in the catalog file, named by their VLSS name.
 
@@ -166,13 +179,13 @@ There might be cases that a VLSS source has more than one WENSS counterpart. Thi
 Instrument tables
 ^^^^^^^^^^^^^^^^^
 
-When calibrating, we try to estimate parameters in the measurement equation. The values of these model parameters are stored in a so-called "parmdb" (table). Usually, this parmdb is stored inside a measurement set and is called **instrument**. To inspect or create a parmdb, use the command `**parmdb** <http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:parmdbm>`_. To view the contents of a parmdb, use the tool **parmdbplot.py** (section \ref{bbs:inspect-solutions}).
+When calibrating, we try to estimate parameters in the measurement equation. The values of these model parameters are stored in a so-called "parmdb" (table). Usually, this parmdb is stored inside a measurement set and is called **instrument**. To inspect or create a parmdb, use the command `parmdb <http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:parmdbm>`_. To view the contents of a parmdb, use the tool **parmdbplot.py** (see section `Inspecting the solutions`_).
 
-A parmdb can contain two sorts of parameters: normal parameters that are both time and frequency dependent, and **default parameters** that are neither frequency nor time dependent. The default parameters can be used as fallback if a model parameter is not known, but they can also be used in some schemes for transferring solutions, see section \ref{bbs:gain-transfer}.
+A parmdb can contain two sorts of parameters: normal parameters that are both time and frequency dependent, and **default parameters** that are neither frequency nor time dependent. The default parameters can be used as fallback if a model parameter is not known, but they can also be used in some schemes for transferring solutions, see section on `gain transfer`_ below.
 
 Before even starting the actual BBS, there need to be values in the parmdb, because they are used as starting values by BBS [#f3]_. For gains (**Gain** and **DirectionalGain**), the default starting value of :math:`0` is not adequate. For this reason, the **calibrate-stand-alone** script implicitly creates a default parmdb that contains initial values of :math:`1` for these parameters.
 
-Please note that if you create your own parmdb, you will almost always want to include the default **adddef** commands listed below to set the correct defaults for **Gain**, **DirectionalGain**. Otherwise, estimating these parameters will not work correctly. The default parameters are automatically created if you use **calibrate-stand-alone** with the option **-f** or **--replace-parmdb**. To set default values in a parmdb manually, use the following commands in `**parmdbm** <http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:parmdbm>`_. ::
+Please note that if you create your own parmdb, you will almost always want to include the default **adddef** commands listed below to set the correct defaults for **Gain**, **DirectionalGain**. Otherwise, estimating these parameters will not work correctly. The default parameters are automatically created if you use **calibrate-stand-alone** with the option **-f** or **--replace-parmdb**. To set default values in a parmdb manually, use the following commands in `parmdbm <http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:parmdbm>`_. ::
 
     adddef Gain:0:0:Ampl  values=1.0
     adddef Gain:1:1:Ampl  values=1.0
@@ -189,15 +202,30 @@ Model
 
 As already mentioned, BBS consists of two parts: a part to solve equations and a part to simulation of visibilities given a sky model. This section is about the latter. BBS uses the measurement equation, which is an equation that describes all effects that happen to the signal that was sent by the sky, before they are captured in your data. All these effects are Jones matrices: :math:`2\times 2` matrices that work on the two components (the two polarizations) of your data. An important thing to note is that these Jones matrices do not commute: the order in which they are matters.
 
-The most commonly used effects that BBS can handle are given in Table~\ref{bbs:effecttable}, in the order that they are applied (from sky to antenna). The direction dependent effects are different for each **patch** you specify in your source model.
+The most commonly used effects that BBS can handle are given in :numref:`bbsEffects`, in the order that they are applied (from sky to antenna). The direction dependent effects are different for each **patch** you specify in your source model.
 
-INSERT BBS TABLE HERE
+.. _bbsEffects:
+
+.. csv-table:: Effects that BBS handles. The first half are direction dependent effects (DDEs), which means that the effect is different for each patch. The bottom effects are direction independent effects (DIEs).
+   :header: "Effect", "Description", "Jones matrix"
+   
+   "ScalarPhase", "A phase that is equal for both dipoles", ":math:`\left( \begin{smallmatrix} e^{\alpha_p}& 0\\ 0 & e^{\alpha_p} \end{smallmatrix}\right)`"
+   "Rotation [#f20]_", "Faraday Rotation without frequency dependency", ":math:`$\left( \begin{smallmatrix} \cos(\alpha_p) & -\sin(\alpha_p)\\ \sin(\alpha_p) & \cos(\alpha_p) \end{smallmatrix}\right)`"
+   "FaradayRotation [#f21]_", "Faraday Rotation, :math:`\rho_p=\alpha_p\cdot\text{(channel wavelength)}^2`", ":math:`\left( \begin{smallmatrix} \cos(\rho_p) & -\sin(\rho_p)\\ \sin(\rho_p) & \cos(\rho_p) \end{smallmatrix}\right)`"
+   "Directional TEC", "TEC (ionosphere), :math:`\phi_p=\frac{-8.44797245\cdot 10^9\alpha_p}{\textrm{channel frequency}}`", ":math:`\left( \begin{smallmatrix} e^{\phi_p} & 0\\ 0 & e^{\phi_p} \end{smallmatrix}\right)`"
+   "Beam [#f22]_", "The LOFAR beam model", "See section on Beam model"
+   "DirectionalGain", "Directional gain", ":math:`\left( \begin{smallmatrix} \alpha:0:0:p & \alpha:0:1:p\\ \alpha:1:0:p & \alpha:1:1:p \end{smallmatrix}\right)`"
+   "CommonScalarPhase", "Scalar phase", ":math:`\left( \begin{smallmatrix} e^\alpha & 0\\ 0 & e^\alpha \end{smallmatrix}\right)`"
+   "CommonRotation", "Rotation", ":math:`\left( \begin{smallmatrix} \cos(\alpha) & -\sin(\alpha)\\ \sin(\alpha) & \cos(\alpha) \end{smallmatrix}\right)`"
+   "TEC", "TEC (ionosphere), :math:`\phi=\frac{-8.44797245\cdot 10^9\alpha}{\text{channel frequency}}`", ":math:`\left( \begin{smallmatrix} e^\phi & 0\\ 0 & e^\phi \end{smallmatrix}\right)`"
+   "Gain", "Gain", ":math:`\left( \begin{smallmatrix} \alpha:0:0 & \alpha:0:1\\ \alpha:1:0 & \alpha:1:1 \end{smallmatrix}\right)`"
+   "Clock", "Clock, :math:`\phi=\alpha\cdot 2\pi\cdot\text{channel frequency}`", ":math:`\left( \begin{smallmatrix} e^\phi & 0\\ 0 & e^\phi \end{smallmatrix}\right)`"
 
 The two most commonly used effects, Gain and DirectionalGain, have only one option: **Phasors**. When set to **True** (or **T**), the gains are expressed like :math:`A\cdot e^{i\phi}`, otherwise they are specified in the form :math:`a + b\cdot i`. While mathematically equivalent, this does make a difference because the solver in BBS solves for real variables. When you are solving for phases or amplitudes only, it is necessary to specify **Phasors = True**. Specify this like ::
 
     Model.Gain.Phasors = T
     
-For configuration of the beam model that is used, see Section~\ref{bbs:beammodel}.
+For configuration of the beam model that is used, see section `Beam model`_.
 
 ^^^^^^^^^^
 Beam model
@@ -229,7 +257,7 @@ The underlying solver is a Levenberg-Marquardt solver. Several parameters exist 
 Example reductions
 -------------------
 
-The sequence of operations that BBS will perform on the data are defined in a configuration or **parset** file [#f4]_. The BBS documentation on the LOFAR wiki documents all the options (see the `LOFAR wiki <http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:bbs>`_), and it is highly recommended that you obtain a hard-copy of this for future reference.
+The sequence of operations that BBS will perform on the data are defined in a configuration or **parset** file [#f4]_. The BBS documentation on the LOFAR wiki documents all the options (see the `LOFAR wiki <http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:bbs>`__), and it is highly recommended that you obtain a hard-copy of this for future reference.
 
 A BBS parset file consists of two sections: The **Strategy** section, which defines the operations (or **steps**) to be carried out, and the **Step** section, which defines the details of each step. The following sections describe a few typical reductions along with the corresponding parset.
 
@@ -241,7 +269,7 @@ Simulation
 
 Given a source catalog and (optionally) a table of model parameters, BBS can be used to compute simulated *uv*-data (without noise) [#f5]_. Simulated data can sometimes be useful as a debugging aid. Imaging simulated data can provide an impression of what you would expect to see with an ideal telescope under ideal conditions and without noise. Comparing observed data to simulated data can provide useful clues, although in practice this is limited to cases where the signal to noise ratio of the observed data is high.
 
-Simulated data produced by BBS (or any other software package) can also be used as model data during calibration using the same parset syntax as described in Section~\ref{bbs:precomputed-visibilities}.
+Simulated data produced by BBS (or any other software package) can also be used as model data during calibration using the same parset syntax as described in section `Pre-computed visibilities`_.
 
 An example parset file [#f6]_ to simulate {\it uv}-data for all the sources in the source catalog is shown below. ::
 
@@ -259,7 +287,7 @@ An example parset file [#f6]_ to simulate {\it uv}-data for all the sources in t
 Gain calibration (direction-independent)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The following parset [#f7]_ describes a direction independent gain calibration. The meaning of each parameter is the same as in Section~\ref{bbs:simulation} unless otherwise stated. Enabling / disabling of model components can be either done by a short-hand **T** and **F** which is equivalent to explicit **True** and **False**. ::
+The following parset [#f7]_ describes a direction independent gain calibration. The meaning of each parameter is the same as in section `Simulation`_ unless otherwise stated. Enabling / disabling of model components can be either done by a short-hand **T** and **F** which is equivalent to explicit **True** and **False**. ::
 
     # uv-plane-cal.parset
     Strategy.InputColumn = DATA
@@ -333,9 +361,23 @@ The source catalog used for calibration is reported below [#f10]_ ::
 
 The flux of 3C380 has been set to the arbitrary value of 1 Jy. Its spectral index has been roughly estimated by comparing VLSS and 3C flux. The subtraction can also be performed without specifying the correct flux of the sources and determining the flux of the target source with self calibration.
 
-The resulting image in shown in Figure~\ref{3C380_comparison}, compared to the map obtained without subtraction.
+The resulting image in shown in :numref:`3c380compare`, compared to the map obtained without subtraction.
 
-INSERT FIGURE HERE
+.. only:: latex
+
+   .. figure:: figures/3C380_comparison_zoom.pdf
+      :align: center
+      
+      The radio source 3C380 imaged by LOFAR at 135~MHz (observation ID **L2010_08567**). **Left panel**: Self calibration has been applied with directional-gain correction and subtraction of Cyg A and Cas A. **Right panel**: Self calibration has been applied without correction. The lowest contour level is at  3 mJy :math:`\mathrm{beam}^{-1}`; subsequent contour levels are spaced by factors of :math:`\sqrt{2}`. The resolution is :math:`83.29" \times  59.42"`. The negative contour is in red.
+
+.. only:: html
+
+   .. _3c380compare:
+
+   .. figure:: figures/3C380_comparison_zoom.png
+      :align: center
+      
+      The radio source 3C380 imaged by LOFAR at 135~MHz (observation ID **L2010_08567**). **Left panel**: Self calibration has been applied with directional-gain correction and subtraction of CygA and CasA. **Right panel**: Self calibration has been applied without correction. The lowest contour level is at  3 mJy :math:`\mathrm{beam}^{-1}`; subsequent contour levels are spaced by factors of :math:`\sqrt{2}`. The resolution is :math:`83.29" \times  59.42"`. The negative contour is in red.
 
 --------------------------
 Tweaking BBS to run faster
@@ -343,13 +385,27 @@ Tweaking BBS to run faster
 
 BBS can take a long time to calibrate your huge dataset. Luckily, there are some ways to tune it. You have to know a bit about how BBS works to do this. 
 
-BBS views the data as a grid of time slots times vs channels (see Figure~\ref{bbs:solve_domains}). A solution cell is defined as the number of timeslots times the number of channels on which a constant parameter solution is computed. For example, if you specify **CellSize.Freq = 1**, a different solution is computed for every channel independently. In Figure~\ref{bbs:solve_domains}, the solution cells are outlined with blue lines.
+BBS views the data as a grid of time slots times vs channels (see :numref:`solvedomains`). A solution cell is defined as the number of timeslots times the number of channels on which a constant parameter solution is computed. For example, if you specify **CellSize.Freq = 1**, a different solution is computed for every channel independently. In :numref:`solvedomains`, the solution cells are outlined with blue lines.
 
 Because the evaluation of the model is computationally expensive, and a lot of intermediate results can be reused, the model is evaluated for a number of cells simultaneously. There is a trade-off here: if one cell would converge to a solution very slowly, the model is evaluated for all the cells in the cell chunk, even the ones that have converged. The number of cells in a cell chunk is specified by **CellChunkSize**, which specifies the number of solution cells in the time direction. Dependent on the amount of frequency cells, a value of **CellChunkSize = 10 -- 25** could be good.
 
 First, BBS loads a lot of timeslots into memory. The amount of timeslots is specified by **ChunkSize**. If you specify **ChunkSize = 0** then the whole MS will be read into memory, which will obviously not work if your data is 80 Gb large. Depending on the number of baselines and channels, usually 100 is a good choice. Monitor the amount of memory that is used (for example by running **top**) to see if you're good. The **ChunkSize** should be an integer multiple of **CellSize.Time** :math:`\times` **CellChunkSize**, so that in every chunk the same number of cell chunks are handled and all cell chunks have the same size.
 
-INSERT SOLVE FIGURE
+.. only:: latex
+
+   .. figure:: figures/solve_domains.pdf
+      :align: center
+      
+      The different solve domains and chunk parameters for BBS. In this example, **CellSize.Time=8**, **CellSize.Freq=8**, **ChunkSize=32**, **CellChunkSize=2** (do not use these values yourself, they are probably not good for actual use).
+      
+.. only:: html
+
+   .. _solvedomains:
+
+   .. figure:: figures/solve_domains.png
+      :align: center
+      
+      The different solve domains and chunk parameters for BBS. In this example, **CellSize.Time=8**, **CellSize.Freq=8**, **ChunkSize=32**, **CellChunkSize=2** (do not use these values yourself, they are probably not good for actual use).
 
 ^^^^^^^^^^^^^^
 Multithreading
@@ -357,7 +413,7 @@ Multithreading
 
 BBS can do a bit of multithreading. Be warned in advance that if you use :math:`N` threads, BBS will most likely not run :math:`N` times faster. Again, a bit of tweaking may be necessary. 
 
-The multithreading is done on solve part, not on the model building part. So it works only on problems that are 'solve-dominated'. The multithreading is performed over the solution cells. For this to give any speedup, there need to be at least as many solution cells as the number of threads. You usually get a decent speed-up if the number of solution cells is about 5--6 times the number of threads. So if you solve over all frequencies (the number of frequency cells is 1), **CellChunkSize = 5 :math:`\times` nThreads** should give you some speedup.
+The multithreading is done on solve part, not on the model building part. So it works only on problems that are 'solve-dominated'. The multithreading is performed over the solution cells. For this to give any speedup, there need to be at least as many solution cells as the number of threads. You usually get a decent speed-up if the number of solution cells is about 5--6 times the number of threads. So if you solve over all frequencies (the number of frequency cells is 1), **CellChunkSize = 5** :math:`\times` **nThreads** should give you some speedup.
 
 You can instruct **calibrate-stand-alone** [#f11]_ to run with multithreading with the parameter **-t** or **--numthreads** ::
 
@@ -390,7 +446,7 @@ After this, all *vds* files need to be combined into a single *gds* file, ready 
 
     > combinevds <output file>.gds <vds file 1> [<vds file 2> ...]
     
-Instead of specifying the list of input *vds* files, you could type **\ *.vds**. Note that the **combine** step is required even if we want to calibrate a single subband only, although normally you would calibrate a single subband using the stand-alone version of BBS (see Section~\ref{bbs:stand-alone-version}).
+Instead of specifying the list of input *vds* files, you could type **\ *.vds**. Note that the **combine** step is required even if we want to calibrate a single subband only, although normally you would calibrate a single subband using the stand-alone version of BBS.
 
 ^^^^^
 Usage
@@ -404,9 +460,9 @@ which is a single command, spread over multiple lines, as indicated by a backsla
 
 + **<key>**, which is a single word that identifies the BBS run. If you want to start a BBS run *while another run is still active*, make sure that the runs have *different* keys (using this option).
 + **<gds file>**, which contains the locations of all the MS (subbands) that constitute the observation. It should be given here by its full path, for example /data/scratch/:math:`<`username:math:`>`/:math:`<`global gds file:math:`>`.
-+ **<parset>**, which defines the reduction (see Section~\ref{bbs:example-reductions}).
-+ **<source catalog>**, which defines a list of sources that can be used for calibration (see Section~\ref{bbs:source-catalog}).
-+ **<working directory>**, which is the working directory where BBS processes will be run and where the logs will be written (usually **/data/scratch/<user name>**). It should be created on each compute node that you intend to use. You can use the **cexec** command for this (see Section~\ref{logginontotheofflineprocessingcluster}).
++ **<parset>**, which defines the reduction (see section `Example reductions`_).
++ **<source catalog>**, which defines a list of sources that can be used for calibration (see section `Source catalog`_).
++ **<working directory>**, which is the working directory where BBS processes will be run and where the logs will be written (usually **/data/scratch/<user name>**). It should be created on each compute node that you intend to use. You can use the **cexec** command for this (see section :ref:`Logging on to CEP3`).
 + The **-f** option, which overwrites stale information from previous runs.
 
 You can run the **calibrate** script without arguments for a description of all the options and the mandatory arguments. You can also use the **-v** option to get a more verbose output. Note that the arguments of **calibrate** are very much like [#f14]_ those of **calibrate-stand-alone**.
@@ -486,33 +542,228 @@ You can use **cexecms** to add model *uv*-data to more than one MS, for example:
 Inspecting the solutions
 ------------------------
 
-You can inspect the solutions using the python script **parmdbplot.py**. To start **parmdbplot.py** from the command line, you should first initialize the **lofar** environment (see Section~\ref{settings}). Then you can type, for example::
+You can inspect the solutions using the python script **parmdbplot.py**. To start **parmdbplot.py** from the command line, you should first initialize the **lofar** environment (see :ref:`Setting up your working environment`). Then you can type, for example::
 
     > parmdbplot.py SB23.MS.dppp/instrument/
     
-The first thing you should see after starting the script should be the main window (see Figure~\ref{fig:main_window}). Here you can select a set of parameters of the same type to be plotted together in a single plot. Note that some features will not be available if you select multiple parameters. Parmdbplot is able to properly handle the following solution types: Gain, DirectionalGain, CommonRotationAngle, RotationAngle, CommonScalarPhase, ScalarPhase, Clock, TEC, RM. The last three (Clock, TEC and RM) are properly converted into a phase -- they are stored differently in the parmdb internally.
+The first thing you should see after starting the script should be the main window (see :numref:`parmdb_mainwindow`). Here you can select a set of parameters of the same type to be plotted together in a single plot. Note that some features will not be available if you select multiple parameters. Parmdbplot is able to properly handle the following solution types: Gain, DirectionalGain, CommonRotationAngle, RotationAngle, CommonScalarPhase, ScalarPhase, Clock, TEC, RM. The last three (Clock, TEC and RM) are properly converted into a phase -- they are stored differently in the parmdb internally.
 
 The "Use resolution" option is best left *unchecked*. If it is checked, the plotter tries to find a resolution that will yield a :math:`100 \times 100` grid in :math:`\mathrm{frequency} \times \mathrm{time}`. Usually, you just want to use the sampling intervals that are present in the parmdb. In that case, leave the box unchecked.
+
+.. _parmdb_mainwindow:
 
 .. figure:: figures/parmdbplot_main.png
    :align: center
    
    The main window of **parmdbplot**.
-   
+
+.. _parmdb_plotwindow:
+
 .. figure:: figures/parmdbplot_figure.png
    :align: center
    
    The plot window of **parmdbplot**.
    
+.. _parmdb_phasesum:
+   
 .. figure:: figures/parmdbplot_phasesum.png
    :align: center
    
    The plot window of **parmdbplot** with a phase sum.
+   
+Once you click the "Plot" button, a window similar to the :numref:`parmdb_plotwindow` should pop up. We discuss the controls on the top of the window from left to right. The first is a drop down box that allows you to select the axis (frequency, time) to slice over. By default, this is set to frequency, which means that the x-axis in the plot is time and that you can step along the frequency axis using the spin control (the second control from the left).
+
+The "Legend" checkbox allows you turn the legend on or off (which can be quite large and thus obscure the plot, so it is off by default). The "Polar" checkbox lets you select if the parameter value is plotted as amplitude/phase (the default) or real/imaginary. The "Unwrap phase" checkbox will turn phase unwrapping on or off. The button "Block y-axis" is useful when stepping over multiple frequency solutions: if checked, the y-scale will remain the same for all plots. "Use points" can be checked if you want points (instead of lines) for amplitude plots.
+
+The last checkbox lets you choose the unit for the x-axis. By default, it is the sample number. If you chose, in the main window, to use a time resolution of 2 seconds, then the number 10 on the x-axis means :math:`10 \times 2 = 20` seconds. If you enable "Values on x-axis", it will show the number of minutes since the start of the observation.
+
+The "Phase reference" drop down box allows you to select the parameter used as the phase reference for the phase plots (the phase reference is only applied in amplitude/phase mode).
+
+When the phase reference is set, one can use the "phase sum" drop-down menu (see :numref:`parmdb_phasesum`). This menu allows the user to select among all the other parameters related to the same antenna and add the phases to those plotted. All the selected phases are referenced to the "phase reference" antenna. This procedure is useful if one solves for Phase and Clock (or TEC) and wants to look at the global phase effect. Note that the phase effects are just added together with not specific order. This is only physically correct if the effects commute. 
+
+The slider on the left of the plots allows you to make an exponential zoom to the median value of amplitude plots. This  can be helpful if you have one outlier in the solution which sets the scale to 1000 when you are actually interested in the details around 0.001.
+
+The controls on the bottom of the window are the default matplotlib controls that allow you to pan, zoom, save the plot, and so on.
+
+For a quick overview of solutions, and to compare lots of solutions at a glance, you can also use the **solplot.py** [#f16]_ script by George Heald::
+
+    >solplot.py -q *.MS/instrument/
+    
+Running the script with **-h** will produce an overview of possible options.
+
+-------------------
+The global bandpass
+-------------------
+
+This section describes estimates of the global bandpass for the **LBA** band and **HBA** bands. The bandpass curves were estimated from the BBS amplitude solutions for several observations of a calibrator source (Cygnus A or 3C196).
+
+^^^
+LBA
+^^^
+
+The global bandpass has been determined for the LBA band between 10-85 MHz by inspecting the BBS solutions after calibration of a 10-minute observation of Cygnus A. Calibration was performed using a 5-second time interval on data flagged for RFI (with RFIconsole), demixed, and compressed to one channel per sub band. The LBA beam model was enabled during the calibration. The bandpass was then derived by calculating the median of the amplitude solutions for each sub band over the 10-minute observation, after iterative flagging of outliers.
+
+.. only:: latex
+
+   .. figure:: figures/globalbandpasslba.pdf
+      :align: center
+      
+      The global bandpass in LBA between 10--85 MHz.
+      
+.. only:: html
+
+   .. _lbabandpass:
+
+   .. figure:: figures//globalbandpasslba.png
+      :align: center
+      
+      The global bandpass in LBA between 10--85 MHz.
+
+:numref:`lbabandpass` shows the amplitudes found by BBS for each sub band, normalized to 1.0 near the peak at :math:`\approx 58` MHz. The time and elevation evolution of the bandpass has also been investigated. In general, the bandpass is approximately constant on average over the elevation range probed by these observations, implying that the effects of the beam have been properly accounted for.
+
+^^^
+HBA
+^^^
+
+.. only:: latex
+
+   .. figure:: figures/mergeGlobalBandpass.pdf
+      :align: center
+      
+      The global bandpass for the HBA.
+
+.. only:: html
+
+   .. _hbabandpass:
+
+   .. figure:: figures/mergeGlobalBandpass.png
+      :align: center
+      
+      The global bandpass for the HBA.
+
+The global bandpass for the HBA bands was determined in the same basic way as the LBA global bandpass. Three one-hour observations of 3C196 from April 2012 were used (one each for HBA-low, HBA-mid, and HBA-high). No demixing was done. A two-point-source model was used for calibration. The resulting bandpass is shown in :numref:`hbabandpass`. Note that several frequency intervals in the HBA-high observation were affected by severe RFI.
+
+.. _gain transfer:
+
+------------------------------------------------------------
+Gain transfer from a calibrator to the target source [#f17]_
+------------------------------------------------------------
+
+In order to calibrate a target field without an *a priori* model, one way forward is to observe a well-known calibrator source, use it to solve for station gains, and apply those to the target field in order to make a first image and begin self-calibrating. There are two tested methods for utilizing calibrator gains in LOFAR observations. Additional methods may become possible later.
+
++ Observe a calibrator source before a target observation, using the same frequency settings, with a short time gap between calibrator and target. This is the same approach as is used in traditional radio telescopes and allows using the full bandwidth in the target observation. However, it is not suggested for long target observations, because the calibrator gains may only remain valid for a relatively short time.
++ Observe a calibrator in parallel with a target observation, using the same frequency settings for both beams. This has the disadvantage that half of the bandwidth is lost in the target observation, but the time variation of the station gains will be available.
+
+The recommended approach for dealing with both of these cases is outlined below.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+The "traditional" approach
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When doing calibration transfer in the normal way, i.e. the calibrator and target are observed at different times, some work needs to be done before the gain solutions of the calibrator can be transferred to the target. This is because the calibrator solutions tell the gain error of the instrument at the time the calibrator was observed, and in principle not of when the target was observed. The implicit assumption of the traditional approach is that the gain solutions are constant in time. The frequencies of the calibrator observation should in principle match those of the target.
+
+The above means that the calibration of the calibrator should lead to only one solution in time. This can be achieved by setting **CellSize.Time** to **0**. After this is done, the validity of this solution should be extended to infinity by using the **export** function of **parmdbm**. Full documentation for that program is available on the `LOFAR wiki <http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:parmdbm>`__.
+
+In order to achieve time independence you should use these settings in the BBS parset [#f18]_ ::
+
+    Strategy.ChunkSize = 0               # Load the entire MS in memory
+    Step.<name>.Solve.CellSize.Time = 0  # Solution should be constant in time
+    Step.<name>.Solve.CellChunkSize = 0  
+
+Export the calibrator solutions so that they can be applied to target field (see the LOFAR wiki for details). For example::
+
+    > parmdbm
+    Command: open tablename='3c196_1.MS/instrument'
+    Command: export Gain* tablename='output.table'
+    Exported record for parameter Gain:0:0:Imag:CS001HBA0
+    Exported record for parameter Gain:0:0:Imag:CS002HBA0
+    ... more of the same ...
+    Exported record for parameter Gain:1:1:Real:RS307HBA
+    Exported record for parameter Gain:1:1:Real:RS503HBA
+    Exported 104 parms to output.table
+    Command: exit
+
+An alternative scheme to make the solutions of the calibrator observation time independent is to have a smaller **CellSize.Time**, and afterwards take the median [#f19]_. This way, time cells where calibration failed do not affect the solutions. To follow this scheme, calibrate the calibrator as you would do normally, for example with **CellSize.Time=5**. To make the solutions time independent, use the tool **parmexportcal.py** (see **parmexportcal --help** or its `documentation <http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:parm-export>`_. For example, if you have calibrated the calibrator and stored the solution in **cal.parmdb**, you can take the median amplitudes as follows ::
+
+    parmexportcal in=cal.parmdb out=cal_timeindependent.parmdb
+    
+By default, **parmexportcal** takes the median amplitude, and the last phase. This is because the phase always varies very fast, and taking the median does not make sense. One can also chose not to transfer the phase solution of the calibrator at all, by setting **zerophase** to false in **parmexportcal**.
+
+More advanced schemes for processing calibrator solutions before transferring them to the target can be applied using `LoSoTo <./losoto.html>`_. An example could be flagging the calibrator solution, and then averaging it (instead of taking the median).
+
+To apply the gain solutions to target field, one can use BBS. For the **calibrate-stand-alone** script, use the **--parmdb** option. Use a BBS parset which *only* includes a **CORRECT** step. Now you should have a calibrated **CORRECTED_DATA** column which can be imaged.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The LOFAR multi-beam approach
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Unlike other radio telescopes, LOFAR has the ability to observe in multiple directions at once. We are currently experimenting with transferring station gains from one field (a calibrator) to a target field. So far it seems to work quite well, with limitations described below. The requirements for this technique are:
+
++ The calibrator and target beams should be observed simultaneously, with the same subband frequency. Future work may change this requirement (we may be able to interpolate between calibrator subbands), but for now the same frequencies must be observed in both fields.
++ Any time and/or frequency averaging performed (before these calibration steps) on one field must be done in exactly the same way for the other field.
++ The calibrator beam should not be too far from the target beam in angular distance. Little guidance is currently available for the definition of "too far", but it appears that a distance of 10 degrees is fine at :math:`\nu\,=\,150` MHz, while 40 degrees (at the same frequency) might well be too far. Future experiments should clarify this limitation.
++ In HBA, the distance limit is also driven by the flux density of the calibrator, and the attenuation by the tile beam. For a good solution on the calibrator, ensure that the sensitivity is sufficient to provide at least a signal-to-noise ratio of :math:`2-3` per visibility. The tile FWHM sizes and station SEFDs are available online.
+
+In order to do the calibration, and transfer the resulting gains to the target field, follow these steps:
+
++ Calibrate the calibrator using BBS. The time and frequency resolution of the solutions can be whatever is needed for the best results. Ensure that the beam is enabled. ::
+
+    Step.<name>.Model.Beam.Enable = T
+    
++ (Optional) Perform some corrections to the calibrator solutions, for example flagging, smoothing or interpolation. This is best done in `LoSoTo <./losoto.html>`_.
+
++ Apply the gain solutions to the target field. For the **calibrate** script, use the **--instrument-db** option. For the **calibrate-stand-alone** script, use the **--parmdb** option. Use a BBS parset which *only* includes a **CORRECT** step. Again, ensure that the beam is enabled. The source list for the **CORRECT** step should be left empty::
+
+    Step.<name>.Model.Sources = []
+    
++ Before proceeding with imaging and self-calibration, it may be advisable to flag and copy the newly created **CORRECTED_DATA** column to a new dataset using DPPP.
+
+---------------
+Post-processing
+---------------
+
+The calibrated data produced by BBS can contain outliers that have to be flagged to produce a decent image. It is recommended to visually inspect the corrected visibilities after calibration. Outliers can be flagged in various ways, for instance using `AOFlagger <./aoflagger.html>`_ or `DPPP <./dppp.html>`_.
+
+---------------
+Troubleshooting
+---------------
+
++ Bugs should be reported using the `LOFAR issue tracker <http://support.astron.nl/lofar_issuetracker>`_.
++ If BBS crashes for any reason, be sure to kill all BBS processes (**bbs-controller**, **bbs-reducer**, and **bbs-shared-estimator**) on all of the nodes you were working on before running again.
++ After calibrating many frequency channels (e.g. for spectral line imaging purposes), the spectral profile could show an artificial sin-like curve. This is due to the fact that BBS applied a single solution to all the input channels. To avoid this, it is important to set the parameter  **Step.<name>.Solve.CellSize.Freq** to a value higher than 0, indicating the number of channels that BBS will try to find a solution for (0 means one solution for all the channels). You can inspect the solutions with **parmdbplot** to judge if this is required.
++ The **:math:`<`key name:math:`>`*.log** files produced by BBS may provide useful information about what went wrong. Inspect these first when BBS has crashed. The log files from **bbs-reducer** are usually located on the compute nodes.
++ BBS expects information about the antenna field layout to be present in the MS. The data writer should take care of including this, but in some cases it can fail due to problems during the observation. The program **makebeamtables** can be used to manually add the required information to an existing MS. Documentation is available on the `LOFAR wiki <\href{http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:makebeamtables>`_.
+
+^^^^^^^^^^^^^^^
+Common problems
+^^^^^^^^^^^^^^^
+
+In the following some error messages are reported together with the solution we have found to fix them.
+
+1. Station is not a LOFAR station::
+
+    Station <name> is not a LOFAR station or the additional information needed to compute the station beam is missing.
+    
+Solution: Run **makebeamtables** on all subbands to add the information required to compute the station beam model.
+
+2. setupsourcedb failed::
+
+    [FAIL] error: setupsourcedb or remote setupsourcedb-part process(es) failed
+    
+Solution: Check your source catalog file. You can run **makesourcedb** locally on your catalog file to get a more detailed error message::
+
+    makesourcedb in=<catalog> out="test.sky" format="<"
+    
+3. Database failure::
+
+    [FAIL] error: clean database for key default failed
+    
+Solution: Check if you can reach the database server on **ldb002** and make sure that you created your personal database correctly.
+
 
 .. rubric:: Footnotes
 
-.. [#f1] This section is maintained by Tammo Jan Dijkema (`dijkema[at]astron[dot]nl <mailto:dijkema@astron.nl>`_). It was originally written by Joris van Zwieten and Reinout van Weeren.
-.. [#f2] This section was contributed by Bart Scheers.
+.. [#f1] This section is maintained by `Tammo Jan Dijkema <mailto:dijkema@astron.nl>`_). It was originally written by Joris van Zwieten and Reinout van Weeren.
 .. [#f3] For calibration with DPPP this is not necessary.
 .. [#f4] Examples of these files can be found at `https://github.com/lofar-astron/LOFAR-Cookbook <https://github.com/lofar-astron/LOFAR-Cookbook>`.
 .. [#f5] Use DPPP's **predict** step for this, it is much more efficient.
@@ -526,3 +777,10 @@ The "Use resolution" option is best left *unchecked*. If it is checked, the plot
 .. [#f13] Examples can be found in `https://github.com/lofar-astron/LOFAR-Cookbook <https://github.com/lofar-astron/LOFAR-Cookbook>`_.
 .. [#f14] Actually, both scripts use different terminology, **sky-db** in the one is called **sourcedb** in the other. This will be fixed.
 .. [#f15] On CEP3, catalog files with up to ca. 10,000 clean components can be processed until the nodes run out of memory.
+.. [#f16] Available at the LOFAR-Contributions GitHub repository: `https://github.com/lofar-astron/LOFAR-Contributions <https://github.com/lofar-astron/LOFAR-Contributions>`_.
+.. [#f17] `George Heald <mailto:heald@csiro.au>`_ contributed to the writing of this section.
+.. [#f18] Note that these settings would be dangerous for a long observation!
+.. [#f19] This is the calibration scheme that the LOFAR pipelines follow.
+.. [#f20] The effect **Rotation** is stored in the instrument table as **RotationAngle**.
+.. [#f21] The effect **FaradayRotation** is stored in the instrument table as **RotationMeasure**.
+.. [#f22] The effect **CommonRotation** is stored in the instrument table as **CommonRotationAngle**.

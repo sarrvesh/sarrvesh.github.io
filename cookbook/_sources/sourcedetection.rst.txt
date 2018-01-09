@@ -72,7 +72,15 @@ A simple example of using PyBDSF on a LOFAR image (an HBA image of 3C61.1) is sh
                            the lower right corner, must be off)
     ________________________________________________________________________
 
-The figure made by **show_fit** is shown in Figure~\ref{F:example}. In the plot window, one can zoom in, save the plot to a file, etc. The list of best-fit Gaussians found by PyBDSF may be written to a file for use in other programs, such as TOPCAT or BBS, as follows::
+.. only:: latex
+
+   The figure made by **show_fit** is shown in :numref:`bdsflatex`. 
+   
+.. only:: html
+
+   The figure made by **show_fit** is shown in :numref:`bdsfhtml`. 
+
+In the plot window, one can zoom in, save the plot to a file, etc. The list of best-fit Gaussians found by PyBDSF may be written to a file for use in other programs, such as TOPCAT or BBS, as follows::
 
     BDSM [5]: write_catalog
     --------> write_catalog()
@@ -81,13 +89,17 @@ The figure made by **show_fit** is shown in Figure~\ref{F:example}. In the plot 
 The output Gaussian or source list contains source positions, fluxes, etc. BBS patches are also supported.
 
 .. only:: latex
-
+   
+   .. _bdsflatex:
+   
    .. figure:: figures/example.pdf
       :align: center
 
       Output of **show_fit**, showing the original image with and without sources, the model image, and the residual (original minus model) image. Boundaries of the islands of emission found by PyBDSF are shown in light blue. The fitted Gaussians are shown for each island as ellipses (the sizes of which correspond to the FWHMs of the Gaussians). Gaussians that have been grouped together into a source are shown with the same color. For example, the two red Gaussians of island \#1 have been grouped together into one source, and the nine Gaussians of island \#0 have been grouped into 4 separate sources. The user can obtain information about a Gaussian by clicking on it. Additionally, with the mouse inside the plot window, the display scaling can be modified by pressing the "m" key, and information about the image flux, model flux, and rms can be obtained by pressing the "i" key.
    
 .. only:: html
+
+  .. _bdsfhtml:
 
   .. figure:: figures/example.png
      :align: center
@@ -98,9 +110,67 @@ The output Gaussian or source list contains source positions, fluxes, etc. BBS p
 Image with artifacts
 ^^^^^^^^^^^^^^^^^^^^
 
+Occasionally, an analysis run with the default parameters does not produce good results. For example, if there are significant deconvolution artifacts in the image, the **thresh_isl**, **thresh_pix**, or **rms_box** parameters might need to be changed to prevent PyBDSF from fitting Gaussians to such artifacts. An example of running PyBDSF with the default parameters on such an image is shown in :numref:`bdsfartefacts`. It is clear that a number of spurious sources are being detected. Simply raising the threshold for island detection (using the **thresh_pix** parameter) would remove these sources but would also remove many real but faint sources in regions of low rms. Instead, by setting the **rms_box** parameter to better match the typical scale over which the artifacts vary significantly, one obtains much better results. In this example, the scale of the regions affected by artifacts is approximately 20 pixels, whereas PyBDSF used a **rms_box** of 63 pixels when run with the default parameters, resulting in an rms map that is over-smoothed. Therefore, one should set **rms_box=(20,10)** so that the rms map is computed using a box of 20 pixels in size with a step size of 10 pixels (i.e., the box is moved across the image in 10-pixel steps). See :numref:`bdsfartefacts2` for a summary of the results of this call.
+
+.. only:: latex
+
+   .. image:: figures/art_fit_def.pdf      
+   .. figure:: figures/art_rms_def.pdf
+      :align: center
+      
+      Example fit with default parameters of an image with strong artifacts around bright sources. A number of artifacts near the bright sources are picked up as sources. The background rms map for the same region (produced using **show_fit**) is shown in the lower panel: the rms varies fairly slowly across the image, whereas ideally it would increase more strongly near the bright sources (reflecting the increased rms in those regions due to the artifacts).
+      
+.. only:: html
+
+   .. image:: figures/art_fit_def.png
+   
+   .. _bdsfartefacts:
+   
+   .. figure:: figures/art_rms_def.png
+      :align: center
+      
+      Example fit with default parameters of an image with strong artifacts around bright sources. A number of artifacts near the bright sources are picked up as sources. The background rms map for the same region (produced using **show_fit**) is shown in the lower panel: the rms varies fairly slowly across the image, whereas ideally it would increase more strongly near the bright sources (reflecting the increased rms in those regions due to the artifacts).
+
+.. only:: latex
+
+   .. image:: figures/art_fit_alt.pdf
+   .. figure:: figures/art_rms_alt.pdf
+      :align: center
+      
+      Same as the image shown above, but with **rms_box=(20,10)**. The rms map now varies on scales similar to that of the regions affected by the artifacts, and both bright and faint sources are recovered properly.
+      
+.. only:: html
+
+   .. image:: figures/art_fit_alt.png
+   
+   .. _bdsfartefacts2:
+   
+   .. figure:: figures/art_rms_alt.png
+      :align: center
+      
+      Same as the image shown above, but with **rms_box=(20,10)**. The rms map now varies on scales similar to that of the regions affected by the artifacts, and both bright and faint sources are recovered properly.
+
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Image with extended emission
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If there is extended emission that fills a significant portion of the image, the background rms map will likely be biased high in regions where extended emission is present, affecting the island determination (this can be checked during a run by setting **interactive=True**). Setting **rms_map=False** and **mean_map='const'** or **'zero'** will force PyBDSF to use a constant mean and rms value across the whole image. Additionally, setting **atrous_do=True** will fit Gaussians of various scales to the residual image to recover extended emission missed in the standard fitting. Depending on the source structure, the **thresh_isl** and **thresh_pix** parameters may also have to be adjusted as well to ensure that PyBDSF finds and fits islands of emission properly. An example analysis of an image with significant extended emission is shown in :numref:`extendedemission`.
+
+.. only:: latex
+
+   .. figure:: figures/HydraA_74MHz_fit.pdf
+      :align: center
+      
+      Example fit of an image of Hydra A with **rms_map=False**, **mean_map='zero'**, and **atrous_do=True**. The values of **thresh_isl** and **thresh_pix** were adjusted before fitting (by setting **interactive=True**) to obtain an island that enclosed all significant emission.
+      
+.. only:: html
+
+   .. _extendedemission:
+
+   .. figure:: figures/HydraA_74MHz_fit.png
+      :align: center
+      
+      Example fit of an image of Hydra A with **rms_map=False**, **mean_map='zero'**, and **atrous_do=True**. The values of **thresh_isl** and **thresh_pix** were adjusted before fitting (by setting **interactive=True**) to obtain an island that enclosed all significant emission.
 
 ^^^^^^^^^^^^^^^^^^^^^^^
 Usage in python scripts
@@ -235,4 +305,4 @@ It can be difficult to identify sources in a clean-component sky model (such as 
 
 .. rubric:: Footnotes
 
-.. [#1f] This section is maintained by David Rafferty (drafferty[at]hs[dot]uni-hamburg[dot]de).
+.. [#1f] This section is maintained by `David Rafferty <mailto:drafferty@hs.uni-hamburg.de>`_).

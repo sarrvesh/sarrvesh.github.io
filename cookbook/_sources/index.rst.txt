@@ -7,7 +7,7 @@ Welcome to LOFAR Imaging Cookbook's documentation!
 ==================================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
    gettingstarted
@@ -19,11 +19,12 @@ Welcome to LOFAR Imaging Cookbook's documentation!
    wsclean
    sourcedetection
    factor
-   tutorial
    resources
    acknowledgements
    bbs
    shapelets
    sagecal
    awimager
-   
+   tutorial
+   changelog
+

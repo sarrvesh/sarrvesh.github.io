@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Sky Model Construction Using Shapelets &mdash; LOFAR Imaging Cookbook 0.0.1 documentation</title>
+  <title>Sky Model Construction Using Shapelets &mdash; LOFAR Imaging Cookbook 22.0.0 documentation</title>
   
 
   
@@ -35,9 +35,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="LOFAR Imaging Cookbook 0.0.1 documentation" href="index.html"/>
+    <link rel="top" title="LOFAR Imaging Cookbook 22.0.0 documentation" href="index.html"/>
         <link rel="next" title="SAGECAL" href="sagecal.html"/>
-        <link rel="prev" title="Black-Board Selfcal (BBS)" href="bbs.html"/> 
+        <link rel="prev" title="Calibration with BBS" href="bbs.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.1
+                22.0
               </div>
             
           
@@ -92,7 +92,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started </a></li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Introduction to computing facilities at ASTRON </a></li>
 <li class="toctree-l1"><a class="reference internal" href="datainspection.html">Data inspection </a></li>
 <li class="toctree-l1"><a class="reference internal" href="aoflagger.html">AOFlagger </a></li>
 <li class="toctree-l1"><a class="reference internal" href="dppp.html">The Default Pre-Processing Pipeline (DPPP) </a></li>
@@ -101,10 +101,9 @@
 <li class="toctree-l1"><a class="reference internal" href="wsclean.html">The WSClean Imager </a></li>
 <li class="toctree-l1"><a class="reference internal" href="sourcedetection.html">Source detection and sky model manipulation: PyBDSF and LSMTool </a></li>
 <li class="toctree-l1"><a class="reference internal" href="factor.html">Factor: Facet Calibration for LOFAR </a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="resources.html">Useful resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bbs.html">Black-Board Selfcal (BBS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bbs.html">Calibration with BBS </a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Sky Model Construction Using Shapelets </a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#software-overview">Software overview</a><ul>
@@ -135,6 +134,8 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sagecal.html">SAGECAL </a></li>
 <li class="toctree-l1"><a class="reference internal" href="awimager.html">The AW Imager </a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples </a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
             
@@ -207,11 +208,11 @@
 <p>We always work with FITS images for our model construction. Therefore, it is assumed that you already have an image of the sky that is being observed, which is good enough to create a sky model from. You can obtain a FITS image of the sky that is being observed in many ways. For example, you can use images made by other instruments (at a probably different frequency/resolution) and one such source is <a class="reference external" href="http://skyview.gsfc.nasa.gov/cgi-bin/skvadvanced.pl">Sky View</a>. You can also do a rough calibration of the data and make a preliminary image of the sky. And if you are hardcore, you can also manipulate an empty FITS file to create the shape that you want to model (we shall discuss this later).</p>
 <p>The FITS file contains more information than that is shown as the image. Since we are dealing with images made with radio interferometers, almost all images have been deconvolved (e.g. by CLEAN). The Point Spread Function (PSF) plays an important role in deconvolution. Most FITS files have information about the approximate PSF that we will be using a lot. This information is stored in the header of the FITS file with the keywords <strong>BMAJ</strong>, <strong>BMIN</strong>, and <strong>BPA</strong>. The <strong>BMAJ</strong> and <strong>BMIN</strong> keywords give the PSF width as the major and minor axes of a Gaussian. The <strong>BPA</strong> keyword gives the position angle (or the rotation) of the Gaussian. We will learn how to manipulate these keywords (or add them if your FITS file is without them) later.</p>
 <p>Throughout this tutorial, we will calibrate an observation of Virgo-A around 50 MHz. In Fig. ref{shp:viravla}, we have shown an image of Virgo-A made by the VLA at 74 MHz. The red circle on top right corner shows the PSF for this image. Although the frequency and resolution does not match the LOFAR observation, we will be using this image to build a sky model.</p>
-<div class="figure align-center" id="id3">
-<img alt="_images/vira_74vla.png" src="_images/vira_74vla.png" />
-<p class="caption"><span class="caption-text">Virgo-A image made by the VLA at 74 MHz. The red circle on top right corner is the PSF.</span></p>
+<div class="figure align-center" id="id4">
+<span id="virgoa"></span><img alt="_images/vira_74vla.png" src="_images/vira_74vla.png" />
+<p class="caption"><span class="caption-number">Fig. 30 </span><span class="caption-text">Virgo-A image made by the VLA at 74 MHz. The red circle on top right corner is the PSF.</span></p>
 </div>
-<p>Looking closer at Fig. ref{shp:viravla}, we see that there is bright compact structure at the center and weak diffuse structure surrounding it. You should always keep in mind the golden rule in source modeling: A point source is best modeled by a point source and nothing else. Almost always, you will have images with both compact structure (best modeled by point sources) and extended structure (best modeled using shapelets). In our example, we need to model the central compact structure as point sources and the remainder as shapelets. See Yatawatta (2010) for a theoretical explanation.</p>
+<p>Looking closer at <a class="reference internal" href="#virgoa"><span class="std std-numref">Fig. 30</span></a>, we see that there is bright compact structure at the center and weak diffuse structure surrounding it. You should always keep in mind the golden rule in source modeling: A point source is best modeled by a point source and nothing else. Almost always, you will have images with both compact structure (best modeled by point sources) and extended structure (best modeled using shapelets). In our example, we need to model the central compact structure as point sources and the remainder as shapelets. See Yatawatta (2010) for a theoretical explanation.</p>
 </div>
 <div class="section" id="software-overview">
 <h2>Software overview<a class="headerlink" href="#software-overview" title="Permalink to this headline">¶</a></h2>
@@ -305,7 +306,7 @@
 <span class="n">P1C1</span> <span class="mi">1</span> <span class="mi">35</span> <span class="mf">29.128</span> <span class="mi">84</span> <span class="mi">21</span> <span class="mf">51.699</span> <span class="mf">0.061585</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mf">1000000.0</span>
 </pre></div>
 </div>
-<p>using <strong>-o 0</strong> for BBS and <strong>-o 1</strong> or <strong>-o 1</strong> for LSM. Note that <strong>buildsky</strong> will now (version 0.0.6) only produce LSM with 3rd order spectra.  Spectral indices use natural logarithm, <span class="math">\(\exp(ln(I_0) + p1*ln(f/f_0) + p2*ln(f/f_0)^2 + \ldots)\)</span> so if you have a model with common logarithms like</p>
+<p>using <strong>-o 0</strong> for BBS and <strong>-o 1</strong> or <strong>-o 1</strong> for LSM. Note that <strong>buildsky</strong> will now (version 0.0.6) only produce LSM with 3rd order spectra.  Spectral indices use natural logarithm, <span class="math">\(\exp(\ln(I_0) + p1*\ln(f/f_0) + p2*\ln(f/f_0)^2 + \ldots)\)</span> so if you have a model with common logarithms like</p>
 <div class="math">
 \[10^{(\log(J_0) + q1*\log(f/f_0) + q2*\log(f/f_0)^2 + \ldots)}\]</div>
 <p>then, conversion is <span class="math">\(I_0=J_0\)</span>, <span class="math">\(p1=q1\)</span>, <span class="math">\(p2=q2/\ln(10)\)</span>, <span class="math">\(p3=q3/(\ln(10)^2)\)</span> and so on.</p>
@@ -335,15 +336,15 @@
 </div>
 <div class="section" id="shapelet-gui">
 <h3>shapelet_gui<a class="headerlink" href="#shapelet-gui" title="Permalink to this headline">¶</a></h3>
-<p>The GUI used in decomposing FITS file to shapelets is called <strong>shapelet_gui</strong>. Once you run this program you will be seeing the GUI as in Fig. ref{shp:gui0}.</p>
-<div class="figure align-center" id="id5">
-<img alt="_images/shap_gui0.png" src="_images/shap_gui0.png" />
-<p class="caption"><span class="caption-text">The <strong>shapelet_gui</strong> initial screen.</span></p>
+<p>The GUI used in decomposing FITS file to shapelets is called <strong>shapelet_gui</strong>. Once you run this program you will be seeing the GUI as in <a class="reference internal" href="#shap-gui0"><span class="std std-numref">Fig. 32</span></a>.</p>
+<div class="figure align-center" id="id6">
+<span id="shap-gui0"></span><img alt="_images/shap_gui0.png" src="_images/shap_gui0.png" />
+<p class="caption"><span class="caption-number">Fig. 32 </span><span class="caption-text">The <strong>shapelet_gui</strong> initial screen.</span></p>
 </div>
-<p>The essential parameters can be changed by using <strong>View-&gt;Change Options</strong> menu item. Once you select this, you will see the dialog as in Fig. ref{shp:gui1}.</p>
-<div class="figure align-center" id="id7">
-<img alt="_images/shap_gui1.png" src="_images/shap_gui1.png" />
-<p class="caption"><span class="caption-text">The options dialog for shapelet decomposition.</span></p>
+<p>The essential parameters can be changed by using <strong>View-&gt;Change Options</strong> menu item. Once you select this, you will see the dialog as in <a class="reference internal" href="#shap-gui1"><span class="std std-numref">Fig. 34</span></a>.</p>
+<div class="figure align-center" id="id8">
+<span id="shap-gui1"></span><img alt="_images/shap_gui1.png" src="_images/shap_gui1.png" />
+<p class="caption"><span class="caption-number">Fig. 34 </span><span class="caption-text">The options dialog for shapelet decomposition.</span></p>
 </div>
 <p>We will go through the options in Fig. ref{shp:gui1} one by one.</p>
 <ul class="simple">
@@ -360,10 +361,10 @@
 <li><strong>Use L1 regularized LS</strong> Instead of using normal L2 minimization to find the shapelet decomposition, you can also use L1 regularization. The difference in results is negligible in most cases.</li>
 </ul>
 <p>It is advised to always enable <strong>Use Mask</strong> and <strong>Convolve modes with PSF</strong> options to get best performance. You can also get more information on all these options by clicking the <strong>Help</strong> button.</p>
-<p>Finally, after fine tuning your options, you can select <strong>File-&gt;Open</strong> to select your FITS file and it will produce an output like Fig. ref{shp:gui2}. If you are not satisfied with the result, you can go back and <strong>View-&gt;Change Options</strong> to re-tune your parameters. Once you have done that, you can decompose the same FITS file by selecting <strong>View-&gt;Decompose</strong> from the menu.</p>
-<div class="figure align-center" id="id9">
-<img alt="_images/shap_gui2.png" src="_images/shap_gui2.png" />
-<p class="caption"><span class="caption-text">Output of shapelet modelling: (top left) original image (top right) shapelet modes (bottom left) residual image (bottom right) shapelet model.</span></p>
+<p>Finally, after fine tuning your options, you can select <strong>File-&gt;Open</strong> to select your FITS file and it will produce an output like <a class="reference internal" href="#shap-gui2"><span class="std std-numref">Fig. 36</span></a>. If you are not satisfied with the result, you can go back and <strong>View-&gt;Change Options</strong> to re-tune your parameters. Once you have done that, you can decompose the same FITS file by selecting <strong>View-&gt;Decompose</strong> from the menu.</p>
+<div class="figure align-center" id="id10">
+<span id="shap-gui2"></span><img alt="_images/shap_gui2.png" src="_images/shap_gui2.png" />
+<p class="caption"><span class="caption-number">Fig. 36 </span><span class="caption-text">Output of shapelet modelling: (top left) original image (top right) shapelet modes (bottom left) residual image (bottom right) shapelet model.</span></p>
 </div>
 <p>Apart from displaying the output, each time you decompose a FITS file, <strong>shapelet_gui</strong> will produce several files. Most importantly, for your input <strong>example.fits</strong> image, it will produce <strong>example.fits.modes</strong> text file that can be used in BBS. Here is an extract of one such file:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">23</span> <span class="mi">23</span> <span class="mf">27.273176</span> <span class="mi">58</span> <span class="mi">49</span> <span class="mf">1.217289</span>
@@ -429,10 +430,10 @@ Options:
 </div>
 <div class="section" id="step-by-step-example">
 <h2>Step by Step Example<a class="headerlink" href="#step-by-step-example" title="Permalink to this headline">¶</a></h2>
-<p>In this section, we will use most of the programs described before to calibrate a LOFAR observation of Virgo-A. We will use Fig. ref{shp:viravla} (FITS file <strong>vira-cen.fits</strong>) to build the initial sky model.</p>
+<p>In this section, we will use most of the programs described before to calibrate a LOFAR observation of Virgo-A. We will use <a class="reference internal" href="#virgoa"><span class="std std-numref">Fig. 30</span></a> (FITS file <strong>vira-cen.fits</strong>) to build the initial sky model.</p>
 <div class="section" id="initial-point-source-model">
 <h3>Initial point source model<a class="headerlink" href="#initial-point-source-model" title="Permalink to this headline">¶</a></h3>
-<p>As we mentioned in section ref{shp:sec1}, the central compact part in Fig. ref{shp:viravla} is best modeled using point sources. Therefore, we create the following as input to <strong>Duchamp</strong></p>
+<p>As we mentioned in the <a class="reference internal" href="#introduction">Introduction</a>, the central compact part in <a class="reference internal" href="#virgoa"><span class="std std-numref">Fig. 30</span></a> is best modeled using point sources. Therefore, we create the following as input to <strong>Duchamp</strong></p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">imageFile</span> <span class="n">vira</span><span class="o">-</span><span class="n">cen</span><span class="o">.</span><span class="n">fits</span>
 <span class="n">logFile</span>   <span class="n">logfile</span><span class="o">.</span><span class="n">txt</span>
 <span class="n">outFile</span>   <span class="n">results</span><span class="o">.</span><span class="n">txt</span>
@@ -453,10 +454,10 @@ Options:
 <span class="n">flagXOutput</span> <span class="mi">0</span>
 </pre></div>
 </div>
-<p>After running <strong>Duchamp</strong> with this input file, we select only the bright compact center (that is the reason for using <span class="math">\(10.01\)</span> as threshold) as seen on Fig. ref{shp:viracomp}.</p>
-<div class="figure align-center" id="id11">
+<p>After running <strong>Duchamp</strong> with this input file, we select only the bright compact center (that is the reason for using <span class="math">\(10.01\)</span> as threshold) as seen on <a class="reference internal" href="#virgoa"><span class="std std-numref">Fig. 30</span></a>.</p>
+<div class="figure align-center" id="id12">
 <img alt="_images/viracomp.png" src="_images/viracomp.png" />
-<p class="caption"><span class="caption-text">Compact center indicated by the red curve.</span></p>
+<p class="caption"><span class="caption-number">Fig. 38 </span><span class="caption-text">Compact center indicated by the red curve.</span></p>
 </div>
 <p>Now we run <strong>buildsky</strong> to build the sky model for this as</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">buildsky</span> <span class="o">-</span><span class="n">f</span> <span class="n">vira</span><span class="o">-</span><span class="n">cen</span><span class="o">.</span><span class="n">fits</span> <span class="o">-</span><span class="n">m</span> <span class="n">vira</span><span class="o">-</span><span class="n">cen</span><span class="o">.</span><span class="n">MASK</span><span class="o">.</span><span class="n">fits</span>
@@ -474,24 +475,24 @@ Options:
  <span class="n">P1C5</span><span class="p">,</span> <span class="n">POINT</span><span class="p">,</span> <span class="mi">12</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">48.75</span><span class="p">,</span> <span class="o">+</span><span class="mf">12.23</span><span class="o">.</span><span class="mf">21.23</span><span class="p">,</span> <span class="mf">155.029319</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
 </pre></div>
 </div>
-<p>Using <strong>ds9</strong> we can also see our sky model as in Fig. ref{shp:viracompds9}.</p>
-<div class="figure align-center" id="id13">
-<img alt="_images/viracompds9.png" src="_images/viracompds9.png" />
-<p class="caption"><span class="caption-text">Compact center modeled by two point sources (green circles).</span></p>
+<p>Using <strong>ds9</strong> we can also see our sky model as in <a class="reference internal" href="#virds9"><span class="std std-numref">Fig. 40</span></a>.</p>
+<div class="figure align-center" id="id14">
+<span id="virds9"></span><img alt="_images/viracompds9.png" src="_images/viracompds9.png" />
+<p class="caption"><span class="caption-number">Fig. 40 </span><span class="caption-text">Compact center modeled by two point sources (green circles).</span></p>
 </div>
 </div>
 <div class="section" id="initial-shaplet-model">
 <h3>Initial shaplet model<a class="headerlink" href="#initial-shaplet-model" title="Permalink to this headline">¶</a></h3>
-<p>Next, we need to model the extended structure inf Fig. ref{shp:viravla}. However, before we do this we have to subtract our point source model from this figure. We use <strong>restore</strong> to do this</p>
+<p>Next, we need to model the extended structure in <a class="reference internal" href="#virgoa"><span class="std std-numref">Fig. 30</span></a>. However, before we do this we have to subtract our point source model from this figure. We use <strong>restore</strong> to do this</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">restore</span> <span class="o">-</span><span class="n">f</span> <span class="n">vira</span><span class="o">-</span><span class="n">cen</span><span class="o">.</span><span class="n">fits</span> <span class="o">-</span><span class="n">i</span> <span class="n">vira</span><span class="o">-</span><span class="n">cen</span><span class="o">.</span><span class="n">fits</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">s</span>
 </pre></div>
 </div>
-<p>which gives us the new image as in Fig. ref{shp:viradiff}.</p>
-<div class="figure align-center" id="id15">
-<img alt="_images/viradiff.png" src="_images/viradiff.png" />
-<p class="caption"><span class="caption-text">Diffused structure after subtracting the center.</span></p>
+<p>which gives us the new image as in <a class="reference internal" href="#viradiff"><span class="std std-numref">Fig. 42</span></a>.</p>
+<div class="figure align-center" id="id16">
+<span id="viradiff"></span><img alt="_images/viradiff.png" src="_images/viradiff.png" />
+<p class="caption"><span class="caption-number">Fig. 42 </span><span class="caption-text">Diffused structure after subtracting the center.</span></p>
 </div>
-<p>Note that the bright central part in Fig. ref{shp:viradiff} is almost subtracted. It is not completely gone, and some parts of it is negative. Nevertheless, this is all right for now because we are only building an approximate sky model. Now we need to create another mask for this image for the diffused structure. We use to following file for <strong>Duchamp</strong>.</p>
+<p>Note that the bright central part in <a class="reference internal" href="#viradiff"><span class="std std-numref">Fig. 42</span></a> is almost subtracted. It is not completely gone, and some parts of it is negative. Nevertheless, this is all right for now because we are only building an approximate sky model. Now we need to create another mask for this image for the diffused structure. We use to following file for <strong>Duchamp</strong>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">imageFile</span> <span class="n">vira</span><span class="o">-</span><span class="n">cen</span><span class="o">.</span><span class="n">fits</span>
 <span class="n">logFile</span>   <span class="n">logfile</span><span class="o">.</span><span class="n">txt</span>
 <span class="n">outFile</span>   <span class="n">results</span><span class="o">.</span><span class="n">txt</span>
@@ -512,15 +513,15 @@ Options:
 <span class="n">flagXOutput</span> <span class="mi">0</span>
 </pre></div>
 </div>
-<p>Note that we have used a lower threshold (<span class="math">\(1.01\)</span>) this time, compared to the previous value. Once running <strong>Duchamp</strong>, we get the mask as indicated by Fig. ref{shp:viramaskdiff}.</p>
-<div class="figure align-center" id="id17">
-<img alt="_images/viramaskdiff.png" src="_images/viramaskdiff.png" />
-<p class="caption"><span class="caption-text">Mask for the diffused structure.</span></p>
+<p>Note that we have used a lower threshold (<span class="math">\(1.01\)</span>) this time, compared to the previous value. Once running <strong>Duchamp</strong>, we get the mask as indicated by <a class="reference internal" href="#viramaskdiff"><span class="std std-numref">Fig. 44</span></a>.</p>
+<div class="figure align-center" id="id18">
+<span id="viramaskdiff"></span><img alt="_images/viramaskdiff.png" src="_images/viramaskdiff.png" />
+<p class="caption"><span class="caption-number">Fig. 44 </span><span class="caption-text">Mask for the diffused structure.</span></p>
 </div>
-<p>Now we are ready to build the shapelet model. We first change some parameters using <strong>View-&gt;Change Options</strong>. We set <strong>Cutoff</strong> to <span class="math">\(1.0\)</span>, <strong>Max Modes</strong> to <span class="math">\(200\)</span>, and the center <strong>p</strong> to 75 and <strong>q</strong> to 74 to move the origin of the shapelets a bit. Furthermore, we enable <strong>Use Mask</strong> and <strong>Convolve Modes with PSF</strong> options. Then we use <strong>File-&gt;Open</strong> to select <strong>vira-cen.fits</strong> as input. After a few seconds, we get the result as in Fig. ref{shp:virashap}.</p>
-<div class="figure align-center" id="id19">
-<img alt="_images/virashap.png" src="_images/virashap.png" />
-<p class="caption"><span class="caption-text">Shapelet model of the diffused structure.</span></p>
+<p>Now we are ready to build the shapelet model. We first change some parameters using <strong>View-&gt;Change Options</strong>. We set <strong>Cutoff</strong> to <span class="math">\(1.0\)</span>, <strong>Max Modes</strong> to <span class="math">\(200\)</span>, and the center <strong>p</strong> to 75 and <strong>q</strong> to 74 to move the origin of the shapelets a bit. Furthermore, we enable <strong>Use Mask</strong> and <strong>Convolve Modes with PSF</strong> options. Then we use <strong>File-&gt;Open</strong> to select <strong>vira-cen.fits</strong> as input. After a few seconds, we get the result as in <a class="reference internal" href="#virashap"><span class="std std-numref">Fig. 46</span></a>.</p>
+<div class="figure align-center" id="id20">
+<span id="virashap"></span><img alt="_images/virashap.png" src="_images/virashap.png" />
+<p class="caption"><span class="caption-number">Fig. 46 </span><span class="caption-text">Shapelet model of the diffused structure.</span></p>
 </div>
 <p>We can easily create an input to BBS for this shapelet model as follows:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#</span>
@@ -550,29 +551,29 @@ Options:
 <div class="section" id="simulation">
 <h3>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h3>
 <p>Once we have the point source and shapelet sky models, we can run BBS. After this is done, you are free to do whatever you like with these sky models.</p>
-<p>First and foremost, it is advised to do a simulation with your sky model and the measurement set that you need to calibrate to make sure your sky model is correct. Moreover, this is also useful to check if there are any errors in flux scales. For a point source, there cannot be any error in flux. However, for an extended source, the flux will be slightly lower than your model in the image. This is because the Fourier transform preserves the integral of flux and not the peak value. So, it is urged to do a simulation first before doing any calibration. We have shown the simulated image in Fig. ref{shp:virasimul}.</p>
-<div class="figure align-center" id="id21">
-<img alt="_images/virasimul.png" src="_images/virasimul.png" />
-<p class="caption"><span class="caption-text">Simulated image of Virgo-A. The red ellipse is the PSF.</span></p>
+<p>First and foremost, it is advised to do a simulation with your sky model and the measurement set that you need to calibrate to make sure your sky model is correct. Moreover, this is also useful to check if there are any errors in flux scales. For a point source, there cannot be any error in flux. However, for an extended source, the flux will be slightly lower than your model in the image. This is because the Fourier transform preserves the integral of flux and not the peak value. So, it is urged to do a simulation first before doing any calibration. We have shown the simulated image in <a class="reference internal" href="#virasimul"><span class="std std-numref">Fig. 48</span></a>.</p>
+<div class="figure align-center" id="id22">
+<span id="virasimul"></span><img alt="_images/virasimul.png" src="_images/virasimul.png" />
+<p class="caption"><span class="caption-number">Fig. 48 </span><span class="caption-text">Simulated image of Virgo-A. The red ellipse is the PSF.</span></p>
 </div>
-<div class="figure align-center" id="id23">
-<img alt="_images/viracal.png" src="_images/viracal.png" />
-<p class="caption"><span class="caption-text">Calibrated image of Virgo-A (uniform weights).</span></p>
+<div class="figure align-center" id="id24">
+<span id="viracal"></span><img alt="_images/viracal.png" src="_images/viracal.png" />
+<p class="caption"><span class="caption-number">Fig. 50 </span><span class="caption-text">Calibrated image of Virgo-A (uniform weights).</span></p>
 </div>
-<p>By looking at Fig. ref{shp:virasimul}, we do not see any major discrepancy in our sky model (although we have lower resolution) so we go ahead with calibration.</p>
+<p>By looking at <a class="reference internal" href="#virasimul"><span class="std std-numref">Fig. 48</span></a>, we do not see any major discrepancy in our sky model (although we have lower resolution) so we go ahead with calibration.</p>
 </div>
 <div class="section" id="calibration">
 <h3>Calibration<a class="headerlink" href="#calibration" title="Permalink to this headline">¶</a></h3>
-<p>You can use the normal calibration procedure you adopt with any other LOFAR observation here. So we will not go into details. We have shown the image made after calibration in Fig. ref{shp:viracal}.</p>
+<p>You can use the normal calibration procedure you adopt with any other LOFAR observation here. So we will not go into details. We have shown the image made after calibration in <a class="reference internal" href="#viracal"><span class="std std-numref">Fig. 50</span></a>.</p>
 <p>NOTE: It is advised to use uniform weights to compare the calibrated image to the model image.</p>
-<p>Using Fig. ref{shp:viracal}, we can repeat our sky model construction to get a better result. This of course depends on your science requirements.</p>
+<p>Using <a class="reference internal" href="#viracal"><span class="std std-numref">Fig. 50</span></a>, we can repeat our sky model construction to get a better result. This of course depends on your science requirements.</p>
 </div>
 <div class="section" id="residual">
 <h3>Residual<a class="headerlink" href="#residual" title="Permalink to this headline">¶</a></h3>
-<p>A better way to check the accuracy of your sky model is to subtract this model from the calibrated data and make an image of the residual. In Fig. ref{shp:virares}, we have shown the residual for two subbands of 1.5 hour duration at 55 MHz. We clearly see an off center source (about 2 Jy) on top right hand corner.</p>
-<div class="figure align-center" id="id25">
-<img alt="_images/virares.png" src="_images/virares.png" />
-<p class="caption"><span class="caption-text">Residual image of Virgo-A. An off center source is present on top right hand corner.</span></p>
+<p>A better way to check the accuracy of your sky model is to subtract this model from the calibrated data and make an image of the residual. In <a class="reference internal" href="#virares"><span class="std std-numref">Fig. 52</span></a>, we have shown the residual for two subbands of 1.5 hour duration at 55 MHz. We clearly see an off center source (about 2 Jy) on top right hand corner.</p>
+<div class="figure align-center" id="id26">
+<span id="virares"></span><img alt="_images/virares.png" src="_images/virares.png" />
+<p class="caption"><span class="caption-number">Fig. 52 </span><span class="caption-text">Residual image of Virgo-A. An off center source is present on top right hand corner.</span></p>
 </div>
 </div>
 <div class="section" id="recalibration">
@@ -581,7 +582,7 @@ Options:
 </div>
 <div class="section" id="conclusions">
 <h3>Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this headline">¶</a></h3>
-<p>We have given only a brief overview of the software and techniques in extended source modeling using shapelets. There are many points that we have not covered in this tutorial. However, we hope you (the user) will experiment and explore all available possibilities. Questions/Comments/Bug reports can be sent to <strong>yatawatta[at]astron[dot]nl</strong>.</p>
+<p>We have given only a brief overview of the software and techniques in extended source modeling using shapelets. There are many points that we have not covered in this tutorial. However, we hope you (the user) will experiment and explore all available possibilities. Questions/Comments/Bug reports can be sent to <a class="reference external" href="mailto:yatawatta&#37;&#52;&#48;astron&#46;nl">Sarod Yatawatta</a>.</p>
 </div>
 </div>
 <div class="section" id="references">
@@ -600,7 +601,7 @@ spheroidal wave functions,” <em>IEEE International Conference on Image Process
 <table class="docutils footnote" frame="void" id="f1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>The author of this chapter is Sarod Yatawatta (<strong>yatawatta[at]astron[dot]nl</strong>).</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>The author of this chapter is <a class="reference external" href="mailto:yatawatta&#37;&#52;&#48;astron&#46;nl">Sarod Yatawatta</a>.</td></tr>
 </tbody>
 </table>
 </div>
@@ -619,7 +620,7 @@ spheroidal wave functions,” <em>IEEE International Conference on Image Process
         <a href="sagecal.html" class="btn btn-neutral float-right" title="SAGECAL" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="bbs.html" class="btn btn-neutral" title="Black-Board Selfcal (BBS)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="bbs.html" class="btn btn-neutral" title="Calibration with BBS" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -628,7 +629,7 @@ spheroidal wave functions,” <em>IEEE International Conference on Image Process
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Sarrvesh Sridhar.
+      Last updated on Jan 08, 2018.
 
     </p>
   </div>
@@ -650,7 +651,7 @@ spheroidal wave functions,” <em>IEEE International Conference on Image Process
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.1',
+            VERSION:'22.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

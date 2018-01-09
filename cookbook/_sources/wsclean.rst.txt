@@ -18,4 +18,4 @@ An extensive manual for WSClean is available on-line, at `wsclean homepage <http
 
 .. rubric:: Footnotes
 
-.. [#f1] The author of this chapter is AndrU+00E9 Offringa (offringa[at]astron[dot]nl).
+.. [#f1] The author of this chapter is `Andre Offringa <mailto:offringa@astron.nl>`_.

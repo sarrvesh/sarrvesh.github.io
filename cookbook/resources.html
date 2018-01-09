@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Useful resources &mdash; LOFAR Imaging Cookbook 0.0.1 documentation</title>
+  <title>Useful resources &mdash; LOFAR Imaging Cookbook 22.0.0 documentation</title>
   
 
   
@@ -35,9 +35,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="LOFAR Imaging Cookbook 0.0.1 documentation" href="index.html"/>
+    <link rel="top" title="LOFAR Imaging Cookbook 22.0.0 documentation" href="index.html"/>
         <link rel="next" title="Acknowledgements" href="acknowledgements.html"/>
-        <link rel="prev" title="Practical examples" href="tutorial.html"/> 
+        <link rel="prev" title="Factor: Facet Calibration for LOFAR" href="factor.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.1
+                22.0
               </div>
             
           
@@ -92,7 +92,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started </a></li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Introduction to computing facilities at ASTRON </a></li>
 <li class="toctree-l1"><a class="reference internal" href="datainspection.html">Data inspection </a></li>
 <li class="toctree-l1"><a class="reference internal" href="aoflagger.html">AOFlagger </a></li>
 <li class="toctree-l1"><a class="reference internal" href="dppp.html">The Default Pre-Processing Pipeline (DPPP) </a></li>
@@ -101,7 +101,6 @@
 <li class="toctree-l1"><a class="reference internal" href="wsclean.html">The WSClean Imager </a></li>
 <li class="toctree-l1"><a class="reference internal" href="sourcedetection.html">Source detection and sky model manipulation: PyBDSF and LSMTool </a></li>
 <li class="toctree-l1"><a class="reference internal" href="factor.html">Factor: Facet Calibration for LOFAR </a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Useful resources</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#webpages">Webpages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#useful-analysis-scripts">Useful analysis scripts</a></li>
@@ -109,10 +108,12 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bbs.html">Black-Board Selfcal (BBS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bbs.html">Calibration with BBS </a></li>
 <li class="toctree-l1"><a class="reference internal" href="shapelets.html">Sky Model Construction Using Shapelets </a></li>
 <li class="toctree-l1"><a class="reference internal" href="sagecal.html">SAGECAL </a></li>
 <li class="toctree-l1"><a class="reference internal" href="awimager.html">The AW Imager </a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples </a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
             
@@ -236,20 +237,20 @@
 <h2>Contact points<a class="headerlink" href="#contact-points" title="Permalink to this headline">¶</a></h2>
 <p>Some key contact points are listed below:</p>
 <ul class="simple">
-<li><strong>LOFAR Imaging Cookbook</strong> - Sarrvesh Sridhar (sarrvesh[at]astron[dot]nl)</li>
-<li><strong>DPPP</strong> - Ger van Diepen (diepen[at]astron[dot]nl), Tammo Jan Dijkema (dijkema[at]astron[dot]nl, and David Rafferty (rafferty[at]strw[dot]leidenuniv[dot]nl)</li>
-<li><strong>AOFlagger</strong> - Andr’e Offringa (offringa[at]astron[dot]nl)</li>
-<li><strong>BBS</strong> - Tammo Jan Dijkema (dijkema[at]astron[dot]nl), Vishambhar Nath Pandey (pandey[at]astron[dot]nl)</li>
-<li><strong>AWImager</strong> - Tammo Jan Dijkema (dijkema[at]astron[dot]nl), and Bas van der Tol (tol[at]astron[dot]nl)</li>
-<li><strong>Python-casacore/TaQL/Casacore</strong> - Ger van Diepen (diepen[at]astron[dot]nl) and Tammo Jan Dijkema (dijkema[at]astron[dot]nl)</li>
-<li><strong>SAGECAL, Shapelets</strong> - Sarod Yatawatta (yatawatta[at]astron[dot]nl)</li>
-<li><strong>PyBDSM, LSMTool</strong> - David Rafferty (rafferty[at]strw[dot]leidenuniv[dot]nl)</li>
+<li><strong>LOFAR Imaging Cookbook</strong> - <a class="reference external" href="mailto:sarrvesh&#37;&#52;&#48;astron&#46;nl">Sarrvesh Sridhar</a></li>
+<li><strong>DPPP</strong> - <a class="reference external" href="mailto:diepen&#37;&#52;&#48;astron&#46;nl">Ger van Diepen</a>, <a class="reference external" href="mailto:dijkema&#37;&#52;&#48;astron&#46;nl">Tammo Jan Dijkema</a>, and <a class="reference external" href="mailto:rafferty&#37;&#52;&#48;strw&#46;leidenuniv&#46;nl">David Rafferty</a></li>
+<li><strong>AOFlagger</strong> - <a class="reference external" href="mailto:offringa&#37;&#52;&#48;astron&#46;nl">Andre Offringa</a></li>
+<li><strong>BBS</strong> - <a class="reference external" href="mailto:dijkema&#37;&#52;&#48;astron&#46;nl">Tammo Jan Dijkema</a>, <a class="reference external" href="mailto:pandey&#37;&#52;&#48;astron&#46;nl">Vishambhar Nath Pandey</a></li>
+<li><strong>AWImager</strong> - <a class="reference external" href="mailto:dijkema&#37;&#52;&#48;astron&#46;nl">Tammo Jan Dijkema</a>, and <a class="reference external" href="mailto:tol&#37;&#52;&#48;astron&#46;nl">Bas van der Tol</a></li>
+<li><strong>Python-casacore/TaQL/Casacore</strong> - <a class="reference external" href="mailto:diepen&#37;&#52;&#48;astron&#46;nl">Ger van Diepen</a> and <a class="reference external" href="mailto:dijkema&#37;&#52;&#48;astron&#46;nl">Tammo Jan Dijkema</a></li>
+<li><strong>SAGECAL, Shapelets</strong> - <a class="reference external" href="mailto:yatawatta&#37;&#52;&#48;astron&#46;nl">Sarod Yatawatta</a></li>
+<li><strong>PyBDSM, LSMTool</strong> - <a class="reference external" href="mailto:rafferty&#37;&#52;&#48;strw&#46;leidenuniv&#46;nl">David Rafferty</a></li>
 </ul>
 <p class="rubric">Footnotes</p>
 <table class="docutils footnote" frame="void" id="f1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>If you have other scripts that could be useful for other commissioners, please contact Sarrvesh Sridhar at sarrvesh[at]astron[dot]nl.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>If you have other scripts that could be useful for other commissioners, please contact <a class="reference external" href="mailto:sarrvesh&#37;&#52;&#48;astron&#46;nl">Sarrvesh Sridhar</a>.</td></tr>
 </tbody>
 </table>
 </div>
@@ -268,7 +269,7 @@
         <a href="acknowledgements.html" class="btn btn-neutral float-right" title="Acknowledgements" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tutorial.html" class="btn btn-neutral" title="Practical examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="factor.html" class="btn btn-neutral" title="Factor: Facet Calibration for LOFAR" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -277,7 +278,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Sarrvesh Sridhar.
+      Last updated on Jan 08, 2018.
 
     </p>
   </div>
@@ -299,7 +300,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.1',
+            VERSION:'22.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

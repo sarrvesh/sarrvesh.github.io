@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>The Default Pre-Processing Pipeline (DPPP) &mdash; LOFAR Imaging Cookbook 0.0.1 documentation</title>
+  <title>The Default Pre-Processing Pipeline (DPPP) &mdash; LOFAR Imaging Cookbook 22.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="LOFAR Imaging Cookbook 0.0.1 documentation" href="index.html"/>
+    <link rel="top" title="LOFAR Imaging Cookbook 22.0.0 documentation" href="index.html"/>
         <link rel="next" title="Gain calibration with DPPP" href="dpppcalibrate.html"/>
         <link rel="prev" title="AOFlagger" href="aoflagger.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.1
+                22.0
               </div>
             
           
@@ -92,7 +92,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started </a></li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Introduction to computing facilities at ASTRON </a></li>
 <li class="toctree-l1"><a class="reference internal" href="datainspection.html">Data inspection </a></li>
 <li class="toctree-l1"><a class="reference internal" href="aoflagger.html">AOFlagger </a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">The Default Pre-Processing Pipeline (DPPP) </a><ul>
@@ -110,7 +110,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#the-parset-file">The ParSet File</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#input-output-parameters">Input/output parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#input-parameters-msin">Input parameters (msin)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-parameters-msout">Output parameters (msout)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#flagging">Flagging</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#averaging">Averaging</a></li>
 </ul>
@@ -123,13 +124,14 @@
 <li class="toctree-l1"><a class="reference internal" href="wsclean.html">The WSClean Imager </a></li>
 <li class="toctree-l1"><a class="reference internal" href="sourcedetection.html">Source detection and sky model manipulation: PyBDSF and LSMTool </a></li>
 <li class="toctree-l1"><a class="reference internal" href="factor.html">Factor: Facet Calibration for LOFAR </a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="resources.html">Useful resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bbs.html">Black-Board Selfcal (BBS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bbs.html">Calibration with BBS </a></li>
 <li class="toctree-l1"><a class="reference internal" href="shapelets.html">Sky Model Construction Using Shapelets </a></li>
 <li class="toctree-l1"><a class="reference internal" href="sagecal.html">SAGECAL </a></li>
 <li class="toctree-l1"><a class="reference internal" href="awimager.html">The AW Imager </a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Practical examples </a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
             
@@ -219,14 +221,14 @@ times with probably different parameters. The operations are defined in a so-cal
 <p>The input to DPPP is any (regularly shaped) MeasurementSet (MS). Regularly shaped means that all time slots in the MS must contain the same baselines and channels. Furthermore, the MS should contain only one spectral window; for a multiband MS this can be achieved by specifying which spectral window to use. The data in the given column are piped through the steps defined in the <strong>parset</strong> file and finally written. This makes it possible to e.g. flag at the full resolution, average, flag on a lower resolution scale, perform more averaging, and write the averaged data to a new MeasurementSet. If time slots are missing, flagged data containing zeroes are inserted to make the data nicely contiguous for later processing.</p>
 <p>The output can be a new MeasurementSet, but it is also possible to update the flags or data in the input. When doing operations changing the meta data (e.g., averaging or phase-shifting), it is not possible to update the input MeasurementSet. Any step can be followed by an output step creating (or updating) a MeasurementSet, whereafter the data can be processed further, possibly creating another MeasurementSet.</p>
 <p>It is possible to combine multiple MeasurementSets into a single spectral window. In this way multiple subbands can be combined into a single MeasurementSet. Note this is different from python-casacore’s <strong>msconcat</strong> command, because <strong>msconcat</strong> keeps the individual spectral windows, while DPPP combines them into one.</p>
-<p>Detailed information on DPPP can be found <a class="reference external" href="http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:ndppp">here</a>. For specific questions regarding this software, you can contact the software developers, Tammo Jan Dijkema (<strong>dijkema[at]astron.nl</strong>) or Ger van Diepen (<strong>diepen[at]astron.nl</strong>).</p>
+<p>Detailed information on DPPP can be found <a class="reference external" href="http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:ndppp">here</a>. For specific questions regarding this software, you can contact the software developers, <a class="reference external" href="mailto:dijkema&#37;&#52;&#48;astron&#46;nl">Tammo Jan Dijkema</a> or <a class="reference external" href="mailto:diepen&#37;&#52;&#48;astron&#46;nl">Ger van Diepen</a>.</p>
 <div class="section" id="how-to-run-dppp">
 <h2>How to run DPPP<a class="headerlink" href="#how-to-run-dppp" title="Permalink to this headline">¶</a></h2>
 <p>The proper environment has to be defined to be able to run LOFAR programs such as DPPP. Normally this is done by the command:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">lofar</span>
 </pre></div>
 </div>
-<p>Some parameters have to be given to DPPP telling the operations to perform. Usually they are defined in a <strong>parset</strong> file (see Sect~ref{theparsetfile}).
+<p>Some parameters have to be given to DPPP telling the operations to perform. Usually they are defined in a <strong>parset</strong> file (see section on <a class="reference internal" href="#the-parset-file">the parset file</a> for details).
 The DPPP task can be run like:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DPPP</span> <span class="n">some</span><span class="o">.</span><span class="n">parset</span>
 </pre></div>
@@ -239,8 +241,8 @@ The DPPP task can be run like:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DPPP</span> <span class="n">some</span><span class="o">.</span><span class="n">parset</span> <span class="n">msout</span><span class="o">.</span><span class="n">overwrite</span><span class="o">=</span><span class="n">true</span>
 </pre></div>
 </div>
-<p>uses a parset, but adds (or overrides) the key {em msout.overwrite}. If no arguments are given, DPPP will try to use the <strong>DPPP.parset</strong> or <strong>NDPPP.parset</strong> file. If not found, DPPP will print some help info.</p>
-<p>An example {tt NDPPP.parset} file can be found in the LOFAR GitHub Cookbook repository: <a class="reference external" href="https://github.com/lofar-astron/LOFAR-Cookbook/tree/master/Parset">https://github.com/lofar-astron/LOFAR-Cookbook/tree/master/Parset</a></p>
+<p>uses a parset, but adds (or overrides) the key <strong>msout.overwrite</strong>. If no arguments are given, DPPP will try to use the <strong>DPPP.parset</strong> or <strong>NDPPP.parset</strong> file. If not found, DPPP will print some help info.</p>
+<p>An example <strong>NDPPP.parset</strong> file can be found in the LOFAR GitHub Cookbook repository: <a class="reference external" href="https://github.com/lofar-astron/LOFAR-Cookbook/tree/master/Parset">https://github.com/lofar-astron/LOFAR-Cookbook/tree/master/Parset</a></p>
 <p>DPPP will print outputs to the screen or a logger, including some brief statistics like the percentage of data being flagged for each antenna and frequency channel.</p>
 <p>The next sections give some example DPPP runs. They only show a subset of the available parameters. DPPP is described in more detail on the <a class="reference external" href="http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:ndppp">LOFAR operations wiki</a> which also contains several examples. It also contains a description of all its <a class="reference external" href="http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:ndppp#description_of_all_parameters">parameters</a>.</p>
 <div class="section" id="copy-a-measurementset-and-calculate-weights">
@@ -326,7 +328,7 @@ filter.baseline = [CR]S*&amp;</div></blockquote>
 <span class="n">add</span><span class="o">.</span><span class="n">stations</span> <span class="o">=</span> <span class="p">{</span><span class="n">CSNew</span><span class="p">:[</span><span class="n">CS00</span><span class="p">[</span><span class="mi">2</span><span class="o">-</span><span class="mi">6</span><span class="p">]</span><span class="o">*</span><span class="p">]}</span>
 </pre></div>
 </div>
-<p>This example adds stations CS002 till CS006 to form a new station CSNew. The example shows that the parameter {em stations} needs to be given in a Python dict-like way. The stations to be added can be given as a vector of glob patterns. In this case only one pattern is given. Note that the wildcard asterix is needed, because the station name ends with LBA or HBA (or even HBA0 or HBA1).</p>
+<p>This example adds stations CS002 till CS006 to form a new station CSNew. The example shows that the parameter <strong>stations</strong> needs to be given in a Python dict-like way. The stations to be added can be given as a vector of glob patterns. In this case only one pattern is given. Note that the wildcard asterix is needed, because the station name ends with LBA or HBA (or even HBA0 or HBA1).</p>
 <p>In the example above the autocorrelations of the new station are not written. That can be done by setting parameter <strong>autocorr</strong>. By default they are calculated by summing the autocorrelations of the input stations. By setting parameter <strong>sumauto</strong> to false, they are calculated from the crosscorrelations of the input stations.</p>
 </div>
 <div class="section" id="update-flags-for-nans">
@@ -355,6 +357,52 @@ column. This can, for instance, be used to clone the data column.</p>
 </div>
 <div class="section" id="demixing">
 <h3>Demixing<a class="headerlink" href="#demixing" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center" id="id5">
+<span id="demixingfigure"></span><img alt="_images/demixing_examples.png" src="_images/demixing_examples.png" />
+<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text"><strong>Top:</strong> the elevation and angular distance of the A-team from the target field centered on B1835+62. This plot shows that during this observation CygA and CasA are very high in elevation and pretty close to our target (24 and 33 degrees, respectively).  <strong>Bottom left:</strong> target visibilities before demixing - the interference of Cas A and Cyg A with the target visibilities is the cause of the bump in the data in the second part of the observation. <strong>Bottom right:</strong> the contributions of the two A-team sources is gone. This is particularly evident in the second part of the observation.</span></p>
+</div>
+<p>The so-called “demixing” procedure should be applied to all LBA (and sometimes HBA) data sets to remove from the target visibilities the interference of the strongest radio sources in the sky (the so called A-team: CasA, CygA, VirA, etc…). Removing this contribution is essential to make it possible to properly calibrate the target field. To understand whether demixing is needed for your data, you are suggested to inspect the elevation of the A-team sources during your observation. By combining this information with the angular distance of the A-team from your target, you can have a clear picture of how critical is to apply this algorithm to your data to improve the calibration and imaging of the visibilities. This overview is provided by the script <strong>plot_Ateam_elevation.py</strong>, which is described in the chapter on <a class="reference external" href="./datainspection.html">data inspection</a>.</p>
+<p>There are two ways to do the demixing:</p>
+<ul>
+<li><p class="first">The old demixer will demix in the same way for the entire observation without taking temporal variations into account. One can define:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The baselines to use.</li>
+<li>The (A-team) sources to solve for and to subtract.</li>
+<li>If the target has to be ignored, solved or deprojected.</li>
+<li>Possibly different time and frequency averaging factors to use for demix and subtract.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Recently a new (smart)demixing scheme (designed by Reinout van Weeren) has been added to DPPP. Basically it works the same as the old demixer, but for each time window it estimates the data by evaluating a rough model of the A-team sources and target. Using those data it tests which sources have to be demixed, which baselines should be used, and if the target has to be ignored, solved, or deprojected. The LOFAR beam is taken into account in estimate, solve, and subtract. In this scheme one can specify:</p>
+<blockquote>
+<div><ul class="simple">
+<li>A detailed model of the A-team sources to be used in the solve/subtract.</li>
+<li>A rough model of the A-team sources to be used in the estimation. If not given, the detailed model is used.</li>
+<li>A model of the target field which can be obtained using e.g. gsm.py.</li>
+<li>The baselines to be used in the demixer. Note that the estimation step might exclude baselines for a given time window.</li>
+<li>Various threshold and ratio values to test which sources, etc. to use.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>Below, an example old demixer parset is given</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">msin</span> <span class="o">=</span> <span class="ow">in</span><span class="o">.</span><span class="n">ms</span>
+<span class="n">msout</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">ms</span>
+<span class="n">steps</span> <span class="o">=</span> <span class="p">[</span><span class="n">demix</span><span class="p">]</span>
+<span class="n">demix</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">demixer</span>
+<span class="n">demix</span><span class="o">.</span><span class="n">subtractsources</span><span class="o">=</span><span class="p">[</span><span class="n">CygA</span><span class="p">,</span> <span class="n">CasA</span><span class="p">,</span> <span class="n">VirA</span><span class="p">]</span>
+<span class="n">demix</span><span class="o">.</span><span class="n">targetsource</span><span class="o">=</span><span class="mi">3</span><span class="n">C196</span>
+<span class="n">demix</span><span class="o">.</span><span class="n">freqstep</span><span class="o">=</span><span class="mi">16</span>
+<span class="n">demix</span><span class="o">.</span><span class="n">timestep</span><span class="o">=</span><span class="mi">10</span>
+</pre></div>
+</div>
+<p>Following this example, the source models of CygA, CasA, and VirA will be subtracted with the gain solutions calculated for them. The target source model is also used to get better gain solutions for the A-team sources.</p>
+<p>If no source model is given for the target, the target direction is projected away when calculating the gains. This should not be done if an A-team source is close to the target. Currently, Science Support is investigating how close it can be. If too close, one should specify</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">demix</span><span class="o">.</span><span class="n">ignoretarget</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+<p>Examples of demixing performance on real data are given in <a class="reference internal" href="#demixingfigure"><span class="std std-numref">Fig. 2</span></a> shown above.</p>
 </div>
 <div class="section" id="combine-measurement-sets">
 <h3>Combine measurement sets<a class="headerlink" href="#combine-measurement-sets" title="Permalink to this headline">¶</a></h3>
@@ -374,9 +422,42 @@ column. This can, for instance, be used to clone the data column.</p>
 <h2>The ParSet File<a class="headerlink" href="#the-parset-file" title="Permalink to this headline">¶</a></h2>
 <p>As shown in the examples in the previous section, the steps to perform the flagging and/or averaging of the data have to be defined in the parset file. The steps are executed in the given order, where the data are piped from one step to the other until all data are processed. Each step has a name to be used thereafter as a prefix in the keyword names specifying the type and parameters of the step.</p>
 <p>A description of all the parameters that can be used in DPPP can be found on the <a class="reference external" href="http://www.lofar.org/operations/doku.php?id=public:user_software:documentation:ndppp">LOFAR wiki</a>.</p>
-<div class="section" id="input-output-parameters">
-<h3>Input/output parameters<a class="headerlink" href="#input-output-parameters" title="Permalink to this headline">¶</a></h3>
-<p>A description of the input/output parameters of DPPP is given below.</p>
+<div class="section" id="input-parameters-msin">
+<h3>Input parameters (msin)<a class="headerlink" href="#input-parameters-msin" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>msin</strong> step defines which MS and which DATA column to use. It is
+possible to skip leading or trailing channels. It sets flags for invalid data
+(NaN or infinite). Dummy, fully flagged data with correct UVW coordinates will
+be inserted for missing time slots in the MS. Missing time slots at the
+beginning or end of the MS can be detected by giving the correct start and end
+time. This is particularly useful for the imaging pipeline where BBS requires
+that the MSs of all sub bands of an observation have the same time slots. When
+updating an MS, those inserted slots are temporary and not put back into the
+MS.</p>
+<p>When combining multiple MSs into a single one, the names of the input MSs can be given in two ways using the <strong>msin</strong> argument.</p>
+<ul>
+<li><p class="first">The name can be wildcarded as done in, say, bash using the characters *, ?, [], and/or {}. The directory part of the name cannot be wildcarded though. For example,</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">msin</span><span class="o">=</span><span class="n">L23456_SAP000_SB</span><span class="o">*</span><span class="n">_uv</span><span class="o">.</span><span class="n">MS</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">A list of MS names can be given like</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">**</span><span class="n">msin</span><span class="o">=</span><span class="p">[</span><span class="n">in1</span><span class="o">.</span><span class="n">ms</span><span class="p">,</span> <span class="n">in2</span><span class="o">.</span><span class="n">ms</span><span class="p">]</span><span class="o">**</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>The MSs will be ordered in frequency unless <strong>msin.orderms=false</strong> is given.</p>
+<p>It is possible to select baselines to use from the input MS. If a selection is given, all baselines not selected will be omitted from the output. Note this is different from the Preflagger where data flags can be set, but always keeps the baselines.</p>
+<p>LOFAR data are written and processed on the CEP2 cluster in Groningen. This cluster consists of the head node lhn001 and the compute/storage nodes locus001..100. Different subbands are stored on different nodes, and it may be necessary to search them all for the required data. MeasurementSets are named in the format <strong>LXXXXX_SAPnnn_SBmmm_uv.MS</strong>, where <strong>L</strong> stands for LOFAR, <strong>XXXXX</strong> is the observation number, <strong>nnn</strong> is the subarray pointing (beam), and mmm is the subband. An example measurement set name is <strong>L32667_SAP000_SB010_uv.MS</strong>.</p>
+</div>
+<div class="section" id="output-parameters-msout">
+<h3>Output parameters (msout)<a class="headerlink" href="#output-parameters-msout" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>msout</strong> step defines the output. The input MS is updated if an emtpy output name is given.</p>
+<p>If you are working on CEP3, note that data should be written to <strong>/data/scratch/&lt;username&gt;</strong> (which may need creating initially). Output data should <strong>not</strong> be written back to the storage disks. Also, do not write output data to <strong>/home/&lt;user name&gt;</strong>, as space is very limited on this disk.</p>
+<p>You can let <strong>DPPP</strong> create a so-called VDS file, which tells other data
+processing programs (notably, <strong>BBS</strong> and <strong>mwimager</strong>) where the
+data live. You need a so-called cluster description file for this. These can
+be found in the <a class="reference external" href="https://github.com/lofar-astron/LOFAR-Cookbook/tree/master/Parset">LOFAR Cookbook GitHub repository</a>. For the curious, the cluster description is a simple ASCII file that should be straightforward to understand).</p>
 </div>
 <div class="section" id="flagging">
 <h3>Flagging<a class="headerlink" href="#flagging" title="Permalink to this headline">¶</a></h3>
@@ -454,7 +535,7 @@ the <strong>aoqplot</strong> tool.</p>
 <table class="docutils footnote" frame="void" id="f1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>This section is maintained by Ger van Diepen (<strong>diepen[at]astron[dot]nl</strong>) and Tammo Jan Dijkema (<strong>dijkema[at]astron[dot]nl</strong>).</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>This section is maintained by <a class="reference external" href="mailto:diepen&#37;&#52;&#48;astron&#46;nl">Ger van Diepen</a> and <a class="reference external" href="mailto:dijkema&#37;&#52;&#48;astron&#46;nl">Tammo Jan Dijkema</a>.</td></tr>
 </tbody>
 </table>
 </div>
@@ -482,7 +563,7 @@ the <strong>aoqplot</strong> tool.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Sarrvesh Sridhar.
+      Last updated on Jan 08, 2018.
 
     </p>
   </div>
@@ -504,7 +585,7 @@ the <strong>aoqplot</strong> tool.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.1',
+            VERSION:'22.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -5,7 +5,7 @@ Factor is a Python package that allows for the production of wide-field HBA LOFA
 
     source ~rafferty/init_factor
 
-If you want to install Factor yourself, follow the instructions in the **README.md** file at `https://github.com/lofar-astron/factor <https://github.com/lofar-astron/factor>`_. Detailed documentation for Factor is available at `http://www.astron.nl/citt/facet-doc <http://www.astron.nl/citt/facet-doc>`_.
+If you want to install Factor yourself, follow the instructions in the **README.md** file on the `Factor GitHub repository <https://github.com/lofar-astron/factor>`_. Detailed documentation for Factor can be found `here <http://www.astron.nl/citt/facet-doc>`_.
 
 -------------------------------------------------------
 Data preparation: Pre-facet calibration pipeline [#f2]_
@@ -15,21 +15,21 @@ The input data to Factor must have the average amplitude scale set and average c
 
 The pre-facet calibration pipelines are intended to prepare the observed data so that they can be used in Factor. The pipelines are defined as parsets for the genericpipeline, that first calibrate the calibrator, then transfer the gain amplitudes, clock delays and phase offsets to the target data, do a direction-independent phase calibration of the target, and finally image and subtract sources.
 
-Please have a look at the documentation for the genericpipeline at `http://www.astron.nl/citt/genericpipeline/ <http://www.astron.nl/citt/genericpipeline/>`_. You should be reasonably familiar with setting up and running a genericpipeline before running this pipeline parset.
+Please have a look at the documentation for the genericpipeline `here <http://www.astron.nl/citt/genericpipeline/>`__. You should be reasonably familiar with setting up and running a genericpipeline before running this pipeline parset.
 
 ^^^^^^^^^^^^^^^^^^^
 Download and set-up
 ^^^^^^^^^^^^^^^^^^^
 
-The pipeline parsets and associated scripts can be found at: `https://github.com/lofar-astron/prefactor <https://github.com/lofar-astron/prefactor>`_. These pipelines require as input data that has been pre-processed by the ASTRON averaging pipeline. They can work both with observations that had a second beam on a calibrator and with interleaved observations in which the calibrator was observed just before and after the target. No demixing is done, but A-Team clipping is performed for the target data [#f3]_.
+The pipeline parsets and associated scripts can be found on the `Prefactor GitHub repository <https://github.com/lofar-astron/prefactor>`_. These pipelines require as input data that has been pre-processed by the ASTRON averaging pipeline. They can work both with observations that had a second beam on a calibrator and with interleaved observations in which the calibrator was observed just before and after the target. No demixing is done, but A-Team clipping is performed for the target data [#f3]_.
 
-To run the genericpipeline you need a correctly set up configuration file for the genericpipeline, see `http://www.astron.nl/citt/genericpipeline/#quick-start <http://www.astron.nl/citt/genericpipeline/#quick-start>`_. In addition to the usual settings you need to ensure that the plugin scripts are found, for that you need to add the pre-facet calibration directory to the **recipe_directories** in the pipeline parset (so that the **plugins** directory is a subdirectory of one of the **recipe_directories**).
+To run the genericpipeline you need a correctly set up configuration file for the genericpipeline. Instruction for setting up the configuration file can be found `online <http://www.astron.nl/citt/genericpipeline/#quick-start>`_. In addition to the usual settings you need to ensure that the plugin scripts are found, for that you need to add the pre-facet calibration directory to the **recipe_directories** in the pipeline parset (so that the **plugins** directory is a subdirectory of one of the **recipe_directories**).
 
 ^^^^^^^^^^^^^^^^^^^^^
 Overview and examples
 ^^^^^^^^^^^^^^^^^^^^^
 
-The most recent overview of the pre-facet pipeline functionality as well as several use cases and troubleshooting information can be found on the pre-facet pipeline GitHub wiki at: `https://github.com/lofar-astron/prefactor/wiki <https://github.com/lofar-astron/prefactor/wiki>`_.
+The most recent overview of the pre-facet pipeline functionality as well as several use cases and troubleshooting information can be found on the pre-facet pipeline `GitHub wiki <https://github.com/lofar-astron/prefactor/wiki>`_.
 
 After the pipeline was run successfully, the resulting measurement sets are moved to the specified directory. The instrument table of the direction-independent, phase-only calibration are inside the measurement sets with the names **instrument_directioninpendent**. These measurement sets are the input to the Initial-Subtract pipeline, which should be run next to do the imaging and source subtraction. Once the Initial-Subtract pipeline has finished, the data are ready to be processed by Factor.
 
@@ -37,7 +37,7 @@ After the pipeline was run successfully, the resulting measurement sets are move
 Factor tutorials
 ----------------
 
-This section includes examples of setting up and using Factor. Setting up a Factor run mainly involves creating a parset that defines the reduction parameters. For many of these parameters, the default values will work well, and hence their values do not need to be explicitly specified in the parset. Therefore, only the parameters relevant to each example are described below. For a description of all parameters, see `http://www.astron.nl/citt/facet-doc/parset.html <http://www.astron.nl/citt/facet-doc/parset.html>`_.
+This section includes examples of setting up and using Factor. Setting up a Factor run mainly involves creating a parset that defines the reduction parameters. For many of these parameters, the default values will work well, and hence their values do not need to be explicitly specified in the parset. Therefore, only the parameters relevant to each example are described below. A detailed description of all parameters can be found on the `online <http://www.astron.nl/citt/facet-doc/parset.html>`__.
 
 ^^^^^^^^^^^
 Quick-start
@@ -57,7 +57,7 @@ Below are the basic steps in a typical Factor run on a single machine (e.g., a s
     L99090_SB041_uv.dppp_122298A79t_125g.pre-cal.ms
     L99090_SB041_uv.dppp_122298A79t_125g.pre-cal.wsclean_low2-model.merge
 
-+ Edit the Factor parset (described in detail at `http://www.astron.nl/citt/facet-doc/parset.html <http://www.astron.nl/citt/facet-doc/parset.html>`_) to fit your reduction and computing resources. For example, the parset for a single machine could be::
++ Edit the Factor parset (see `online documentation <http://www.astron.nl/citt/facet-doc/parset.html>`_ for a detailed description) to fit your reduction and computing resources. For example, the parset for a single machine could be::
 
     [/data]$ more factor.parset
     [global]
@@ -78,16 +78,18 @@ Below are the basic steps in a typical Factor run on a single machine (e.g., a s
 Selecting the DDE calibrators and facets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Before facet calibration can be done, suitable DDE calibrators must be selected. Generally, a suitable calibrator is a bright, compact source (or a group of such sources) [#f4]_. The DDE calibrators can be provided to Factor in a file (see `http://www.astron.nl/citt/facet-doc/directions.html <http://www.astron.nl/citt/facet-doc/directions.html>`_ for details) or can be selected internally. This example shows how to set the parameters needed for internal selection.
+Before facet calibration can be done, suitable DDE calibrators must be selected. Generally, a suitable calibrator is a bright, compact source (or a group of such sources) [#f4]_. The DDE calibrators can be provided to Factor in a file (see `online documentation <http://www.astron.nl/citt/facet-doc/directions.html>`__ for details) or can be selected internally. This example shows how to set the parameters needed for internal selection.
 
-Three parameters in the **[directions]** section of the parset are most important for the internal calibrator selection: **flux_min_Jy**, **size_max_arcmin**, and **separation_max_arcmin**. These parameters set the minimum flux density (in the highest-frequency band) and maximum size of the calibrators and the maximum allowed separation that two sources may have to be grouped together as a single calibrator (see `http://www.astron.nl/citt/facet-doc/parset.html <http://www.astron.nl/citt/facet-doc/parset.html>`_ for details). The following are good values to use as a starting point::
+Three parameters in the **[directions]** section of the parset are most important for the internal calibrator selection: **flux_min_Jy**, **size_max_arcmin**, and **separation_max_arcmin**. These parameters set the minimum flux density (in the highest-frequency band) and maximum size of the calibrators and the maximum allowed separation that two sources may have to be grouped together as a single calibrator (see `online documentation <http://www.astron.nl/citt/facet-doc/parset.html>`__ for details). The following are good values to use as a starting point::
 
     [directions]
     flux_min_Jy = 0.3
     size_max_arcmin = 1.0
     separation_max_arcmin = 9.0
 
-It is recommended that you set **interactive = True** under **[global]** while experimenting with the calibrator selection, as Factor will select the calibrators and then pause to allow you to verify them. Now, run Factor (with **runfactor factor.parset**) and once it asks for verification, open one of the **\ *high2**} images generated during the Initial Subtract pipeline in ds9 or casaviewer. Then load the region files located in the **dir_working/regions/**} directory (where **dir_working** is the working directory defined in your Factor parset). Figure~\ref{F:example_field_layout} shows an example of such an image with the regions overlaid.
+It is recommended that you set **interactive = True** under **[global]** while experimenting with the calibrator selection, as Factor will select the calibrators and then pause to allow you to verify them. Now, run Factor (with **runfactor factor.parset**) and once it asks for verification, open one of the **\ *high2**} images generated during the Initial Subtract pipeline in ds9 or casaviewer. Then load the region files located in the **dir_working/regions/**} directory (where **dir_working** is the working directory defined in your Factor parset). :numref:`facetlayout` shows an example of such an image with the regions overlaid.
+
+.. _facetlayout:
 
 .. figure:: figures/factor_field_layout_example.png
    :align: center
@@ -102,7 +104,9 @@ Once the calibrator and facet selection is acceptable, Factor will make a direct
 Imaging a target source
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-If you are interested only in a single target source, you may want to process just the brightest sources in the field and those nearest the target. Figure~\ref{F:example_target_layout} shows the layout of an example field, with the target source (a galaxy cluster) indicated by the blue circle in facet_patch_468. Note that the faceting radius has been reduced substantially to speed up processing (since facets outside of this radius are small patches that run much more quickly than full facets). A few facets (e.g., facet_patch_566 and facet_patch_273) contain bright sources with artifacts that affect the target. Additionally, although they contain fainter sources, artifacts from the neighboring facets (e.g., facet_patch_424) can also affect the target significantly. Therefore, a good strategy is to process these facets before processing the target. Note that the lowest possible noise would be obtained by processing the entire field but would require much longer to complete.
+If you are interested only in a single target source, you may want to process just the brightest sources in the field and those nearest the target. :numref:`targetfacet` shows the layout of an example field, with the target source (a galaxy cluster) indicated by the blue circle in facet_patch_468. Note that the faceting radius has been reduced substantially to speed up processing (since facets outside of this radius are small patches that run much more quickly than full facets). A few facets (e.g., facet_patch_566 and facet_patch_273) contain bright sources with artifacts that affect the target. Additionally, although they contain fainter sources, artifacts from the neighboring facets (e.g., facet_patch_424) can also affect the target significantly. Therefore, a good strategy is to process these facets before processing the target. Note that the lowest possible noise would be obtained by processing the entire field but would require much longer to complete.
+
+.. _targetfacet:
 
 .. figure:: figures/factor_target_layout_example.png
    :align: center
@@ -125,7 +129,7 @@ We can limit the processing to the sources above by moving them to the top of th
     facet_patch_480 14h32m28.9389s,45d13m49.3407s ...
     facet_patch_778 14h20m03.7803s,44d09m40.3293s ...
 
-Additionally, if the target source is diffuse, Factor may not be able to adjust the facet boundaries properly to ensure that it lies entirely within a single facet. To ensure that no facet boundary passes through the target source, you can define the position and the size of an avoidance region under the **[directions]** section of the parset. The **target_ra**, **target_dec**, and **target_radius_arcmin** parameters determine this avoidance region. An example of such a region for the target above is given below and the resulting facets are shown in Figure~\ref{F:example_target_layout}. Note that the boundaries of the target facet (facet_patch_468) are curved to avoid this region. ::
+Additionally, if the target source is diffuse, Factor may not be able to adjust the facet boundaries properly to ensure that it lies entirely within a single facet. To ensure that no facet boundary passes through the target source, you can define the position and the size of an avoidance region under the **[directions]** section of the parset. The **target_ra**, **target_dec**, and **target_radius_arcmin** parameters determine this avoidance region. An example of such a region for the target above is given below and the resulting facets are shown in :numref:`facetlayout`. Note that the boundaries of the target facet (facet_patch_468) are curved to avoid this region. ::
 
     [directions]
     target_ra = 14h31m59.7s
@@ -136,7 +140,7 @@ Additionally, if the target source is diffuse, Factor may not be able to adjust 
 Peeling bright sources
 ^^^^^^^^^^^^^^^^^^^^^^
 
-In many observations there will be one or more strong sources that lie far outside the FWHM of the primary beam but nevertheless cause significant artifacts inside it. However, because of strong variations in the beam with frequency at these locations, self calibration does not generally work well. Therefore, Factor includes the option to peel these outlier sources. A high-resolution sky model (in makesourcedb format) is needed for this peeling. Factor includes a number of such sky models for well-known calibrators (see `https://github.com/lofar-astron/factor/tree/master/factor/skymodels <https://github.com/lofar-astron/factor/tree/master/factor/skymodels>`_ for a list). If an appropriate sky model is not available inside Factor, you must obtain one and specify it in the directions file. To enable peeling, the **outlier_source** entry in the directions file must be set to **True** for the source.
+In many observations there will be one or more strong sources that lie far outside the FWHM of the primary beam but nevertheless cause significant artifacts inside it. However, because of strong variations in the beam with frequency at these locations, self calibration does not generally work well. Therefore, Factor includes the option to peel these outlier sources. A high-resolution sky model (in makesourcedb format) is needed for this peeling. Factor includes a number of such sky models for well-known calibrators (see `online documentation <https://github.com/lofar-astron/factor/tree/master/factor/skymodels>`__ for a list). If an appropriate sky model is not available inside Factor, you must obtain one and specify it in the directions file. To enable peeling, the **outlier_source** entry in the directions file must be set to **True** for the source.
 
 It is also possible that a strong source (such as 3C295) will lie inside a facet. Such a source can be peeled to avoid dynamic-range limitations. Peeling will be done if a source exceeds **peel_flux_Jy** (set under the **[calibration]** section of the parset) and a sky model is available. After peeling, the facet is then imaged as normal.
 
@@ -148,12 +152,16 @@ You can check the progress of a run with the checkfactor script by supplying the
 
     [/data]$ checkfactor factor.parset
     
-A plot showing the field layout will be displayed (see Figure~\ref{F:checkfactor_example}), with facets colored by their status. Left-click on a facet to see a summary of its state, and press "c" to see a plot of the self calibration images and their clean masks. An example of such a plot is shown in Figure~\ref{F:factor_success_example}. For a successful self calibration, you should see a gradual improvement from **image02** to **image42**.
+A plot showing the field layout will be displayed (see :numref:`checkfactor`), with facets colored by their status. Left-click on a facet to see a summary of its state, and press "c" to see a plot of the self calibration images and their clean masks. An example of such a plot is shown in :numref:`factor_success_example`. For a successful self calibration, you should see a gradual improvement from **image02** to **image42**.
+
+.. _checkfactor:
 
 .. figure:: figures/factor_checkfactor_example.png
    :align: center
    
    Example **checkfactor** plot.
+
+.. _factor_success_example:
 
 .. figure:: figures/factor_success_example.png
    :align: center
@@ -166,21 +174,23 @@ If self calibration has completed for a direction, select it and press "t" to se
 Dealing with failed self calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Self calibration may occasionally fail to converge for a direction, causing to Factor to skip the subtraction of the corresponding facet model. An example in which self calibration failed is shown in Figure~\ref{F:factor_multires_example}. Note how the image noise does not improve much in this case during the self calibration process. While Factor can continue with the processing of other directions and apply the calibration solutions from the nearest successful facet to the failed one (depending on the value of the **exit_on_selfcal_failure** option under **[calibration]** in the parset; see `http://www.astron.nl/citt/facet-doc/parset.html <http://www.astron.nl/citt/facet-doc/parset.html>`_ for details), it is generally better to stop Factor and try to correct the problem.  In these cases, turning on multi-resolution self calibration or supplying a custom clean mask may improve the results.
+Self calibration may occasionally fail to converge for a direction, causing to Factor to skip the subtraction of the corresponding facet model. An example in which self calibration failed is shown in :numref:`factor_multires_example`. Note how the image noise does not improve much in this case during the self calibration process. While Factor can continue with the processing of other directions and apply the calibration solutions from the nearest successful facet to the failed one (depending on the value of the **exit_on_selfcal_failure** option under **[calibration]** in the parset; see `online documentation <http://www.astron.nl/citt/facet-doc/parset.html>`__ for details), it is generally better to stop Factor and try to correct the problem.  In these cases, turning on multi-resolution self calibration or supplying a custom clean mask may improve the results.
 
-Multi-resolution self calibration involves imaging at decreasing resolutions, from 20 arcsec to full resolution (:math:`\approx 5` arcsec). This process can stabilize clean in the presence of calibration errors. An example of such a situation is shown in Figure~\ref{F:factor_multires_example}. Multi-resolution self calibration can be enabled by setting **multires_selfcal = True** under **[calibration]** in the parset.
+Multi-resolution self calibration involves imaging at decreasing resolutions, from 20 arcsec to full resolution (:math:`\approx 5` arcsec). This process can stabilize clean in the presence of calibration errors. An example of such a situation is shown in :numref:`factor_multires_example`. Multi-resolution self calibration can be enabled by setting **multires_selfcal = True** under **[calibration]** in the parset.
+
+.. _factor_multires_example:
 
 .. figure:: figures/factor_multires_example.png
    :align: center
    
    Example of self calibration images at the same stage of reduction for an unsuccessful run (left) in which an incorrect source structure is present (the bright sources both have "L"-shaped morphologies) and the successful run (right) in which multi-resolution self calibration was used.
 
-In some cases, usually when the calibrator has a complex structure, it may be necessary to supply a clean mask made by hand. Such a clean mask can be made by opening one of the self calibration images (e.g., **\ *image22.image**; see `http://www.astron.nl/citt/facet-doc/operations.html <http://www.astron.nl/citt/facet-doc/operations.html>`_ for details of the **facetselfcal** output) in casaviewer and drawing a region that encloses the source emission but excludes any artifacts. Save the region in CASA format to a file and specify the full path to this file in the **region_selfcal** column of the directions file 
+In some cases, usually when the calibrator has a complex structure, it may be necessary to supply a clean mask made by hand. Such a clean mask can be made by opening one of the self calibration images (e.g., **\ *image22.image**; see `online documentation <http://www.astron.nl/citt/facet-doc/operations.html>`__ for details of the **facetselfcal** output) in casaviewer and drawing a region that encloses the source emission but excludes any artifacts. Save the region in CASA format to a file and specify the full path to this file in the **region_selfcal** column of the directions file 
 (named **dir_working/factor_directions.txt** if generated automatically) for the appropriate direction. Note that the supplied mask must include all significant emission within the self calibration region.
 
 Lastly, it is possible that the DDE calibrator is too faint to produce good self calibration results. In this case, the slow-gain solutions are generally noisy and the images produced after the slow-gain calibration (e.g., **\ *image32.image**) are worse than those before ((e.g., **\ *image22.image**). To fix this problem, either process other, brighter facets first (to lower the overall noise) or skip self calibration of the problematic facet.
 
-To restart self calibration for the failed direction, you will need to reset it. See Section~\ref{S:resumming_factor} below for instructions on how to reset a direction.
+To restart self calibration for the failed direction, you will need to reset it. See the section on `resuming and resetting a run`_ below for instructions on how to reset a direction.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Imaging at the end of a run
@@ -207,9 +217,9 @@ If a Factor run is interrupted, it can be resumed by simply running it again wit
 Finding the final output products
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Usually, the final, primary-beam-corrected image of the field or target will be located in **dir_working/results/fieldmosaic/field** and will be called **\ *correct_mosaic.pbcor.fits**. A full description of the primary output products generated by Factor is available at `http://www.astron.nl/citt/facet-doc/products.html <http://www.astron.nl/citt/facet-doc/products.html>`_.
+Usually, the final, primary-beam-corrected image of the field or target will be located in **dir_working/results/fieldmosaic/field** and will be called **\ *correct_mosaic.pbcor.fits**. A full description of the primary output products generated by Factor is available `online <http://www.astron.nl/citt/facet-doc/products.html>`__.
 
-Additionally, it may be desirable to image a facet by hand using the calibrated data (e.g., to ensure that any diffuse emission is properly cleaned). To do so, one can use **archivefactor** (see Section~\ref{S:archiving_factor}) to archive the calibrated data for a facet in a convenient form for use in CASA or WSClean. Note that these data have not been corrected for any primary beam attenuation but have had the beam effects at the field phase center removed.
+Additionally, it may be desirable to image a facet by hand using the calibrated data (e.g., to ensure that any diffuse emission is properly cleaned). To do so, one can use **archivefactor** (see `archiving a factor run`_) to archive the calibrated data for a facet in a convenient form for use in CASA or WSClean. Note that these data have not been corrected for any primary beam attenuation but have had the beam effects at the field phase center removed.
 
 ^^^^^^^^^^^^^^^^^^^^^^
 Archiving a Factor run
@@ -227,7 +237,7 @@ Lastly, to make an archive from which a Factor run can later be resumed, use the
 
     archivefactor factor.parset dir_output -r
     
-To resume from such an archive, use **unarchivefactor**. See `http://www.astron.nl/citt/facet-doc/archiving.html <http://www.astron.nl/citt/facet-doc/archiving.html>`_ for details.
+To resume from such an archive, use **unarchivefactor**. See the `online documentation <http://www.astron.nl/citt/facet-doc/archiving.html>`__ for details.
 
 
 
@@ -236,7 +246,7 @@ To resume from such an archive, use **unarchivefactor**. See `http://www.astron.
 
 .. rubric:: Footnotes
 
-.. [#f1] This chapter is maintained by David Rafferty(**drafferty@hs.uni-hamburg.de**).
-.. [#f2] This section was written by Andreas Horneffer (**ahorneffer@mpifr-bonn.mpg.de**) with a lot of help from Tim Shimwell.
+.. [#f1] This chapter is maintained by `David Rafferty <mailto:drafferty@hs.uni-hamburg.de>`_.
+.. [#f2] This section was written by `Andreas Horneffer <mailto:ahorneffer@mpifr-bonn.mpg.de>`_ with a lot of help from Tim Shimwell.
 .. [#f3] Versions of the pipeline (parset) which also do demixing are being planned.
 .. [#f4] Ideally calibrators should be selected that provide roughly uniform coverage of the field with separations less than the typical distance over which the direction-dependent effects vary strongly (this distance depends on the severity of the ionospheric conditions, but is usually less than a degree or so). However, the achievable uniformity of coverage will vary from field to field, depending on the specific distribution of sources.
