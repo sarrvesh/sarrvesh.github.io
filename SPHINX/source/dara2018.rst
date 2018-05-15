@@ -13,6 +13,12 @@ The workshop will be held at Eduardo Mondlane University from June 18, 2018 to J
 Schedule
 --------
 
++ Please note that this schedule is subject to change depending on the progress made during the workshop.
++ Morning break: 10:00-10:30
++ Lunch break: 13:00-14:00
++ Evening break: 16:00-16:30
++ Lecturers: Dalmiro Maia (DM) & Sarrvesh Sridhar (SS)
+
 =====  ===========  ============================================    ========
 Date   Time         Title                                           Lead
 =====  ===========  ============================================    ========
@@ -39,8 +45,53 @@ Date   Time         Title                                           Lead
 ..     12:00-13:00  L6: Radio frequency interference (RFI)          SS
 ..     14:00-16:00  Back-up time slot                               ..
 ..     16:30-17:30  Recap of week 1                                 SS/DM
+25/06  08:30-09:00  Recap from week 1                               SS/DM
+..     09:00-10:00  T11: 3C277.1 calibration tutorial               SS/DM
+..     10:30-13:00  T11: 3C277.1 calibration tutorial               SS/DM
+..     14:00-15:00  L7: Advanced imaging techniques                 SS
+..     15:00-16:00  T12: 3C277.1 imaging tutorial                   SS/DM
+..     16:30-17:30  T12: 3C277.1 imaging tutorial                   SS/DM
+26/06  08:30-09:00  Recap from previous day                         SS/DM
+..     09:00-10:00  T12: 3C277.1 imaging tutorial                   SS/DM
+..     10:30-11:30  L8: Science with spectral lines                 DM
+..     11:30-13:00  L9: Spectral line data reduction                SS
+..     14:00-16:00  T13: Spectral line tutorial                     SS/DM
+..     16:30-17:30  T13: Spectral line tutorial                     SS/DM
+27/06  08:30-09:00  Recap from previous day                         SS/DM
+..     09:00-10:00  T13: Spectral line tutorial                     SS/DM
+..     10:30-11:30  L10: Radio interferometers: Present & Future    SS
+..     11:30-12:30  Proposals & projects                            SS/DM
+..     14:00-17:30  Proposals & projects                            SS/DM
+28/06  08:30-09:00  Recap from previous day                         SS/DM
+..     09:00-10:00  L10: Error recognition                          DM
+..     10:30-12:00  T15: Error recognition tutorials                SS/DM
+..     12:00-13:00  L11: Fringe fitting & AIPS                      DM
+..     14:00-15:00  L11: Fring fitting & AIPS                       DM
+..     15:00-16:00  Data & literature archives                      SS
+..     16:00-17:30  Back-up time                                    ..
+29/06  08:30-09:00  Recap from previous day                         SS/DM
+..     09:00-10:00  Science talk                                    SS
+..     10:30-11:30  Science talk                                    DM
+..     12:00-13:00  Time for final questions                        SS/DM
+..     14:00-15:00  Summary & Feedback                              ..
 =====  ===========  ============================================    ========
+
+You can also download this schedule :download:`here <_static/schedule_dara2018.pdf>`.
 
 ---------
 Tutorials
 ---------
+
+The following material is based on original tutorials from a `previous DARA workshop <http://www.jb.man.ac.uk/~radcliff/DARA/Data_reduction_workshops.html>`_. 
+
+^^^^^^^^^^^^^^^^^^^^^^^
+EVN Continuum tutorials
+^^^^^^^^^^^^^^^^^^^^^^^
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3C277.1 e-MERLIN Continuum tutorial
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Spectral line tutorial - NGC 660 Hydrogen Absorption
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
