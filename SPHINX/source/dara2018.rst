@@ -84,14 +84,6 @@ Tutorials
 
 The following material is based on original tutorials from a `previous DARA workshop <http://www.jb.man.ac.uk/~radcliff/DARA/Data_reduction_workshops.html>`_. 
 
-^^^^^^^^^^^^^^^^^^^^^^^
-EVN Continuum tutorials
-^^^^^^^^^^^^^^^^^^^^^^^
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-3C277.1 e-MERLIN Continuum tutorial
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Spectral line tutorial - NGC 660 Hydrogen Absorption
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++ :ref:`evn_continuum`
++ :ref:`emerlin_tutorial`
++ :ref:`spectral_tutorial`
