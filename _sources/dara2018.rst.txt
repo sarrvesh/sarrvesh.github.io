@@ -19,64 +19,62 @@ Schedule
 + Evening break: 16:00-16:30
 + Lecturers: Dalmiro Maia (DM) & Sarrvesh Sridhar (SS)
 
-=====  ===========  ==========================================================  ========
-Date   Time         Title                                                       Lead
-=====  ===========  ==========================================================  ========
-18/06  09:00-10:00  L1: Introduction & scope of the workshop                    SS/DM
-..     10:30-13:00  T1: The UNIX terminal                                       DM
-..     14:00-15:00  T2: :download:`Python basics <_static/python_basics.pdf>`   SS
-..     15:00-17:30  T3: Useful python packages                                  SS
-19/06  08:30-09:00  L2: Introduction to Radio Interferometry                    DM
-..     09:00-10:00  T4: Fun with Fourier transforms                             DM
-..     10:30-11:30  L3: Radio Interferometry: First principles                  SS
-..     11:30-13:00  T5: CASA & Measurement set                                  SS
-..     14:00-16:00  T6: Calibration tutorial                                    SS/DM
-..     16:30-17:30  T6: Calibration tutorial                                    SS/DM
-20/06  08:30-09:00  Recap from previous day                                     SS/DM
-..     09:00-10:00  L3: Imaging                                                 DM
-..     10:30-12:30  T7: Imaging tutorial                                        SS/DM
-..     12:30-13:00  L4: Imaging parameters	                                    SS
-..     14:00-16:00  T8: Imaging tutorial                                        SS/DM
-..     16:30-17:30  T8: Imaging tutorial                                        SS/DM
-21/06  all day      T9: Continuum tutorial                                      SS/DM
-22/06  08:30-09:00  Recap from previous day                                     SS/DM
-..     09:00-10:00  L5: Self-calibration                                        DM
-..     10:30-12:00  T10: Self-calibration tutorial                              SS/DM
-..     12:00-13:00  L6: Radio frequency interference (RFI)                      SS
-..     14:00-16:00  Back-up time slot                                           ..
-..     16:30-17:30  Recap of week 1                                             SS/DM
-26/06  08:30-09:00  Recap from week 1                                           SS/DM
-..     09:00-10:00  T11: 3C277.1 calibration tutorial                           SS/DM
-..     10:30-13:00  T11: 3C277.1 calibration tutorial                           SS/DM
-..     14:00-15:00  L7: Advanced imaging techniques                             SS
-..     15:00-16:00  T12: 3C277.1 imaging tutorial                               SS/DM
-..     16:30-17:30  T12: 3C277.1 imaging tutorial                               SS/DM
-27/06  08:30-09:00  Recap from previous day                                     SS/DM
-..     09:00-10:00  L8: Science with spectral lines                             DM
-..     10:30-11:30  L9: Radio interferometers: Present & Future                 SS
-..     11:30-12:30  Proposals & projects                                        SS/DM
-..     14:00-17:30  Proposals & projects                                        SS/DM
-28/06  08:30-09:00  Recap from previous day                                     SS/DM
-..     09:00-10:00  L10: Error recognition                                      DM
-..     10:30-12:00  T13: Error recognition tutorials                            SS/DM
-..     12:00-13:00  L11: Fringe fitting & AIPS                                  DM
-..     14:00-15:00  L11: Fring fitting & AIPS                                   DM
-..     15:00-16:00  Data & literature archives                                  SS
-..     16:00-17:30  Back-up time                                                ..
-29/06  08:30-09:00  Recap from previous day                                     SS/DM
-..     09:00-10:00  Science talk                                                SS
-..     10:30-11:30  Science talk                                                DM
-..     12:00-13:00  Time for final questions                                    SS/DM
-..     14:00-15:00  Summary & Feedback                                          ..
-=====  ===========  ==========================================================  ========
+=====  ===========  =================================================================   ========
+Date   Time         Title                                                               Lead
+=====  ===========  =================================================================   ========
+18/06  09:00-10:00  L1: Introduction & scope of the workshop                            SS/DM
+..     10:30-13:00  T1: The UNIX terminal                                               DM
+..     14:00-15:00  T2: :download:`Python basics <_static/python_basics.pdf>`           SS
+..     15:00-17:30  T3: :download:`Python packages <_static/python_basics.pdf>`         SS
+19/06  08:30-09:00  L2: Introduction to Radio Interferometry                            DM
+..     09:00-10:00  T4: Fun with Fourier transforms                                     DM
+..     10:30-11:30  L3: Radio Interferometry: First principles                          SS
+..     11:30-13:00  T5: :download:`CASA & Measurement set <_static/casa_and_ms.pdf>`     SS
+..     14:00-16:00  T6: Calibration tutorial                                            SS/DM
+..     16:30-17:30  T6: Calibration tutorial                                            SS/DM
+20/06  08:30-09:00  Recap from previous day                                             SS/DM
+..     09:00-10:00  L3: Imaging                                                         DM
+..     10:30-12:30  T7: Imaging tutorial                                                SS/DM
+..     12:30-13:00  L4: Imaging parameters	                                            SS
+..     14:00-16:00  T8: Imaging tutorial                                                SS/DM
+..     16:30-17:30  T8: Imaging tutorial                                                SS/DM
+21/06  all day      T9: Continuum tutorial                                              SS/DM
+22/06  08:30-09:00  Recap from previous day                                             SS/DM
+..     09:00-10:00  L5: Self-calibration                                                DM
+..     10:30-12:00  T10: Self-calibration tutorial                                      SS/DM
+..     12:00-13:00  L6: Radio frequency interference (RFI)                              SS
+..     14:00-16:00  Back-up time slot                                                   ..
+..     16:30-17:30  Recap of week 1                                                     SS/DM
+26/06  08:30-09:00  Recap from week 1                                                   SS/DM
+..     09:00-10:00  T11: 3C277.1 calibration tutorial                                   SS/DM
+..     10:30-13:00  T11: 3C277.1 calibration tutorial                                   SS/DM
+..     14:00-15:00  L7: Advanced imaging techniques                                     SS
+..     15:00-16:00  T12: 3C277.1 imaging tutorial                                       SS/DM
+..     16:30-17:30  T12: 3C277.1 imaging tutorial                                       SS/DM
+27/06  08:30-09:00  Recap from previous day                                             SS/DM
+..     09:00-10:00  L8: Science with spectral lines                                     DM
+..     10:30-11:30  L9: Radio interferometers: Present & Future                         SS
+..     11:30-12:30  Proposals & projects                                                SS/DM
+..     14:00-17:30  Proposals & projects                                                SS/DM
+28/06  08:30-09:00  Recap from previous day                                             SS/DM
+..     09:00-10:00  L10: Error recognition                                              DM
+..     10:30-12:00  T13: Error recognition tutorials                                    SS/DM
+..     12:00-13:00  L11: Fringe fitting & AIPS                                          DM
+..     14:00-15:00  L11: Fring fitting & AIPS                                           DM
+..     15:00-16:00  Data & literature archives                                          SS
+..     16:00-17:30  Back-up time                                                        ..
+29/06  08:30-09:00  Recap from previous day                                             SS/DM
+..     09:00-10:00  Science talk                                                        SS
+..     10:30-11:30  Science talk                                                        DM
+..     12:00-13:00  Time for final questions                                            SS/DM
+..     14:00-15:00  Summary & Feedback                                                  ..
+=====  ===========  =================================================================   ========
 
 You can also download this schedule :download:`here <_static/schedule_dara2018.pdf>`.
 
 ---------
 Tutorials
 ---------
-
-The following material is based on original tutorials from a `previous DARA workshop <http://www.jb.man.ac.uk/~radcliff/DARA/Data_reduction_workshops.html>`_. 
 
 + :ref:`evn_continuum`
 + :ref:`emerlin_tutorial`
@@ -88,3 +86,9 @@ Other files
 
 + Download the FITS file for python tutorial :download:`here <_static/n1569.fits>`.
 + Download the script for fun with Fourier transforms :download:`here <_static/L4.zip>`.
+
+----------------
+Acknowledgements
+----------------
+
+A lot of the material presented during the workshop is based on original tutorials from a `previous DARA workshop <http://www.jb.man.ac.uk/~radcliff/DARA/Data_reduction_workshops.html>`_. 
