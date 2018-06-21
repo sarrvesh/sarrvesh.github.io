@@ -7,7 +7,7 @@ Overview
 
 Later this year, in June, Prof. Dalmiro Maia (University of Porto) and I will be teaching radio astronomy at a workshop in Maputo, Mozambique. The workshop is organized as part of the `DARA project <https://www.dara-project.org/>`_.
 
-The workshop will be held at Eduardo Mondlane University from June 18, 2018 to June 19, 2018.
+The workshop will be held at Eduardo Mondlane University from June 18, 2018 to June 29, 2018.
 
 --------
 Schedule
@@ -77,6 +77,7 @@ Tutorials
 ---------
 
 + :ref:`evn_continuum`
++ `Calibration and imaging tutorial <http://www.jb.man.ac.uk/~radcliff/DARA/Data_reduction_workshops/EVN_Continuum/CASA_1848+283_J1849+3024-ManOxWiki.html>`_
 + :ref:`emerlin_tutorial`
 + :ref:`spectral_tutorial`
 
