@@ -64,7 +64,7 @@ Date   Time         Title                                                       
 ..     15:00-16:00  Data & literature archives                                          SS
 ..     16:00-17:30  Back-up time                                                        ..
 29/06  08:30-09:00  Recap from previous day                                             SS/DM
-..     09:00-10:00  Science talk                                                        SS
+..     09:00-10:00  :download:`Science talk <_static/science_SS.pdf>`                   SS
 ..     10:30-11:30  Science talk                                                        DM
 ..     12:00-13:00  Time for final questions                                            SS/DM
 ..     14:00-15:00  Summary & Feedback                                                  ..
