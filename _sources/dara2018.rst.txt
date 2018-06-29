@@ -67,7 +67,7 @@ Date   Time         Title                                                       
 ..     09:00-10:00  :download:`Science talk <_static/science_SS.pdf>`                   SS
 ..     10:30-11:30  Science talk                                                        DM
 ..     12:00-13:00  Time for final questions                                            SS/DM
-..     14:00-15:00  Summary & Feedback                                                  ..
+..     14:00-15:00  :download:`Summary & Feedback <_static/review.pdf>`                 SS/DM
 =====  ===========  ==================================================================  ========
 
 ---------
@@ -81,7 +81,6 @@ Tutorials
 Other files
 -----------
 
-+ Download the FITS file for python tutorial :download:`here <_static/n1569.fits>`.
 + Download the script for fun with Fourier transforms :download:`here <_static/L4.zip>`.
 
 ----------------
