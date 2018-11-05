@@ -11,7 +11,7 @@ Welcome to Sarrvesh's website
    :figwidth: 45%
    :align: right
 
-I am a telescope scientist working with the LOw Frequency ARray (LOFAR) at ASTRON. For my PhD, I studied the non-thermal emission and magnetic fields in nearby galaxies using the LOFAR and the Westerbork radio telescopes. You can find the electronic copy of my thesis :download:`here <_static/sarrvesh_thesis.pdf>`.
+I am a telescope scientist working with the LOw Frequency ARray (LOFAR) at ASTRON. For my PhD, I studied the non-thermal emission and magnetic fields in nearby galaxies using the LOFAR and the Westerbork radio telescopes. You can find the electronic copy of my thesis `here <https://www.dropbox.com/s/c4ww1wita24wygp/sarrvesh_thesis.pdf?dl=0>`_.
 
 You can download my CV :download:`here <_static/CV_Sarrvesh.pdf>`. You can access my list of publication on `NASA ADS <http://adsabs.harvard.edu/cgi-bin/nph-abs_connect?library&libname=sarrvesh&libid=503b7579ff>`_ or here. 
 
