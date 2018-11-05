@@ -1,2 +1,2 @@
-List of publications
-====================
+Publications list
+=================

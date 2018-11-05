@@ -3,6 +3,16 @@ Assorted stuff
 
 Here you can find an assorted list of things that interests me. 
 
+Books
+-----
+
+I am an avid reader of non-fiction and I am quite active on `Goodreads.com <https://www.goodreads.com/sarrvesh>`_. Check out my recently read list of books below: 
+
+.. raw:: html
+    :file: _static/goodreads.html
+
+|
+
 Blog posts
 ----------
 
@@ -14,7 +24,6 @@ I am a keen follower of the blogs listed below:
    + `Not even wrong <http://www.math.columbia.edu/~woit/wordpress/>`_ by Peter Woit
    + I also read follow `SciAm <https://www.scientificamerican.com>`_, `Quanta <http://www.quantamagazine.org/>`_ and `Aeon <https://aeon.co>`_ magazines regularly
 
-------------------------------
 Radio telescopes/observatories
 ------------------------------
 
