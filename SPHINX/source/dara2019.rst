@@ -24,8 +24,8 @@ Date   Time         Title                                                       
 =====  ===========  ==================================================================  ========
 18/06  09:00-10:00  L1: Introduction & scope of the workshop                            SS/MM
 ..     10:30-13:00  T1: The UNIX terminal                                               MM
-..     14:00-15:00  T2: :download:`Python basics <_static/python_basics.pdf>`           SS
-..     15:00-17:30  T3: :download:`Python packages <_static/python_basics.pdf>`         SS
+..     14:00-15:00  T2: :download:`Python basics <_static/dara2019/python_basics.pdf>`  SS
+..     15:00-17:30  T3: :download:`Python packages <_static/dara2019/python_basics.pdf>`SS
 19/06  08:30-09:00  L2: Introduction to Radio Interferometry                            MM
 ..     09:00-10:00  T4: :download:`Fun with Fourier transforms <_static/fun.pdf>`       MM
 ..     10:30-11:30  L3: Radio Interferometry: First principles                          SS
@@ -82,6 +82,15 @@ Other files
 -----------
 
 + Download the script for fun with Fourier transforms :download:`here <_static/L4.zip>`.
+
+---------
+Software 
+---------
+
+The following software tools are required to follow the tutorials presented during this workshop:
+
++ Python3 (with NumPy, Matplotlib, AstroPy, and AplPy)
++ On Ubuntu, make sure **python3-tk** is installed.
 
 ----------------
 Acknowledgements
