@@ -82,6 +82,7 @@ Other files
 -----------
 
 + Download the script for fun with Fourier transforms :download:`here <_static/L4.zip>`.
++ Download the file for python tutorial :download:`here <_static/dara2019/n1569.fits>`.
 
 ---------
 Software 
