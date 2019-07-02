@@ -19,56 +19,53 @@ Schedule
 + Evening break: 16:00-16:30
 + Lecturers: Mubela Mutale (MM) & Sarrvesh Sridhar (SS)
 
-=====  ===========  =============================================================================== ========
-Date   Time         Title                                                                           Lead
-=====  ===========  =============================================================================== ========
-18/06  09:00-10:00  L1: :download:`Introduction <_static/dara2019/introduction.pdf>`                SS/MM
-..     10:30-13:00  T1: The UNIX terminal                                                           MM
-..     14:00-15:00  T2: :download:`Python basics <_static/dara2019/python_basics.pdf>`              SS
-..     15:00-17:30  T3: :download:`Python packages <_static/dara2019/python_basics.pdf>`            SS
-19/06  08:30-09:00  L2: Introduction to Radio Interferometry                                        MM
-..     09:00-10:00  T4: :download:`Fun with Fourier transforms <_static/fun.pdf>`                   MM
-..     10:30-11:30  L3: Radio Interferometry: First principles                                      SS
-..     11:30-13:00  T5: :download:`CASA & Measurement set <_static/dara2019/casa_and_ms.pdf>`       SS
-..     14:00-15:00  L3: Imaging                                                                     MM
-..     15:00-16:00  L4: :download:`Imaging parameters <_static/dara2019/imaging_parameters.pdf>`    SS
-..     16:30-17:30  T6: :download:`Imaging with CASA <_static/dara2019/imaging_parameters.pdf>`     SS
-20/06  08:30-09:00  Recap from previous day                                                         SS/MM
-..     09:00-10:00  T7: Calibration tutorial                                                        SS/MM
-..     10:30-13:00  T7: Calibration tutorial                                                        SS/MM
-..     14:00-16:00  T8: Imaging tutorial                                                            SS/MM
-..     16:30-17:30  T8: Imaging tutorial                                                            SS/MM
-21/06  all day      T9: Continuum tutorial                                                          SS/MM
-22/06  08:30-09:00  Recap from previous day                                                         SS/MM
-..     09:00-10:00  :download:`L5: Self-calibration <_static/selfcal.pdf>`                          MM
-..     10:30-12:00  T10: Self-calibration tutorial                                                  SS/MM
-..     12:00-13:00  L6: Radio frequency interference (RFI)                                          SS
-..     14:00-16:00  Back-up time slot                                                               ..
-..     16:30-17:30  Recap of week 1                                                                 SS/MM
-26/06  08:30-09:00  Recap from week 1                                                               SS/MM
-..     09:00-10:00  T11: 3C277.1 calibration tutorial                                               SS/MM
-..     10:30-13:00  T11: 3C277.1 calibration tutorial                                               SS/MM
-..     14:00-15:00  :download:`L7: Advanced imaging <_static/advanced_imaging.pdf>`                 SS
-..     15:00-16:00  T12: 3C277.1 imaging tutorial                                                   SS/MM
-..     16:30-17:30  T12: 3C277.1 imaging tutorial                                                   SS/MM
-10/07  08:30-09:00  Recap from previous day                                                         SS/MM
-..     09:00-10:00  L8: Science with spectral lines                                                 MM
-..     10:30-11:30  :download:`L9: Modern interferometers <_static/modern_arrays.pdf>`              SS
-..     11:30-12:30  :download:`Proposals & projects <_static/dara2019/project.pdf>`                 SS/MM
-..     14:00-17:30  Proposals & projects                                                            SS/MM
-11/07  08:30-09:00  Recap from previous day                                                         SS/MM
-..     09:00-10:00  :download:`L10: Error recognition <_static/error.pdf>`                          MM
-..     10:30-12:00  T13: Error recognition tutorials                                                SS/MM
-..     12:00-13:00  L11: Fringe fitting & AIPS                                                      MM
-..     14:00-15:00  L11: Fring fitting & AIPS                                                       MM
-..     15:00-16:00  :download:`Data & literature archives <_static/archives.pdf>`                   SS
-..     16:00-17:30  Back-up time                                                                    ..
-12/07  08:30-09:00  Recap from previous day                                                         SS/MM
-..     09:00-10:00  :download:`Science talk <_static/science_SS.pdf>`                               SS
-..     10:30-11:30  Science talk                                                                    MM
-..     12:00-13:00  Time for final questions                                                        SS/MM
-..     14:00-15:00  :download:`Summary & Feedback <_static/review.pdf>`                             SS/MM
-=====  ===========  =============================================================================== ========
+=====  ===========  ======================================================================================================= ========
+Date   Time         Title                                                                                                   Lead
+=====  ===========  ======================================================================================================= ========
+01/07  09:00-10:00  L1: :download:`Introduction <_static/dara2019/introduction.pdf>`                                        SS/MM
+..     10:30-13:00  T1: :download:`The UNIX terminal <_static/dara2019/w1_intro_to_unix.pdf>`                               MM
+..     14:00-15:00  T2: :download:`Python basics <_static/dara2019/python_basics.pdf>`                                      SS
+..     15:00-17:30  T3: :download:`Python packages <_static/dara2019/python_basics.pdf>`                                    SS
+02/07  09:00-10:30  L2: :download:`Introduction to Radio Interferometry <_static/dara2019/L2_interferometry_basics.pdf>`    MM
+..     13:30-15:00  T5: :download:`CASA & Measurement set <_static/dara2019/casa_and_ms.pdf>`                               SS
+..     15:00-16:00  L4: :download:`Imaging parameters <_static/dara2019/imaging_parameters.pdf>`                            SS
+..     16:30-17:30  T6: :download:`Imaging with CASA <_static/dara2019/imaging_parameters.pdf>`                             SS
+03/07  09:00-09:30  Recap from previous day                                                                                 SS/MM
+..     09:30-10:30  L:  Radio interferometry: First principles                                                              SS
+..     11:00-12:30  T4: :download:`Fun with Fourier transforms <_static/fun.pdf>`                                           MM
+..     13:45-15:00  L: Science Talk                                                                                         SS
+..     15:30-17:00  L: Calibration & fringe fitting                                                                         MM
+21/06  all day      T9: Continuum tutorial                                                                                  SS/MM
+22/06  08:30-09:00  Recap from previous day                                                                                 SS/MM
+..     09:00-10:00  :download:`L5: Self-calibration <_static/selfcal.pdf>`                                                  MM
+..     10:30-12:00  T10: Self-calibration tutorial                                                                          SS/MM
+..     12:00-13:00  L6: Radio frequency interference (RFI)                                                                  SS
+..     14:00-16:00  Back-up time slot                                                                                       ..
+..     16:30-17:30  Recap of week 1                                                                                         SS/MM
+26/06  08:30-09:00  Recap from week 1                                                                                       SS/MM
+..     09:00-10:00  T11: 3C277.1 calibration tutorial                                                                       SS/MM
+..     10:30-13:00  T11: 3C277.1 calibration tutorial                                                                       SS/MM
+..     14:00-15:00  :download:`L7: Advanced imaging <_static/advanced_imaging.pdf>`                                         SS
+..     15:00-16:00  T12: 3C277.1 imaging tutorial                                                                           SS/MM
+..     16:30-17:30  T12: 3C277.1 imaging tutorial                                                                           SS/MM
+10/07  08:30-09:00  Recap from previous day                                                                                 SS/MM
+..     09:00-10:00  L8: Science with spectral lines                                                                         MM
+..     10:30-11:30  :download:`L9: Modern interferometers <_static/modern_arrays.pdf>`                                      SS
+..     11:30-12:30  :download:`Proposals & projects <_static/dara2019/project.pdf>`                                         SS/MM
+..     14:00-17:30  Proposals & projects                                                                                    SS/MM
+11/07  08:30-09:00  Recap from previous day                                                                                 SS/MM
+..     09:00-10:00  :download:`L10: Error recognition <_static/error.pdf>`                                                  MM
+..     10:30-12:00  T13: Error recognition tutorials                                                                        SS/MM
+..     12:00-13:00  L11: Fringe fitting & AIPS                                                                              MM
+..     14:00-15:00  L11: Fring fitting & AIPS                                                                               MM
+..     15:00-16:00  :download:`Data & literature archives <_static/archives.pdf>`                                           SS
+..     16:00-17:30  Back-up time                                                                                            ..
+12/07  08:30-09:00  Recap from previous day                                                                                 SS/MM
+..     09:00-10:00  :download:`Science talk <_static/science_SS.pdf>`                                                       SS
+..     10:30-11:30  Science talk                                                                                            MM
+..     12:00-13:00  Time for final questions                                                                                SS/MM
+..     14:00-15:00  :download:`Summary & Feedback <_static/review.pdf>`                                                     SS/MM
+=====  ===========  ======================================================================================================= ========
 
 ---------
 Tutorials
@@ -82,7 +79,6 @@ Other files
 -----------
 
 + Download the script for fun with Fourier transforms :download:`here <_static/L4.zip>`.
-+ Download the file for python tutorial :download:`here <_static/dara2019/n1569.fits>`.
 
 ---------
 Software 
