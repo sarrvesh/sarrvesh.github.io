@@ -32,10 +32,15 @@ Date   Time         Title                                                       
 ..     16:30-17:30  T6: :download:`Imaging with CASA <_static/dara2019/imaging_parameters.pdf>`                             SS
 03/07  09:00-09:30  Recap from previous day                                                                                 SS/MM
 ..     09:30-10:30  L:  Radio interferometry: First principles                                                              SS
+..     11:00-12:30  T:  `Imaging simulator (interactive session) <https://github.com/urvashirau/ImagingSimulator>`_         SS
 ..     11:00-12:30  T4: :download:`Fun with Fourier transforms <_static/fun.pdf>`                                           MM
-..     13:45-15:00  L: Science Talk                                                                                         SS
-..     15:30-17:00  L: Calibration & fringe fitting                                                                         MM
-21/06  all day      T9: Continuum tutorial                                                                                  SS/MM
+..     13:45-15:00  L   :download:`Proposals & projects <_static/dara2019/project.pdf>`                                     SS
+04/07  09:00-11:30  T: Fun with Fourier transforms (interactive session)                                                    SS
+..     11:30-12:30  T5: :download:`CASA & Measurement set (recap) <_static/dara2019/casa_and_ms.pdf>`                       SS
+..     14:00-14:30  L:  :download:`Calibration <_static/dara2019/L6_tailoring_calibration_2.pdf>`                           MM
+..     14:00-16:30  T9: `EVN Continuum tutorial <http://www.jb.man.ac.uk/DARA/unit4/Workshops/EVN_continuum_part_1.html>`_  SS/MM
+05/07  09:00-10:00  L:  Science talk                                                                                        SS
+..     10:00-16:30  T9: `EVN Continuum tutorial <http://www.jb.man.ac.uk/DARA/unit4/Workshops/EVN_continuum_part_1.html>`_  SS/MM
 22/06  08:30-09:00  Recap from previous day                                                                                 SS/MM
 ..     09:00-10:00  :download:`L5: Self-calibration <_static/selfcal.pdf>`                                                  MM
 ..     10:30-12:00  T10: Self-calibration tutorial                                                                          SS/MM
