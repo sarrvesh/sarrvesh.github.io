@@ -15,8 +15,8 @@ Schedule
 
 + Please note that this schedule is subject to change depending on the progress made during the workshop.
 + Morning break: 10:00-10:30
-+ Lunch break: 13:00-14:00
-+ Evening break: 16:00-16:30
++ Lunch break: 12:30-13:30
++ Evening break: 15:30-16:00
 + Lecturers: Mubela Mutale (MM) & Sarrvesh Sridhar (SS)
 
 =====  ===========  ======================================================================================================= ========
@@ -39,14 +39,11 @@ Date   Time         Title                                                       
 ..     11:30-12:30  T5: :download:`CASA & Measurement set (recap) <_static/dara2019/casa_and_ms.pdf>`                       SS
 ..     14:00-14:30  L:  :download:`Calibration <_static/dara2019/L6_tailoring_calibration_2.pdf>`                           MM
 ..     14:00-16:30  T9: `EVN Continuum tutorial <http://www.jb.man.ac.uk/DARA/unit4/Workshops/EVN_continuum_part_1.html>`_  SS/MM
-05/07  09:00-10:00  L:  Science talk                                                                                        SS
-..     10:00-16:30  T9: `EVN Continuum tutorial <http://www.jb.man.ac.uk/DARA/unit4/Workshops/EVN_continuum_part_1.html>`_  SS/MM
-22/06  08:30-09:00  Recap from previous day                                                                                 SS/MM
-..     09:00-10:00  :download:`L5: Self-calibration <_static/selfcal.pdf>`                                                  MM
-..     10:30-12:00  T10: Self-calibration tutorial                                                                          SS/MM
-..     12:00-13:00  L6: Radio frequency interference (RFI)                                                                  SS
-..     14:00-16:00  Back-up time slot                                                                                       ..
-..     16:30-17:30  Recap of week 1                                                                                         SS/MM
+05/07  09:00-15:30  T9: `EVN Continuum tutorial <http://www.jb.man.ac.uk/DARA/unit4/Workshops/EVN_continuum_part_1.html>`_  SS/MM
+..     16:00-16:30  :download:`Recap - Week 1 <_static/dara2019/review_week1.pdf>`                                          SS/MM
+..     ..           ..                                                                                                      ..
+08/07  09:00-09:30  :download:`Recap - Week 1 <_static/dara2019/review_week1.pdf>`                                          SS/MM
+..     09:30-15:30  T9: `EVN Continuum tutorial <http://www.jb.man.ac.uk/DARA/unit4/Workshops/EVN_continuum_part_2.html>`_  SS/MM
 26/06  08:30-09:00  Recap from week 1                                                                                       SS/MM
 ..     09:00-10:00  T11: 3C277.1 calibration tutorial                                                                       SS/MM
 ..     10:30-13:00  T11: 3C277.1 calibration tutorial                                                                       SS/MM
@@ -71,13 +68,6 @@ Date   Time         Title                                                       
 ..     12:00-13:00  Time for final questions                                                                                SS/MM
 ..     14:00-15:00  :download:`Summary & Feedback <_static/review.pdf>`                                                     SS/MM
 =====  ===========  ======================================================================================================= ========
-
----------
-Tutorials
----------
-
-+ :ref:`evn_continuum`
-+ `Calibration and imaging tutorial <http://www.jb.man.ac.uk/~radcliff/DARA/Data_reduction_workshops/EVN_Continuum/CASA_1848+283_J1849+3024-ManOxWiki.html>`_
 
 -----------
 Other files
