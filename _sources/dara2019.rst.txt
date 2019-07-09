@@ -39,34 +39,23 @@ Date   Time         Title                                                       
 ..     11:30-12:30  T5: :download:`CASA & Measurement set (recap) <_static/dara2019/casa_and_ms.pdf>`                       SS
 ..     14:00-14:30  L:  :download:`Calibration <_static/dara2019/L6_tailoring_calibration_2.pdf>`                           MM
 ..     14:00-16:30  T9: `EVN Continuum tutorial <http://www.jb.man.ac.uk/DARA/unit4/Workshops/EVN_continuum_part_1.html>`_  SS/MM
-05/07  09:00-15:30  T9: `EVN Continuum tutorial <http://www.jb.man.ac.uk/DARA/unit4/Workshops/EVN_continuum_part_1.html>`_  SS/MM
+05/07  09:00-15:30  T9: `Continuum tutorial 1  <http://www.jb.man.ac.uk/DARA/unit4/Workshops/EVN_continuum_part_1.html>`_   SS/MM
 ..     16:00-16:30  :download:`Recap - Week 1 <_static/dara2019/review_week1.pdf>`                                          SS/MM
 ..     ..           ..                                                                                                      ..
 08/07  09:00-09:30  :download:`Recap - Week 1 <_static/dara2019/review_week1.pdf>`                                          SS/MM
-..     09:30-15:30  T9: `EVN Continuum tutorial <http://www.jb.man.ac.uk/DARA/unit4/Workshops/EVN_continuum_part_2.html>`_  SS/MM
-26/06  08:30-09:00  Recap from week 1                                                                                       SS/MM
-..     09:00-10:00  T11: 3C277.1 calibration tutorial                                                                       SS/MM
-..     10:30-13:00  T11: 3C277.1 calibration tutorial                                                                       SS/MM
-..     14:00-15:00  :download:`L7: Advanced imaging <_static/advanced_imaging.pdf>`                                         SS
-..     15:00-16:00  T12: 3C277.1 imaging tutorial                                                                           SS/MM
-..     16:30-17:30  T12: 3C277.1 imaging tutorial                                                                           SS/MM
+..     09:30-10:30  :download:`Imaging <_static/dara2019/L7_imaging.pdf>`                                                   MM
+..     10:30-15:30  T9: `Continuum tutorial 2 <http://www.jb.man.ac.uk/DARA/unit4/Workshops/EVN_continuum_part_2.html>`_    SS/MM
+09/07  09:00-15:30  T9: `Continuum tutorial 2 <http://www.jb.man.ac.uk/DARA/unit4/Workshops/EVN_continuum_part_2.html>`_    SS/MM
+..     16:00-16:30  Science talk                                                                                            SS
 10/07  08:30-09:00  Recap from previous day                                                                                 SS/MM
-..     09:00-10:00  L8: Science with spectral lines                                                                         MM
 ..     10:30-11:30  :download:`L9: Modern interferometers <_static/modern_arrays.pdf>`                                      SS
-..     11:30-12:30  :download:`Proposals & projects <_static/dara2019/project.pdf>`                                         SS/MM
-..     14:00-17:30  Proposals & projects                                                                                    SS/MM
-11/07  08:30-09:00  Recap from previous day                                                                                 SS/MM
-..     09:00-10:00  :download:`L10: Error recognition <_static/error.pdf>`                                                  MM
-..     10:30-12:00  T13: Error recognition tutorials                                                                        SS/MM
-..     12:00-13:00  L11: Fringe fitting & AIPS                                                                              MM
-..     14:00-15:00  L11: Fring fitting & AIPS                                                                               MM
+11/07  09:00-09:30  Recap from previous day                                                                                 SS/MM
+..     09:30-10:30  :download:`L10: Error recognition <_static/error.pdf>`                                                  MM
 ..     15:00-16:00  :download:`Data & literature archives <_static/archives.pdf>`                                           SS
-..     16:00-17:30  Back-up time                                                                                            ..
-12/07  08:30-09:00  Recap from previous day                                                                                 SS/MM
-..     09:00-10:00  :download:`Science talk <_static/science_SS.pdf>`                                                       SS
-..     10:30-11:30  Science talk                                                                                            MM
-..     12:00-13:00  Time for final questions                                                                                SS/MM
-..     14:00-15:00  :download:`Summary & Feedback <_static/review.pdf>`                                                     SS/MM
+..     11:00-16:30  Proposals & projects                                                                                    ..
+12/07  09:00-09:30  Recap from previous day                                                                                 SS/MM
+..     09:30-10:30  Time for final questions                                                                                SS
+..     11:00-12:00  :download:`Summary & Feedback <_static/review.pdf>`                                                     SS/MM
 =====  ===========  ======================================================================================================= ========
 
 -----------
